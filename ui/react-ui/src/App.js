@@ -1,4 +1,8 @@
 import React from 'react';
+import { Routes, Route } from "react-router-dom";
+
+import LandingPage from './components/LandingPage';
+import Login from './components/Login';
 
 class App extends React.Component {
 
@@ -12,9 +16,10 @@ class App extends React.Component {
     render() {
         return (
             <div className="App">
-                <header className="App-header">
-                    {this.state.greetings}
-                </header>
+                <Routes>
+                    <Route path="web" element={<LandingPage />} />
+                    <Route path="web/login" element={<Login />} />
+                </Routes>
             </div>
         );
     }
