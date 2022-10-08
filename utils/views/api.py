@@ -264,19 +264,10 @@ class DjangoAPIMixin:
         return is_client_error(code) or is_server_error(code)
 
 
-class API(APIView):
+class API(DjangoAPIMixin, APIView):
     """Our class based view for rest_framework api views.
     
     https://www.django-rest-framework.org/api-guide/views/#class-based-views
     """
 
     RESPONSE = Response
-
-class DjangoView(View):
-    """Our class based view for django views.
-    
-    https://docs.djangoproject.com/en/3.2/topics/class-based-views/#class-based-views
-    https://docs.djangoproject.com/en/3.2/ref/class-based-views/base/#view
-    """
-
-    RESPONSE = JsonResponse
