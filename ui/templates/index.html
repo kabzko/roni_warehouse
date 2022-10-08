@@ -1,0 +1,25 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>RONI Warehouse System</title>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+</head>
+<input type="text" name="token" value = "{{ request.session.token }}" hidden>
+{% csrf_token %}
+<body id="page-top" class="landing-page">
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    </div>
+    <script
+        type="text/javascript"
+        src="{% static 'js/bundle.js' %}">
+    </script>
+</body>
+</html>
