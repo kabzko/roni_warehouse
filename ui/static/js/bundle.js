@@ -3254,7 +3254,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* harmony import */ var _components_landing_page_LandingPage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/landing_page/LandingPage */ "./src/components/landing_page/LandingPage.js");
 /* harmony import */ var _components_login_Login__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/login/Login */ "./src/components/login/Login.js");
-/* harmony import */ var _components_dashboard_Dasboard__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/dashboard/Dasboard */ "./src/components/dashboard/Dasboard.js");
+/* harmony import */ var _components_dashboard_AdminDasboard__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/dashboard/AdminDasboard */ "./src/components/dashboard/AdminDasboard.js");
 
 
 
@@ -3282,9 +3282,7 @@ var App = /*#__PURE__*/function (_React$Component) {
     (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, App);
 
     _this = _super.call(this);
-    _this.state = {
-      "greetings": "Hello World"
-    };
+    _this.state = {};
     return _this;
   }
 
@@ -3303,8 +3301,8 @@ var App = /*#__PURE__*/function (_React$Component) {
         path: "/web/login",
         element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(_components_login_Login__WEBPACK_IMPORTED_MODULE_7__["default"], null)
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Route, {
-        path: "/web/dashboard",
-        element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(_components_dashboard_Dasboard__WEBPACK_IMPORTED_MODULE_8__["default"], null)
+        path: "/web/dashboard/admin",
+        element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(_components_dashboard_AdminDasboard__WEBPACK_IMPORTED_MODULE_8__["default"], null)
       })));
     }
   }]);
@@ -3509,10 +3507,10 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
 
 /***/ }),
 
-/***/ "./src/components/dashboard/Dasboard.js":
-/*!**********************************************!*\
-  !*** ./src/components/dashboard/Dasboard.js ***!
-  \**********************************************/
+/***/ "./src/components/dashboard/AdminDasboard.js":
+/*!***************************************************!*\
+  !*** ./src/components/dashboard/AdminDasboard.js ***!
+  \***************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -3543,22 +3541,22 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 
 
-var Dashboard = /*#__PURE__*/function (_React$Component) {
-  (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__["default"])(Dashboard, _React$Component);
+var AdminDashboard = /*#__PURE__*/function (_React$Component) {
+  (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__["default"])(AdminDashboard, _React$Component);
 
-  var _super = _createSuper(Dashboard);
+  var _super = _createSuper(AdminDashboard);
 
-  function Dashboard() {
+  function AdminDashboard() {
     var _this;
 
-    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, Dashboard);
+    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, AdminDashboard);
 
     _this = _super.call(this);
     _this.state = {};
     return _this;
   }
 
-  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(Dashboard, [{
+  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(AdminDashboard, [{
     key: "render",
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement("div", {
@@ -3577,10 +3575,10 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
     }
   }]);
 
-  return Dashboard;
+  return AdminDashboard;
 }((react__WEBPACK_IMPORTED_MODULE_5___default().Component));
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Dashboard);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AdminDashboard);
 
 /***/ }),
 
@@ -3765,7 +3763,11 @@ var Login = /*#__PURE__*/function (_React$Component) {
       var data = _objectSpread({}, this.state);
 
       _utils_axios__WEBPACK_IMPORTED_MODULE_9__["default"].post("/api/login/", data).then(function (res) {
-        window.location.reload();
+        if (data.login_as == "admin") {
+          window.location.href = "/web/dashboard/admin";
+        } else if (data.login_as == "cashier") {
+          window.location.href = "/web/dashboard/cashier";
+        }
       }).catch(function (error) {
         var error_msg = error.response.data.message;
         (0,_utils_alert__WEBPACK_IMPORTED_MODULE_10__["default"])(error_msg, "danger", "error-notification");

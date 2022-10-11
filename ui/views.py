@@ -11,12 +11,17 @@ def index(request):
     try:
         is_allow_pages = any((
             "/web/login/" == request.path,
+            "/web/login" == request.path,
             "/web/" == request.path,
+            "/web" == request.path,
             "/" == request.path
         ))
 
         if request.user.is_authenticated and is_allow_pages:
-            return redirect("/web/dashboard/")
+            if request.user.user_type == "admin":
+                return redirect("/web/dashboard/admin/")
+            elif request.user.user_type == "cashier":
+                return redirect("/web/dashboard/cashier/")
 
         is_redirect = all((
             not request.user.is_authenticated,

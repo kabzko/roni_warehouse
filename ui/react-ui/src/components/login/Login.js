@@ -40,7 +40,11 @@ class Login extends React.Component {
         let data = {...this.state};
         
         axios.post("/api/login/", data).then(res => {
-            window.location.reload();
+            if (data.login_as == "admin") {
+                window.location.href ="/web/dashboard/admin";
+            } else if (data.login_as == "cashier") {
+                window.location.href ="/web/dashboard/cashier";
+            }
         }).catch(error => {
             let error_msg = error.response.data.message;
             alert(error_msg, "danger", "error-notification");

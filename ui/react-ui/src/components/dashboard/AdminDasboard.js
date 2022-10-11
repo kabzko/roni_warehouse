@@ -3,7 +3,7 @@ import React from 'react';
 import SideNav from '../common/SideNav';
 import Header from '../common/Header';
 
-class Dashboard extends React.Component {
+class AdminDashboard extends React.Component {
     constructor() {
         super();
         this.state = {};
@@ -28,4 +28,4 @@ class Dashboard extends React.Component {
     }
 }
 
-export default Dashboard;
+export default AdminDashboard;
