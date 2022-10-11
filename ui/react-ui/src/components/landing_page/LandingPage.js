@@ -29,7 +29,7 @@ class LandingPage extends React.Component {
                             Manage your inventories online easily
                         </p>
                         <p className="lead">
-                            <Link className="btn btn-lg btn-secondary fw-bold border-white bg-white" to="login">
+                            <Link className="btn btn-lg btn-secondary fw-bold border-white bg-white" to="/web/login">
                                 Click here to login
                             </Link>
                         </p>

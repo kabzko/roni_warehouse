@@ -12,6 +12,7 @@ from app.models import User
 
 from utils.exceptions import HumanReadableError
 from utils.views.api import API
+from utils.debug import debug_exception
 
 class UserLoginAPIView(API):
     """Login"""
@@ -24,13 +25,27 @@ class UserLoginAPIView(API):
 
         try:
             payload = request.data
-            user = authenticate(mobile_number=payload["mobile_number"], password=payload["password"])
-            if user != None:
+
+            if not payload.get("mobile_number"):
+                self.raise_error(title="Error", message="Please provide mobile number!")
+
+            if not payload.get("password"):
+                self.raise_error(title="Error", message="Please provide password!")
+
+            if not payload.get("login_as"):
+                self.raise_error(title="Error", message="Please specify login type!")
+
+            user = authenticate(username=payload["mobile_number"], password=payload["password"])
+            
+            if user:
+                if user.user_type != payload.get("login_as"):
+                    self.raise_error(title="Error", message="Invalid username or password.")
+
                 login(request, user)
                 token, created = Token.objects.get_or_create(user=user)
                 response = {
                     "message": "Signin successfully.",
-                    "token": token
+                    "token": token.key
                 }
                 return self.success_response(response)
             else:
@@ -38,6 +53,7 @@ class UserLoginAPIView(API):
         except HumanReadableError as exc:
             return self.error_response(exc, self.error_dict, self.status)
         except Exception as exc:
+            debug_exception(exc)
             return self.server_error_response(exc)
 
 class UserLogoutAPIView(API):
