@@ -1,11 +1,14 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import "./SideNav.css"
 
 class SideNav extends React.Component {
-    constructor() {
-        super();
-        this.state = {};
+    constructor(props) {
+        super(props);
+        this.state = {
+            ...props,
+        };
     }
 
     render() {
@@ -14,28 +17,20 @@ class SideNav extends React.Component {
                 <div className="position-sticky pt-3 sidebar-sticky">
                     <ul className="nav flex-column">
                         <li className="nav-item">
-                            <a className="nav-link active" aria-current="page" href="#">
+                            <Link className={(this.state.active === "dashboard") ? "nav-link active" : "nav-link"} to="/web/admin/dashboard">
                                 <span className="align-text-bottom">
                                     <i className="bi bi-house"></i>
                                     Dashboard
                                 </span>
-                            </a>
+                            </Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">
+                            <Link className={(this.state.active === "users-list") ? "nav-link active" : "nav-link"} to="/web/admin/users">
                                 <span className="align-text-bottom">
-                                    <i className="bi bi-box"></i>
-                                    Inventories
+                                    <i className="bi bi-people-fill"></i>
+                                    Users
                                 </span>
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">
-                                <span className="align-text-bottom">
-                                    <i className="bi bi-bar-chart-line"></i>
-                                    Stocks
-                                </span>
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                 </div>

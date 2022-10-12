@@ -4,17 +4,15 @@ import "./Login.css"
 import axios from '../../utils/axios';
 import alert from '../../utils/alert';
 
-class Login extends React.Component {
+class AdminLogin extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             "mobile_number": "",
             "password": "",
-            "login_as": "cashier",
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.loginAsChange = this.loginAsChange.bind(this);
     }
 
     inputChange(input_name, event) {
@@ -29,22 +27,13 @@ class Login extends React.Component {
         }
     }
 
-    loginAsChange(e) {
-        this.setState({
-            login_as: e.target.value,
-        })
-    }
-
     handleSubmit(event) {
         event.preventDefault();
         let data = {...this.state};
+        data["login_as"] = "admin";
         
         axios.post("/api/login/", data).then(res => {
-            if (data.login_as == "admin") {
-                window.location.href ="/web/dashboard/admin";
-            } else if (data.login_as == "cashier") {
-                window.location.href ="/web/dashboard/cashier";
-            }
+            window.location.href ="/web/admin/dashboard";
         }).catch(error => {
             let error_msg = error.response.data.message;
             alert(error_msg, "danger", "error-notification");
@@ -57,7 +46,7 @@ class Login extends React.Component {
                 <main className="form-signin w-100 m-auto">
                     <div>
                         <img className="mb-4" src="/static/img/logo192.png" alt="" width="70" height="70"></img>
-                        <h1 className="h3 mb-3 fw-normal">Please log in</h1>
+                        <h1 className="h3 mb-3 fw-normal">Admin | log in</h1>
 
                         <div className="form-floating">
                             <input
@@ -81,31 +70,6 @@ class Login extends React.Component {
                             <label htmlFor="floatingPassword">Password</label>
                         </div>
 
-                        <div className="form-check">
-                            <input
-                                className="form-check-input" type="radio"
-                                name="login_as" id="login-as-cashier"
-                                value="cashier"
-                                checked={this.state.login_as === "cashier"}
-                                onChange={this.loginAsChange}>
-                            </input>
-                            <label className="form-check-label" htmlFor="login-as-cashier">
-                                Login as Cashier
-                            </label>
-                        </div>
-                        <div className="form-check">
-                            <input
-                                className="form-check-input" type="radio"
-                                name="login_as" id="login-as-admin"
-                                value="admin"
-                                checked={this.state.login_as === "admin"}
-                                onChange={this.loginAsChange}>
-                            </input>
-                            <label className="form-check-label" htmlFor="login-as-admin">
-                                Login as Admin
-                            </label>
-                        </div>
-
                         <div id="error-notification" className="mt-2"></div>
 
                         <button className="w-100 btn btn-lg btn-primary" onClick={this.handleSubmit}>Log in</button>
@@ -117,4 +81,4 @@ class Login extends React.Component {
     }
 }
 
-export default Login;
+export default AdminLogin;

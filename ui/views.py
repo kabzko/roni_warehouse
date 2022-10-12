@@ -10,8 +10,10 @@ def index(request):
     """Landing page view."""
     try:
         is_allow_pages = any((
-            "/web/login/" == request.path,
-            "/web/login" == request.path,
+            "/web/login/admin/" == request.path,
+            "/web/login/admin" == request.path,
+            "/web/login/cashier/" == request.path,
+            "/web/login/cashier" == request.path,
             "/web/" == request.path,
             "/web" == request.path,
             "/" == request.path
@@ -19,7 +21,7 @@ def index(request):
 
         if request.user.is_authenticated and is_allow_pages:
             if request.user.user_type == "admin":
-                return redirect("/web/dashboard/admin/")
+                return redirect("/web/admin/dashboard/")
             elif request.user.user_type == "cashier":
                 return redirect("/web/dashboard/cashier/")
 
@@ -29,7 +31,7 @@ def index(request):
         ))
 
         if is_redirect:
-            return redirect("/web/login/")
+            return redirect("/web/")
 
         return render(request, "index.html")
     except Exception as exc:

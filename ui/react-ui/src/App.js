@@ -2,8 +2,9 @@ import React from 'react';
 import { Routes, Route } from "react-router-dom";
 
 import LandingPage from './components/landing_page/LandingPage';
-import Login from './components/login/Login';
-import AdminDashboard from './components/dashboard/AdminDasboard';
+import AdminLogin from './components/login/LoginAdmin';
+import AdminDashboard from './components/admin/dashboard/AdminDasboard';
+import AdminUsersList from './components/admin/users/AdminUsersList';
 
 class App extends React.Component {
 
@@ -18,8 +19,9 @@ class App extends React.Component {
                 <Routes>
                     <Route path="" element={<LandingPage />} />
                     <Route path="web" element={<LandingPage />} />
-                    <Route path="/web/login" element={<Login />} />
-                    <Route path="/web/dashboard/admin" element={<AdminDashboard />} />
+                    <Route path="/web/login/admin" element={<AdminLogin />} />
+                    <Route path="/web/admin/dashboard" element={<AdminDashboard />} />
+                    <Route path="/web/admin/users" element={<AdminUsersList />} />
                 </Routes>
             </div>
         );
