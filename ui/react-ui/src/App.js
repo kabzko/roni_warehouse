@@ -5,9 +5,9 @@ import LandingPage from './components/landing_page/LandingPage';
 import AdminLogin from './components/login/LoginAdmin';
 import AdminDashboard from './components/admin/dashboard/AdminDasboard';
 import AdminUsersList from './components/admin/users/AdminUsersList';
+import PageNotFound from './components/page_not_found/PageNotFound';
 
 class App extends React.Component {
-
     constructor() {
         super();
         this.state = {}
@@ -17,6 +17,7 @@ class App extends React.Component {
         return (
             <div className="App">
                 <Routes>
+                    <Route path="*" element={<PageNotFound />} />
                     <Route path="" element={<LandingPage />} />
                     <Route path="web" element={<LandingPage />} />
                     <Route path="/web/login/admin" element={<AdminLogin />} />
