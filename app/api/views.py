@@ -3,15 +3,18 @@ from django.contrib.auth import (
     login, 
     logout
 )
+from django.db.models import Q
 
 from rest_framework.authtoken.models import Token
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 from app.models import User
+from app.serializers.user import UserSerializer
 
 from utils.exceptions import HumanReadableError
 from utils.views.api import API
+from utils.common import beautify_serializer_error
 from utils.debug import debug_exception
 
 class UserLoginAPIView(API):
@@ -20,9 +23,8 @@ class UserLoginAPIView(API):
     authentication_classes = ()
     permission_classes = ()
     
-    def post(self, request, format=None) -> dict:
+    def post(self, request):
         """Login User"""
-
         try:
             payload = request.data
 
@@ -62,9 +64,8 @@ class UserLogoutAPIView(API):
     authentication_classes = [SessionAuthentication]
     permission_classes = [IsAuthenticated]
     
-    def post(self, request, format=None) -> dict:
+    def post(self, request):
         """Logout User"""
-
         try:
             user_has_token = Token.objects.filter(user=request.user).count()
             
@@ -81,47 +82,111 @@ class UserLogoutAPIView(API):
         except Exception as exc:
             return self.server_error_response(exc)
 
-class UserRegisterAPIView(API):
-    """Register"""
+class UserAPIView(API):
+    """User API View"""
     
-    def post(self, request, format=None) -> dict:
-        """Register User"""
-
+    def post(self, request):
+        """Create user post request"""
         try:
             payload = request.data
-            token = self.create_user(request, payload)
-            response = {
-                "message": "Signin successfully.",
-                "token": token
-            } 
-            return self.success_response(response)
+            self.create_user(payload)
+            
+            return self.success_response("Successfully created!")
         except HumanReadableError as exc:
             return self.error_response(exc, self.error_dict, self.status)
         except Exception as exc:
+            debug_exception(exc)
+            return self.server_error_response(exc)
+
+    def get(self, request):
+        """Get users. If pk is provided, get specific user only."""
+        try:
+            search = request.GET.get("search", None)
+            filters = Q(is_superadmin=False)
+
+            if search:
+                filters &= (Q(first_name__icontains=search) | Q(last_name__icontains=search) | Q(middle_name__icontains=search))
+
+            users = User.objects.filter(filters)
+            user_serializer = UserSerializer(users, many=True)
+
+            return self.success_response(user_serializer.data)
+        except HumanReadableError as exc:
+            return self.error_response(exc, self.error_dict, self.status)
+        except Exception as exc:
+            debug_exception(exc)
             return self.server_error_response(exc)
         
-    def create_user(self, request, payload: dict) -> str:
-        """Register new user"""
-        
-        is_strong_password, password_requirements = STRONG_PASSWORD_POLICY_UTILITY.is_strong_password(password=payload["password"])
-        if not is_strong_password:
-            self.raise_error(title="Error", message=", ".join(password_requirements))
+    def create_user(self, payload: dict) -> User:
+        """Create new user"""
 
-        payload["mobile_number"] = payload["mobile_number"]
+        if not payload.get("password"):
+            self.raise_error("Password is required!")
 
-        try:
-            user = User.objects.create(mobile_number=payload["mobile_number"], company=company)
+        if not payload.get("user_type"):
+            self.raise_error("User type is required!")
+
+        user_serializer = UserSerializer(data=payload)
+
+        if user_serializer.is_valid():
+            user = user_serializer.save()
             user.set_password(payload["password"])
             user.save()
-        except IntegrityError as error:
-            self.raise_error(title="Error", message="Mobile number is already used.")
-        
-        user_login = authenticate(mobile_number=payload["mobile_number"], password=payload["password"])
-        login(request, user_login)
-        token, created = Token.objects.get_or_create(user=request.user)
-        return token
+        else:
+            self.raise_error(beautify_serializer_error(user_serializer.errors))
+
+class UserDetailAPIView(API):
+    """User detail API view. Update, Get, or Delete specific user"""
+
+    def get(self, request, pk):
+        """Get specific user"""
+        try:
+            user = User.objects.get(pk=pk)
+            user_serializer = UserSerializer(user)
+            return self.success_response(user_serializer.data)
+        except User.DoesNotExist:
+            self.raise_error("User does not exist!")
+        except HumanReadableError as exc:
+            return self.error_response(exc, self.error_dict, self.status)
+        except Exception as exc:
+            debug_exception(exc)
+            return self.server_error_response(exc)
     
-    def filter_mobile_number(self, mobile_number) -> str:
-        """"""
-        
-        pass
+    def post(self, request, pk):
+        """Update user information"""
+        try:
+            data = request.data
+            user = User.objects.get(pk=pk)
+            user_serializer = UserSerializer(user, data=data)
+            
+            if user_serializer.is_valid():
+                user = user_serializer.save()
+
+                if data.get("password"):
+                    user.set_password(data["password"])
+                    user.save()
+            else:
+                self.raise_error(beautify_serializer_error(user_serializer.errors))
+
+            return self.success_response("Successfully updated!")
+        except User.DoesNotExist:
+            self.raise_error("User does not exist!")
+        except HumanReadableError as exc:
+            return self.error_response(exc, self.error_dict, self.status)
+        except Exception as exc:
+            debug_exception(exc)
+            return self.server_error_response(exc)
+
+    def delete(self, request, pk):
+        """Delete user"""
+        try:
+            user = User.objects.get(pk=pk)
+            user.delete()
+            return self.success_response("Successfully deleted!")
+        except User.DoesNotExist:
+            self.raise_error("User does not exist!")
+        except HumanReadableError as exc:
+            return self.error_response(exc, self.error_dict, self.status)
+        except Exception as exc:
+            debug_exception(exc)
+            return self.server_error_response(exc)

@@ -24,3 +24,5 @@ debug.log
 logs
 
 *.log
+
+*.sqlite3

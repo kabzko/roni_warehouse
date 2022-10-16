@@ -31,7 +31,9 @@ class User(AbstractBaseUser):
     """The app AUTH_USER_MODEL."""
     
     system_id = models.CharField(max_length=100, blank=True, null=True)
-    name = models.CharField(max_length=100, blank=True, null=True)
+    first_name = models.CharField(max_length=100, blank=True, null=True)
+    last_name = models.CharField(max_length=100, blank=True, null=True)
+    middle_name = models.CharField(max_length=100, blank=True, null=True)
     avatar = models.CharField(default=f"{settings.STATIC_URL}assets/no_photo.png", max_length=100)
     email = models.EmailField(max_length=100, unique=True, null=False, blank=False)
     mobile_number = models.CharField(max_length=20, unique=True, null=False, blank=False)

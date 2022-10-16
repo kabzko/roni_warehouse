@@ -9,3 +9,7 @@ body {
 #root, .App {
     height: 100% !important;
 }
+
+td, th {
+    vertical-align: middle !important;
+}

@@ -51,7 +51,7 @@ class AdminLogin extends React.Component {
                         <div className="form-floating">
                             <input
                                 type="text" className="form-control"
-                                id="floatingInput" placeholder="name@example.com"
+                                id="floatingInput" placeholder="0905xxxxxxx"
                                 value={this.state.mobile_number}
                                 onChange={this.inputChange.bind(this, "mobile_number")}
                                 onKeyUp={this.inputChange.bind(this, "mobile_number")}>
