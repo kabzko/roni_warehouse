@@ -16,7 +16,7 @@ def index(request):
             "/web/login/cashier" == request.path,
             "/web/" == request.path,
             "/web" == request.path,
-            "/" == request.path
+            "/" == request.path,
         ))
 
         if request.user.is_authenticated and is_allow_pages:

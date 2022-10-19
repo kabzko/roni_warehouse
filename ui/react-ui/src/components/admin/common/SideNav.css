@@ -49,6 +49,10 @@
     color: inherit;
 }
 
+.nav-link:hover {
+    color: #2470dc !important;
+}
+
 .side-nav-custom .sidebar-heading {
     font-size: .75rem;
 }

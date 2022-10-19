@@ -1,11 +1,11 @@
 from datetime import datetime
 from django.db import models
 
-class Product(models.Model):
-    """Product/Item Model"""
+class Store(models.Model):
+    """Store/branch model"""
 
     name = models.CharField(max_length=250)
-    description = models.TextField(blank=True, null=True)
-    barcode = models.CharField(max_length=100, blank=True, null=True)
+    address = models.TextField(blank=True, null=True)
+    created_by = models.ForeignKey("User", on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=datetime.now)
     updated_at = models.DateTimeField(default=datetime.now)
