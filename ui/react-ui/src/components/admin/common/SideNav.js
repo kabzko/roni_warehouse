@@ -52,7 +52,7 @@ class SideNav extends React.Component {
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <Link className={(this.state.active === "stock-in") ? "nav-link active" : "nav-link"} to="/">
+                            <Link className={(this.state.active === "stock-in") ? "nav-link active" : "nav-link"} to="/web/admin/stock-in">
                                 <span className="align-text-bottom">
                                     <i className="bi bi-box-arrow-in-down-right"></i>
                                     Stock In
@@ -60,7 +60,7 @@ class SideNav extends React.Component {
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <Link className={(this.state.active === "stock-out") ? "nav-link active" : "nav-link"} to="/">
+                            <Link className={(this.state.active === "stock-out") ? "nav-link active" : "nav-link"} to="/web/admin/stock-out">
                                 <span className="align-text-bottom">
                                     <i className="bi bi-box-arrow-up-right"></i>
                                     Stock Out
