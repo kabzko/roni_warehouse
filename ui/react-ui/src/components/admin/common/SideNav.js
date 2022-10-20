@@ -67,14 +67,6 @@ class SideNav extends React.Component {
                                 </span>
                             </Link>
                         </li>
-                        <li className="nav-item">
-                            <Link className={(this.state.active === "stores") ? "nav-link active" : "nav-link"} to="/">
-                                <span className="align-text-bottom">
-                                    <i className="bi bi-building"></i>
-                                    Stores/Branches
-                                </span>
-                            </Link>
-                        </li>
                         <li className="nav-item" onClick={this.logout}>
                             <span className="nav-link" style={{cursor: "pointer"}}>
                                 <span className="align-text-bottom">

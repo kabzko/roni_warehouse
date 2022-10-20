@@ -6,7 +6,7 @@ class StockOut(models.Model):
 
     stock_in = models.ForeignKey("StockIn", on_delete=models.CASCADE)
     created_by = models.ForeignKey("User", on_delete=models.CASCADE)
-    delivered_to = models.ForeignKey("Store", on_delete=models.CASCADE)
+    delivered_to = models.CharField(max_length=250, blank=True, null=True)
     checked_by = models.CharField(max_length=250, blank=True, null=True)
     received_by = models.CharField(max_length=250, blank=True, null=True)
     truck_plate_number = models.CharField(max_length=250, blank=True, null=True)

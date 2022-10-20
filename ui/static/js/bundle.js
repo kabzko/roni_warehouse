@@ -3529,15 +3529,6 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("i", {
         className: "bi bi-box-arrow-up-right"
       }), "Stock Out"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("li", {
-        className: "nav-item"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Link, {
-        className: this.state.active === "stores" ? "nav-link active" : "nav-link",
-        to: "/"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
-        className: "align-text-bottom"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("i", {
-        className: "bi bi-building"
-      }), "Stores/Branches"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("li", {
         className: "nav-item",
         onClick: this.logout
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
