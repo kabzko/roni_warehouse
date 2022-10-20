@@ -126,28 +126,36 @@ class UpdateCreateUserDialog extends React.Component {
                                     </div>
                                 </div>
                                 <div className="row mb-2">
-                                    <label htmlFor="email" className="col-form-label col-sm-4 text-end">Email:</label>
+                                    <label htmlFor="email" className="col-form-label col-sm-4 text-end">
+                                        <span className="text-danger">*</span>Email:
+                                    </label>
                                     <div className="col-sm-8">
                                         <input type="email" className="form-control" id="email" placeholder="Enter here.."
                                             onChange={this.inputChange.bind(this, "email")} value={this.state.email}></input>
                                     </div>
                                 </div>
                                 <div className="row mb-2">
-                                    <label htmlFor="mobile-number" className="col-form-label col-sm-4 text-end">Mobile Number:</label>
+                                    <label htmlFor="mobile-number" className="col-form-label col-sm-4 text-end">
+                                        <span className="text-danger">*</span>Mobile Number:
+                                    </label>
                                     <div className="col-sm-8">
                                         <input type="text" className="form-control" id="mobile-number" placeholder="Enter here.."
                                             onChange={this.inputChange.bind(this, "mobile_number")} value={this.state.mobile_number}></input>
                                     </div>
                                 </div>
                                 <div className="row mb-2">
-                                    <label htmlFor="password" className="col-form-label col-sm-4 text-end">Password:</label>
+                                    <label htmlFor="password" className="col-form-label col-sm-4 text-end">
+                                        <span className="text-danger">*</span>Password:
+                                    </label>
                                     <div className="col-sm-8">
                                         <input type="password" className="form-control" id="password" placeholder="Enter here.."
                                             onChange={this.inputChange.bind(this, "password")} value={this.state.password}></input>
                                     </div>
                                 </div>
                                 <div className="row mb-2">
-                                    <label htmlFor="user-type" className="col-form-label col-sm-4 text-end">User type:</label>
+                                    <label htmlFor="user-type" className="col-form-label col-sm-4 text-end">
+                                        <span className="text-danger">*</span>User type:
+                                    </label>
                                     <div className="col-sm-8">
                                         <select className="form-select" aria-label="Default select example"
                                             value={this.state.user_type} onChange={this.inputChange.bind(this, "user_type")}>

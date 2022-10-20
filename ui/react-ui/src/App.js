@@ -5,6 +5,7 @@ import LandingPage from './components/landing_page/LandingPage';
 import AdminLogin from './components/login/LoginAdmin';
 import AdminDashboard from './components/admin/dashboard/AdminDasboard';
 import AdminUsersList from './components/admin/users/AdminUsersList';
+import AdminProductList from './components/admin/products/AdminProductList';
 import PageNotFound from './components/page_not_found/PageNotFound';
 
 class App extends React.Component {
@@ -23,6 +24,7 @@ class App extends React.Component {
                     <Route path="/web/login/admin" element={<AdminLogin />} />
                     <Route path="/web/admin/dashboard" element={<AdminDashboard />} />
                     <Route path="/web/admin/users" element={<AdminUsersList />} />
+                    <Route path="/web/admin/products" element={<AdminProductList />} />
                 </Routes>
             </div>
         );

@@ -85,6 +85,9 @@ class UserLogoutAPIView(API):
 class UserAPIView(API):
     """User API View"""
     
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+
     def post(self, request):
         """Create user post request"""
         try:
@@ -138,6 +141,9 @@ class UserAPIView(API):
 class UserDetailAPIView(API):
     """User detail API view. Update, Get, or Delete specific user"""
 
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+    
     def get(self, request, pk):
         """Get specific user"""
         try:
