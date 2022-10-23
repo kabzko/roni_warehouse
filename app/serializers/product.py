@@ -18,5 +18,9 @@ class ProductSerializer(serializers.ModelSerializer):
         ]
 
         extra_kwargs = {
-            "name": {"error_messages": {"blank": "Name is required!"}},
+            "name": {
+                "error_messages": {
+                    "blank": "Name is required!"
+                }
+            },
         }

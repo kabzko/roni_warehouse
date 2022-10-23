@@ -10,7 +10,7 @@ def beautify_serializer_error(errors) -> str:
 
     for key in errors:
         for error in errors[key]:
-            message += "<li>{}</li>".format(error.title())
+            message += "<li>{}</li>".format(error)
 
     message += "</ul>"
     return message

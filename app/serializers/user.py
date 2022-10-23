@@ -21,6 +21,14 @@ class UserSerializer(serializers.ModelSerializer):
         ]
 
         extra_kwargs = {
-            "mobile_number": {"error_messages": {"blank": "Mobile number is required!"}},
-            "email": {"error_messages": {"blank": "Email is required!"}},
+            "mobile_number": {
+                "error_messages": {
+                    "blank": "Mobile number is required!"
+                }
+            },
+            "email": {
+                "error_messages": {
+                    "blank": "Email is required!"
+                }
+            },
         }

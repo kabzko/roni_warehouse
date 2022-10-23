@@ -12,6 +12,11 @@ from app.api.views.product import (
     ProductDetailAPIView,
 )
 
+from app.api.views.stock_in import (
+    StockInAPIView,
+    StockInDetailAPIView,
+)
+
 urlpatterns = [
     # Authentication URLs
     path("login/", UserLoginAPIView.as_view()),
@@ -24,4 +29,8 @@ urlpatterns = [
     # Product URLs
     path("products/", ProductAPIView.as_view()),
     path("products/<int:pk>/", ProductDetailAPIView.as_view()),
+
+    # Stock In URLs
+    path("stock-in/", StockInAPIView.as_view()),
+    path("stock-in/<int:pk>/", StockInDetailAPIView.as_view()),
 ]

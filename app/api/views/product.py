@@ -86,7 +86,7 @@ class ProductDetailAPIView(API):
 
             return self.success_response("Product successfully updated!")
         except Product.DoesNotExist:
-            self.raise_error("User does not exist!")
+            self.raise_error("Product does not exist!")
         except HumanReadableError as exc:
             return self.error_response(exc, self.error_dict, self.status)
         except Exception as exc:
@@ -100,7 +100,7 @@ class ProductDetailAPIView(API):
             product_instance.delete()
             return self.success_response("Product successfully deleted!")
         except Product.DoesNotExist:
-            self.raise_error("User does not exist!")
+            self.raise_error("Product does not exist!")
         except HumanReadableError as exc:
             return self.error_response(exc, self.error_dict, self.status)
         except Exception as exc:
