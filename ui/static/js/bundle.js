@@ -5226,7 +5226,7 @@ var App = /*#__PURE__*/function (_React$Component) {
         path: "web",
         element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(_components_landing_page_LandingPage__WEBPACK_IMPORTED_MODULE_6__["default"], null)
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.Route, {
-        path: "/web/login/admin",
+        path: "/web/login/:type",
         element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(_components_login_LoginAdmin__WEBPACK_IMPORTED_MODULE_7__["default"], null)
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.Route, {
         path: "/web/admin/dashboard",
@@ -5454,6 +5454,15 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("i", {
         className: "bi bi-box-arrow-up-right"
       }), "Stock Out"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("li", {
+        className: "nav-item"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Link, {
+        className: this.state.active === "listing" ? "nav-link active" : "nav-link",
+        to: "/web/admin/listing"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
+        className: "align-text-bottom"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("i", {
+        className: "bi bi-box-arrow-up-right"
+      }), "Listing"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("li", {
         className: "nav-item",
         onClick: this.logout
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
@@ -7550,7 +7559,7 @@ var AdminLogin = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      "mobile_number": "",
+      "email": "",
       "password": ""
     };
     _this.handleSubmit = _this.handleSubmit.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__["default"])(_this));
@@ -7578,7 +7587,7 @@ var AdminLogin = /*#__PURE__*/function (_React$Component) {
       var data = _objectSpread({}, this.state);
 
       data["login_as"] = "admin";
-      _utils_axios__WEBPACK_IMPORTED_MODULE_9__["default"].post("/api/login/", data).then(function (res) {
+      _utils_axios__WEBPACK_IMPORTED_MODULE_9__["default"].post("/api/login/", data).then(function () {
         window.location.href = "/web/admin/dashboard";
       }).catch(function (error) {
         var error_msg = error.response.data.message;
@@ -7592,13 +7601,7 @@ var AdminLogin = /*#__PURE__*/function (_React$Component) {
         className: "text-center login-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("main", {
         className: "form-signin w-100 m-auto"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("img", {
-        className: "mb-4",
-        src: "/static/img/logo192.png",
-        alt: "",
-        width: "70",
-        height: "70"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("h1", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("h1", {
         className: "h3 mb-3 fw-normal"
       }, "Admin | log in"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
         className: "form-floating"
@@ -7606,13 +7609,13 @@ var AdminLogin = /*#__PURE__*/function (_React$Component) {
         type: "text",
         className: "form-control",
         id: "floatingInput",
-        placeholder: "0905xxxxxxx",
-        value: this.state.mobile_number,
-        onChange: this.inputChange.bind(this, "mobile_number"),
-        onKeyUp: this.inputChange.bind(this, "mobile_number")
+        placeholder: "email",
+        value: this.state.email,
+        onChange: this.inputChange.bind(this, "email"),
+        onKeyUp: this.inputChange.bind(this, "email")
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("label", {
         htmlFor: "floatingInput"
-      }, "Mobile number")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+      }, "Email")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
         className: "form-floating"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("input", {
         type: "password",

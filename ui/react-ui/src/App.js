@@ -23,7 +23,7 @@ class App extends React.Component {
                     <Route path="*" element={<PageNotFound />} />
                     <Route path="" element={<LandingPage />} />
                     <Route path="web" element={<LandingPage />} />
-                    <Route path="/web/login/admin" element={<AdminLogin />} />
+                    <Route path="/web/login/:type" element={<AdminLogin />} />
                     <Route path="/web/admin/dashboard" element={<AdminDashboard />} />
                     <Route path="/web/admin/users" element={<AdminUsersList />} />
                     <Route path="/web/admin/products" element={<AdminProductList />} />

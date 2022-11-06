@@ -8,7 +8,7 @@ class AdminLogin extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            "mobile_number": "",
+            "email": "",
             "password": "",
         }
 
@@ -32,7 +32,7 @@ class AdminLogin extends React.Component {
         let data = {...this.state};
         data["login_as"] = "admin";
         
-        axios.post("/api/login/", data).then(res => {
+        axios.post("/api/login/", data).then(() => {
             window.location.href ="/web/admin/dashboard";
         }).catch(error => {
             let error_msg = error.response.data.message;
@@ -45,18 +45,17 @@ class AdminLogin extends React.Component {
             <div className='text-center login-container'>
                 <main className="form-signin w-100 m-auto">
                     <div>
-                        <img className="mb-4" src="/static/img/logo192.png" alt="" width="70" height="70"></img>
                         <h1 className="h3 mb-3 fw-normal">Admin | log in</h1>
 
                         <div className="form-floating">
                             <input
                                 type="text" className="form-control"
-                                id="floatingInput" placeholder="0905xxxxxxx"
-                                value={this.state.mobile_number}
-                                onChange={this.inputChange.bind(this, "mobile_number")}
-                                onKeyUp={this.inputChange.bind(this, "mobile_number")}>
+                                id="floatingInput" placeholder="email"
+                                value={this.state.email}
+                                onChange={this.inputChange.bind(this, "email")}
+                                onKeyUp={this.inputChange.bind(this, "email")}>
                             </input>
-                            <label htmlFor="floatingInput">Mobile number</label>
+                            <label htmlFor="floatingInput">Email</label>
                         </div>
 
                         <div className="form-floating">

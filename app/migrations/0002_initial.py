@@ -9,10 +9,11 @@ def create_super_admin_account(apps, schema_editor):
     User = apps.get_model("app", "User")
 
     user = User.objects.create(
-        system_id="MSWDADMIN-001",
-        name="ADMIN ACCOUNT",
+        system_id="RONIADMIN001",
+        first_name="ADMIN ACCOUNT",
         email="admin@admin.com",
         mobile_number="09123456789",
+        user_type="admin",
         is_superadmin=True
     )
 

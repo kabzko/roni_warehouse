@@ -13,8 +13,8 @@ class UserManager(BaseUserManager):
         if not email:
             raise ValueError("The given email must be set")
         
-        if not "mobile_number" in extra_fields:
-            extra_fields["mobile_number"] = "09057779592"
+        if not "email" in extra_fields:
+            extra_fields["email"] = "admin@admin.com"
 
         extra_fields["is_staff"] = True
 
@@ -30,7 +30,7 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser):
     """The app AUTH_USER_MODEL."""
     
-    system_id = models.CharField(max_length=100, blank=True, null=True)
+    system_id = models.CharField(max_length=100, unique=True, blank=True, null=True)
     first_name = models.CharField(max_length=100, blank=True, null=True)
     last_name = models.CharField(max_length=100, blank=True, null=True)
     middle_name = models.CharField(max_length=100, blank=True, null=True)
@@ -43,7 +43,7 @@ class User(AbstractBaseUser):
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
     
-    USERNAME_FIELD = "mobile_number"
+    USERNAME_FIELD = "system_id"
     
     objects = UserManager()
     

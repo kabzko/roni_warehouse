@@ -28,7 +28,7 @@ class UserLoginAPIView(API):
         try:
             payload = request.data
 
-            if not payload.get("mobile_number"):
+            if not payload.get("email"):
                 self.raise_error(title="Error", message="Please provide mobile number!")
 
             if not payload.get("password"):
@@ -36,9 +36,14 @@ class UserLoginAPIView(API):
 
             if not payload.get("login_as"):
                 self.raise_error(title="Error", message="Please specify login type!")
-
-            user = authenticate(username=payload["mobile_number"], password=payload["password"])
             
+            try:
+                user_account = User.objects.get(Q(email=payload.get("email")))
+            except User.DoesNotExist:
+                self.raise_error(title="Error", message="Invalid username or password.")
+
+            user = authenticate(system_id=user_account.system_id, password=payload.get("password"))
+            print(user.user_type)
             if user:
                 if user.user_type != payload.get("login_as"):
                     self.raise_error(title="Error", message="Invalid username or password.")
@@ -88,19 +93,6 @@ class UserAPIView(API):
     authentication_classes = [SessionAuthentication]
     permission_classes = [IsAuthenticated]
 
-    def post(self, request):
-        """Create user post request"""
-        try:
-            payload = request.data
-            self.create_user(payload)
-            
-            return self.success_response("Successfully created!")
-        except HumanReadableError as exc:
-            return self.error_response(exc, self.error_dict, self.status)
-        except Exception as exc:
-            debug_exception(exc)
-            return self.server_error_response(exc)
-
     def get(self, request):
         """Get users. If pk is provided, get specific user only."""
         try:
@@ -114,6 +106,19 @@ class UserAPIView(API):
             user_serializer = UserSerializer(users, many=True)
 
             return self.success_response(user_serializer.data)
+        except HumanReadableError as exc:
+            return self.error_response(exc, self.error_dict, self.status)
+        except Exception as exc:
+            debug_exception(exc)
+            return self.server_error_response(exc)
+
+    def post(self, request):
+        """Create user post request"""
+        try:
+            payload = request.data
+            self.create_user(payload)
+            
+            return self.success_response("Successfully created!")
         except HumanReadableError as exc:
             return self.error_response(exc, self.error_dict, self.status)
         except Exception as exc:
