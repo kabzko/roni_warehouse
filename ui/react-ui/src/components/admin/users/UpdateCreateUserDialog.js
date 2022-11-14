@@ -12,7 +12,7 @@ class UpdateCreateUserDialog extends React.Component {
             "last_name": props.last_name ? props.last_name : "",
             "middle_name": props.middle_name ? props.middle_name : "",
             "email": props.email ? props.email : "",
-            "mobile_number": props.mobile_number ? props.mobile_number : "",
+            "cashier_id": props.cashier_id ? props.cashier_id : "",
             "user_type": props.user_type ? props.user_type : "",
             "password": props.password ? props.password : "",
         };
@@ -71,7 +71,7 @@ class UpdateCreateUserDialog extends React.Component {
                     "last_name": "",
                     "middle_name": "",
                     "email": "",
-                    "mobile_number": "",
+                    "cashier_id": "",
                     "user_type": "",
                     "password": "",
                 })
@@ -103,7 +103,42 @@ class UpdateCreateUserDialog extends React.Component {
                             <form>
                                 <div id="error-notification"></div>
                                 <div id="success-notification"></div>
-
+                                <div className="row mb-2">
+                                    <label htmlFor="user-type" className="col-form-label col-sm-4 text-end">
+                                        <span className="text-danger">*</span>User type:
+                                    </label>
+                                    <div className="col-sm-8">
+                                        <select className="form-select" aria-label="Default select example"
+                                            value={this.state.user_type} onChange={this.inputChange.bind(this, "user_type")}>
+                                            <option defaultValue="">Select user type</option>
+                                            <option value="admin">Admin</option>
+                                            <option value="cashier">Cashier</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                {
+                                    this.state.user_type ? 
+                                        this.state.user_type === "admin" ?
+                                        <div className="row mb-2">
+                                            <label htmlFor="email" className="col-form-label col-sm-4 text-end">
+                                                <span className="text-danger">*</span>Email:
+                                            </label>
+                                            <div className="col-sm-8">
+                                                <input type="email" className="form-control" id="email" placeholder="Enter here.."
+                                                    onChange={this.inputChange.bind(this, "email")} value={this.state.email}></input>
+                                            </div>
+                                        </div> :
+                                        <div className="row mb-2">
+                                            <label htmlFor="cashier_id" className="col-form-label col-sm-4 text-end">
+                                                <span className="text-danger">*</span>Cashier ID:
+                                            </label>
+                                            <div className="col-sm-8">
+                                                <input type="text" className="form-control" id="cashier_id" placeholder="Enter here.."
+                                                    onChange={this.inputChange.bind(this, "cashier_id")} value={this.state.cashier_id}></input>
+                                            </div>
+                                        </div>
+                                    : null
+                                }
                                 <div className="row mb-2">
                                     <label htmlFor="first-name" className="col-form-label col-sm-4 text-end">First Name:</label>
                                     <div className="col-sm-8">
@@ -126,43 +161,12 @@ class UpdateCreateUserDialog extends React.Component {
                                     </div>
                                 </div>
                                 <div className="row mb-2">
-                                    <label htmlFor="email" className="col-form-label col-sm-4 text-end">
-                                        <span className="text-danger">*</span>Email:
-                                    </label>
-                                    <div className="col-sm-8">
-                                        <input type="email" className="form-control" id="email" placeholder="Enter here.."
-                                            onChange={this.inputChange.bind(this, "email")} value={this.state.email}></input>
-                                    </div>
-                                </div>
-                                <div className="row mb-2">
-                                    <label htmlFor="mobile-number" className="col-form-label col-sm-4 text-end">
-                                        <span className="text-danger">*</span>Mobile Number:
-                                    </label>
-                                    <div className="col-sm-8">
-                                        <input type="text" className="form-control" id="mobile-number" placeholder="Enter here.."
-                                            onChange={this.inputChange.bind(this, "mobile_number")} value={this.state.mobile_number}></input>
-                                    </div>
-                                </div>
-                                <div className="row mb-2">
                                     <label htmlFor="password" className="col-form-label col-sm-4 text-end">
                                         <span className="text-danger">*</span>Password:
                                     </label>
                                     <div className="col-sm-8">
                                         <input type="password" className="form-control" id="password" placeholder="Enter here.."
                                             onChange={this.inputChange.bind(this, "password")} value={this.state.password}></input>
-                                    </div>
-                                </div>
-                                <div className="row mb-2">
-                                    <label htmlFor="user-type" className="col-form-label col-sm-4 text-end">
-                                        <span className="text-danger">*</span>User type:
-                                    </label>
-                                    <div className="col-sm-8">
-                                        <select className="form-select" aria-label="Default select example"
-                                            value={this.state.user_type} onChange={this.inputChange.bind(this, "user_type")}>
-                                            <option defaultValue="">Select user type</option>
-                                            <option value="admin">Admin</option>
-                                            <option value="cashier">Cashier</option>
-                                        </select>
                                     </div>
                                 </div>
                             </form>

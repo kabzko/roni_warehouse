@@ -28,8 +28,13 @@ class UserLoginAPIView(API):
         try:
             payload = request.data
 
-            if not payload.get("email"):
-                self.raise_error(title="Error", message="Please provide mobile number!")
+            if payload.get("login_as") == "admin":
+                if not payload.get("email"):
+                    self.raise_error(title="Error", message="Please provide email!")
+            
+            if payload.get("login_as") == "cashier":
+                if not payload.get("cashier_id"):
+                    self.raise_error(title="Error", message="Please provide cashier id!")
 
             if not payload.get("password"):
                 self.raise_error(title="Error", message="Please provide password!")
@@ -38,15 +43,15 @@ class UserLoginAPIView(API):
                 self.raise_error(title="Error", message="Please specify login type!")
             
             try:
-                user_account = User.objects.get(Q(email=payload.get("email")))
+                user_account = User.objects.get(Q(cashier_id=payload.get("cashier_id", None)) or Q(email=payload.get("email", None)))
             except User.DoesNotExist:
                 self.raise_error(title="Error", message="Invalid username or password.")
 
             user = authenticate(system_id=user_account.system_id, password=payload.get("password"))
-            print(user.user_type)
+
             if user:
                 if user.user_type != payload.get("login_as"):
-                    self.raise_error(title="Error", message="Invalid username or password.")
+                    self.raise_error(title="Error", message="Invalid username or password!")
 
                 login(request, user)
                 token, created = Token.objects.get_or_create(user=user)
@@ -56,7 +61,7 @@ class UserLoginAPIView(API):
                 }
                 return self.success_response(response)
             else:
-                self.raise_error(title="Error", message="Invalid username or password.")
+                self.raise_error(title="Error", message="Invalid username or password!")
         except HumanReadableError as exc:
             return self.error_response(exc, self.error_dict, self.status)
         except Exception as exc:
@@ -79,7 +84,7 @@ class UserLogoutAPIView(API):
                 
             logout(request)
             response = {
-                "message": "Signout successfully."
+                "message": "Signout successfully!"
             }
             return self.success_response(response)
         except HumanReadableError as exc:
@@ -133,6 +138,10 @@ class UserAPIView(API):
 
         if not payload.get("user_type"):
             self.raise_error("User type is required!")
+
+        user_count = User.objects.exclude(system_id="RONIADMIN001").count()
+        user_id = str(user_count + 1).zfill(5)
+        payload["system_id"] = f"RONIUSER{user_id}"
 
         user_serializer = UserSerializer(data=payload)
 

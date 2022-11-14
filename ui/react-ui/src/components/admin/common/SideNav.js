@@ -70,7 +70,7 @@ class SideNav extends React.Component {
                         <li className="nav-item">
                             <Link className={(this.state.active === "listing") ? "nav-link active" : "nav-link"} to="/web/admin/listing">
                                 <span className="align-text-bottom">
-                                    <i className="bi bi-box-arrow-up-right"></i>
+                                    <i class="bi bi-list-ul"></i>
                                     Listing
                                 </span>
                             </Link>

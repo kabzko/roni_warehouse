@@ -31,15 +31,15 @@ class User(AbstractBaseUser):
     """The app AUTH_USER_MODEL."""
     
     system_id = models.CharField(max_length=100, unique=True, blank=True, null=True)
+    cashier_id = models.CharField(max_length=100, blank=True, null=True)
     first_name = models.CharField(max_length=100, blank=True, null=True)
     last_name = models.CharField(max_length=100, blank=True, null=True)
     middle_name = models.CharField(max_length=100, blank=True, null=True)
     avatar = models.CharField(default=f"{settings.STATIC_URL}assets/no_photo.png", max_length=100)
-    email = models.EmailField(max_length=100, unique=True, null=False, blank=False)
-    mobile_number = models.CharField(max_length=20, unique=True, null=False, blank=False)
+    email = models.EmailField(max_length=100, blank=False, null=False)
     is_superadmin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
-    user_type = models.CharField(max_length=250, null=True, blank=True)
+    user_type = models.CharField(max_length=250, blank=True, null=False)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
     

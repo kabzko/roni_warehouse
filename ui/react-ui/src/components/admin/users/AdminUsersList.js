@@ -104,7 +104,7 @@ class AdminUsersList extends React.Component {
                         <main className='col-md-9 ms-sm-auto col-lg-10 px-md-4'>
                             <div className='d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom'>
                                 <h1 className="h2">Users list</h1>
-                                <button type="button" className="btn btn-dark" onClick={this.showCreateUpdateUserModal.bind(this)}>Add user</button>
+                                <button type="button" className="btn btn-dark" onClick={this.showCreateUpdateUserModal.bind(this, {})}>Add user</button>
                             </div>
                             <div className="input-group mb-3 w-50 float-lg-end">
                                 <input type="text" className="form-control" placeholder="Search user's name..."
@@ -120,7 +120,7 @@ class AdminUsersList extends React.Component {
                                             <th scope="col">Last name</th>
                                             <th scope="col">Middle name</th>
                                             <th scope="col">Email</th>
-                                            <th scope="col">Mobile number</th>
+                                            <th scope="col">Cashier ID</th>
                                             <th scope="col">User type</th>
                                             <th scope="col">Date created</th>
                                             <th scope="col">Action</th>
@@ -135,7 +135,7 @@ class AdminUsersList extends React.Component {
                                                         <td>{user.last_name}</td>
                                                         <td>{user.middle_name}</td>
                                                         <td>{user.email}</td>
-                                                        <td>{user.mobile_number}</td>
+                                                        <td>{user.cashier_id}</td>
                                                         <td>{user.user_type}</td>
                                                         <td>{user.created_at}</td>
                                                         <td>

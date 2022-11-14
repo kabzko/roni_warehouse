@@ -1,14 +1,14 @@
 import React from 'react';
 
 import "./Login.css"
-import axios from '../../utils/axios';
-import alert from '../../utils/alert';
+import axios from '../../../utils/axios';
+import alert from '../../../utils/alert';
 
 class AdminLogin extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            "email": "",
+            "cashier_id": "",
             "password": "",
         }
 
@@ -30,10 +30,10 @@ class AdminLogin extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
         let data = {...this.state};
-        data["login_as"] = "admin";
+        data["login_as"] = "cashier";
         
         axios.post("/api/login/", data).then(() => {
-            window.location.href ="/web/admin/dashboard";
+            window.location.href ="/web/user/dashboard";
         }).catch(error => {
             let error_msg = error.response.data.message;
             alert(error_msg, "danger", "error-notification");
@@ -45,17 +45,17 @@ class AdminLogin extends React.Component {
             <div className='text-center login-container'>
                 <main className="form-signin w-100 m-auto">
                     <div>
-                        <h1 className="h3 mb-3 fw-normal">Admin | log in</h1>
+                        <h1 className="h3 mb-3 fw-normal">Cashier | log in</h1>
 
                         <div className="form-floating">
                             <input
                                 type="text" className="form-control"
-                                id="floatingInput" placeholder="email"
-                                value={this.state.email}
-                                onChange={this.inputChange.bind(this, "email")}
-                                onKeyUp={this.inputChange.bind(this, "email")}>
+                                id="floatingInput" placeholder="Cashier ID"
+                                value={this.state.cashier_id}
+                                onChange={this.inputChange.bind(this, "cashier_id")}
+                                onKeyUp={this.inputChange.bind(this, "cashier_id")}>
                             </input>
-                            <label htmlFor="floatingInput">Email</label>
+                            <label htmlFor="floatingInput">Cashier ID</label>
                         </div>
 
                         <div className="form-floating">
