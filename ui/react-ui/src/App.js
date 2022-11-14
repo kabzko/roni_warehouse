@@ -12,6 +12,7 @@ import AdminStockInList from './components/admin/stock_in/AdminStockInList';
 import AdminStockOutList from './components/admin/stock_out/AdminStockOutList';
 
 import UserLogin from './components/user/login/LoginUser';
+import UserDashboard from './components/user/dashboard/UserDashboard';
 
 class App extends React.Component {
     constructor() {
@@ -34,6 +35,7 @@ class App extends React.Component {
                     <Route path="/web/admin/stock-in" element={<AdminStockInList />} />
                     <Route path="/web/admin/stock-out" element={<AdminStockOutList />} />
                     <Route path="/web/login/cashier" element={<UserLogin />} />
+                    <Route path="/web/user/dashboard" element={<UserDashboard />} />
                 </Routes>
             </div>
         );
