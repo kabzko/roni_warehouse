@@ -4,37 +4,24 @@ import Select from 'react-select';
 
 import axios from '../../../utils/axios';
 import alert from '../../../utils/alert';
+import Toast from "../../../utils/toast";
 
 const productOptions = [];
-const unitOfMeasureOptions = [{
-    value: "pieces",
-    label: "Pieces"
-}, {
-    value: "bundle",
-    label: "Bundle"
-}, {
-    value: "box",
-    label: "Box"
-}, {
-    value: "bottle",
-    label: "Bottle"
-}];
+const stockInOptions = [];
 
-class UpdateCreateStockInDialog extends React.Component {
+class UpdateCreateStockOutDialog extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            "product": props.product ? props.product : "",
-            "supplier_name": props.supplier_name ? props.supplier_name : "",
-            "unit_of_measure": props.unit_of_measure ? props.unit_of_measure : "",
+            "stock_in": props.product ? props.product : "",
             "checked_by": props.checked_by ? props.checked_by : "",
             "received_by": props.received_by ? props.received_by : "",
             "truck_plate_number": props.truck_plate_number ? props.truck_plate_number : "",
             "truck_driver": props.truck_driver ? props.truck_driver : "",
-            "price": props.price ? props.price : "",
             "quantity": props.quantity ? props.quantity : "",
-            "number_of_pieces": props.number_of_pieces ? props.number_of_pieces : "",
             "date": props.date ? props.date : "",
+            "delivered_to": props.delivered_to ? props.delivered_to : "",
+            "available_stock": 0,
         };
 
         if (props.id) {
@@ -51,20 +38,30 @@ class UpdateCreateStockInDialog extends React.Component {
                 return prod;
             })
         }
-        
-        if (props.product) {
-            this.state.product = this.getProduct(props.product);
+
+        if (props.stockInOptions) {
+            stockInOptions.splice(0, stockInOptions.length);
+            props.stockInOptions.map(stock => {
+                let stockIn = {};
+                stockIn["value"] = stock.id;
+
+                let product = this.getProduct(stock.product);
+                stockIn["label"] = `${product.label} (Price: ${stock.price}) (${stock.quantity} ${stock.unit_of_measure})`;
+
+                stockInOptions.push(stockIn);
+                return stock;
+            })
         }
 
-        if (props.unit_of_measure) {
-            this.state.unit_of_measure = this.getUnitOfMeasure(props.unit_of_measure);
+        if (props.stock_in) {
+            this.state["stock_in"] = this.getStockIn(props.stock_in);
+            this.getAvailableStock(props.stock_in, props.quantity);
         }
 
         this.modal = null;
-        this.handleSaveStockIn = this.handleSaveStockIn.bind(this);
+        this.handleSaveStockOut = this.handleSaveStockOut.bind(this);
         this.handleClose = this.handleClose.bind(this);
-        this.selectProductChange = this.selectProductChange.bind(this);
-        this.selectUnitOfMeasureChange = this.selectUnitOfMeasureChange.bind(this);
+        this.selectStockInChange = this.selectStockInChange.bind(this);
     }
 
     static show(props) {
@@ -77,7 +74,7 @@ class UpdateCreateStockInDialog extends React.Component {
         document.body.appendChild(containerElement);
 
         const root = createRoot(containerElement);
-        return root.render(<UpdateCreateStockInDialog {...props} />);
+        return root.render(<UpdateCreateStockOutDialog {...props} />);
     }
 
     componentDidMount() {
@@ -100,17 +97,17 @@ class UpdateCreateStockInDialog extends React.Component {
         return product;
     }
 
-    getUnitOfMeasure(unit) {
-        let unitOfMeasure;
+    getStockIn(stockInId) {
+        let stock_in;
 
-        for (let i in unitOfMeasureOptions) {
-            if (unitOfMeasureOptions[i].value === unit) {
-                unitOfMeasure = unitOfMeasureOptions[i];
+        for (let i in stockInOptions) {
+            if (stockInOptions[i].value === stockInId) {
+                stock_in = stockInOptions[i];
                 break;
             }
         }
 
-        return unitOfMeasure;
+        return stock_in;
     }
 
     inputChange(input_name, event) {
@@ -119,48 +116,45 @@ class UpdateCreateStockInDialog extends React.Component {
         this.setState({...updated_field});
     }
 
-    selectProductChange(selectedOption) {
-        this.setState({product: selectedOption});
+    selectStockInChange(selectedOption) {
+        this.setState({stock_in: selectedOption});
+        this.getAvailableStock(selectedOption.value);
     }
 
-    selectUnitOfMeasureChange(selectedOption) {
-        this.setState({unit_of_measure: selectedOption});
-    }
-
-    handleSaveStockIn(event) {
+    handleSaveStockOut(event) {
         event.preventDefault();
         let data = {...this.state};
-        let api_url = "/api/stock-in/";
+        let api_url = "/api/stock-out/";
 
         if (data.id) {
-            api_url = `/api/stock-in/${data.id}/`
+            api_url = `/api/stock-out/${data.id}/`
         }
 
-        if (data.product) {
-            data["product"] = data.product.value;
+        if (data.stock_in) {
+            data["stock_in"] = data.stock_in.value;
+        }
+
+        if (data.quantity) {
+            if (data.quantity > data.available_stock) {
+                return alert("Quantity must less than the available stocks!", "danger", "error-notification");
+            }
         }
         
-        if (data.unit_of_measure) {
-            data["unit_of_measure"] = data.unit_of_measure.value;
-        }
-
         axios.post(api_url, data).then(res => {
             alert(res.data, "success", "success-notification");
             this.props.callBackSave();
 
             if (!data.id) {
                 this.setState({
-                    "product": "",
-                    "supplier_name": "",
-                    "unit_of_measure": "",
+                    "stock_in": "",
                     "checked_by": "",
                     "received_by": "",
                     "truck_plate_number": "",
                     "truck_driver": "",
-                    "price": "",
                     "quantity": "",
-                    "number_of_pieces": "",
                     "date": "",
+                    "delivered_to": "",
+                    "available_stock": 0,
                 })
             }
         }).catch(error => {
@@ -175,6 +169,19 @@ class UpdateCreateStockInDialog extends React.Component {
         document.getElementById("stock-in-dialog-container").remove();
     }
 
+    getAvailableStock(stockIn, addQuantity) {
+        axios.get(`/api/stock/available?stock_in=${stockIn}`).then(res => {
+            if (addQuantity) {
+                res.data.available += addQuantity;
+            }
+
+            this.setState({"available_stock": res.data.available});
+        }).catch(error => {
+            console.log(error);
+            Toast.error(error.response.data.message);
+        })
+    }
+
     render() {
         return (
             <div className="modal modal-lg fade" id="custom-dialog-modal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
@@ -182,7 +189,7 @@ class UpdateCreateStockInDialog extends React.Component {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h1 className="modal-title fs-5" id="exampleModalLabel">
-                                {this.props.id ? "Update stock in" : "Create stock in"}
+                                {this.props.id ? "Update stock out" : "Create stock out"}
                             </h1>
                             <button type="button" className="btn-close" onClick={this.handleClose} aria-label="Close"></button>
                         </div>
@@ -200,35 +207,18 @@ class UpdateCreateStockInDialog extends React.Component {
                                     </div>
                                 </div>
                                 <div className="row mb-2">
-                                    <div className="col-sm-6">
-                                        <label htmlFor="product-name" className="col-form-label text-end">
-                                            <span className="text-danger">*</span>Product:
+                                    <div className="col-sm-12">
+                                        <label htmlFor="stock-in" className="col-form-label text-end">
+                                            <span className="text-danger">*</span>Stock In:
                                         </label>
                                         <div>
-                                            <Select value={this.state.product} onChange={this.selectProductChange} options={productOptions} />
+                                            <Select value={this.state.stock_in} onChange={this.selectStockInChange} options={stockInOptions} />
                                         </div>
-                                    </div>
-                                    <div className="col-sm-6">
-                                        <label htmlFor="supplier-name" className="col-form-label text-end">
-                                            Supplier Name:
-                                        </label>
-                                        <div>
-                                            <input type="text" className="form-control" id="supplier-name" placeholder="Enter here.."
-                                                onChange={this.inputChange.bind(this, "supplier_name")} value={this.state.supplier_name}></input>
-                                        </div>
+                                        <small>Available stock: <b>{this.state.available_stock}</b></small>
                                     </div>
                                 </div>
 
                                 <div className="row mb-2">
-                                    <div className="col-sm-6">
-                                        <label htmlFor="price" className="col-form-label text-end">
-                                            <span className="text-danger">*</span>Price:
-                                        </label>
-                                        <div>
-                                            <input type="number" className="form-control" id="price" placeholder="Enter here.."
-                                                onChange={this.inputChange.bind(this, "price")} value={this.state.price}></input>
-                                        </div>
-                                    </div>
                                     <div className="col-sm-6">
                                         <label htmlFor="quantity" className="col-form-label text-end">
                                             <span className="text-danger">*</span>Quantity:
@@ -238,24 +228,13 @@ class UpdateCreateStockInDialog extends React.Component {
                                                 onChange={this.inputChange.bind(this, "quantity")} value={this.state.quantity}></input>
                                         </div>
                                     </div>
-                                </div>
-
-                                <div className="row mb-2">
                                     <div className="col-sm-6">
-                                        <label htmlFor="unit-of-measure" className="col-form-label text-end">
-                                            <span className="text-danger">*</span>Unit Of Measure:
+                                        <label htmlFor="delivered-to" className="col-form-label text-end">
+                                            Delivered to:
                                         </label>
                                         <div>
-                                            <Select value={this.state.unit_of_measure} onChange={this.selectUnitOfMeasureChange} options={unitOfMeasureOptions} />
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-6">
-                                        <label htmlFor="number-of-pieces" className="col-form-label text-end">
-                                            <span className="text-danger">*</span>No. of pieces per unit of measure:
-                                        </label>
-                                        <div>
-                                            <input type="number" className="form-control" id="number-of-pieces" placeholder="Enter here.."
-                                                onChange={this.inputChange.bind(this, "number_of_pieces")} value={this.state.number_of_pieces}></input>
+                                            <input type="text" className="form-control" id="delivered-to" placeholder="Enter here.."
+                                                onChange={this.inputChange.bind(this, "delivered_to")} value={this.state.delivered_to}></input>
                                         </div>
                                     </div>
                                 </div>
@@ -308,7 +287,7 @@ class UpdateCreateStockInDialog extends React.Component {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-light" id="close-user-modal" onClick={this.handleClose}>Close</button>
-                            <button type="button" className="btn btn-primary" onClick={this.handleSaveStockIn}>Save</button>
+                            <button type="button" className="btn btn-primary" onClick={this.handleSaveStockOut}>Save</button>
                         </div>
                     </div>
                 </div>
@@ -317,4 +296,4 @@ class UpdateCreateStockInDialog extends React.Component {
     }
 }
 
-export default UpdateCreateStockInDialog;
+export default UpdateCreateStockOutDialog;

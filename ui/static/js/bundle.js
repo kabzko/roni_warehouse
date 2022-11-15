@@ -5471,7 +5471,7 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
         className: "align-text-bottom"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("i", {
-        class: "bi bi-list-ul"
+        className: "bi bi-list-ul"
       }), "Listing"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("li", {
         className: "nav-item",
         onClick: this.logout
@@ -6424,7 +6424,7 @@ var AdminStockInList = /*#__PURE__*/function (_React$Component) {
         style: {
           cursor: "pointer"
         },
-        onClick: this.searchProducts,
+        onClick: this.filterWithProduct,
         value: this.state.search
       }, "Search")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
         className: "clearfix"
@@ -6444,7 +6444,7 @@ var AdminStockInList = /*#__PURE__*/function (_React$Component) {
         scope: "col"
       }, "Unit of measure"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
         scope: "col"
-      }, "Quanitity"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
+      }, "Quantity"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
         scope: "col"
       }, "Number of pieces"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
         scope: "col"
@@ -6568,6 +6568,7 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
     }
 
     if (props.products) {
+      productOptions.splice(0, productOptions.length);
       props.products.map(function (prod) {
         productOptions.push({
           value: prod.id,
@@ -6738,7 +6739,9 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("label", {
         htmlFor: "date",
         className: "col-form-label"
-      }, "Date:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("input", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
+        className: "text-danger"
+      }, "*"), "Date:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("input", {
         type: "date",
         className: "form-control",
         id: "date",
@@ -6938,22 +6941,34 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
-/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
-/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js");
-/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _common_SideNav__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../common/SideNav */ "./src/components/admin/common/SideNav.js");
-/* harmony import */ var _common_Header__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../common/Header */ "./src/components/admin/common/Header.js");
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js");
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _common_SideNav__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../common/SideNav */ "./src/components/admin/common/SideNav.js");
+/* harmony import */ var _common_Header__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../common/Header */ "./src/components/admin/common/Header.js");
+/* harmony import */ var _updateCreateStockOutDialog__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./updateCreateStockOutDialog */ "./src/components/admin/stock_out/updateCreateStockOutDialog.js");
+/* harmony import */ var _utils_axios__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../../utils/axios */ "./src/utils/axios.js");
+/* harmony import */ var _utils_dialog__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../../utils/dialog */ "./src/utils/dialog.js");
+/* harmony import */ var _utils_toast__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../../utils/toast */ "./src/utils/toast.js");
 
 
 
 
 
 
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__["default"])(this, result); }; }
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__["default"])(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_6__["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_6__["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_5__["default"])(this, result); }; }
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
@@ -6961,52 +6976,688 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 
 
+
+
+
+
 var AdminStockOutList = /*#__PURE__*/function (_React$Component) {
-  (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_2__["default"])(AdminStockOutList, _React$Component);
+  (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4__["default"])(AdminStockOutList, _React$Component);
 
   var _super = _createSuper(AdminStockOutList);
 
   function AdminStockOutList(props) {
     var _this;
 
-    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, AdminStockOutList);
+    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__["default"])(this, AdminStockOutList);
 
     _this = _super.call(this, props);
     _this.state = {
+      products: [],
       stockOut: [],
-      search: ""
+      stockIn: [],
+      productFilter: ""
     };
+    _this.callBackSaveStockOut = _this.callBackSaveStockOut.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__["default"])(_this));
+    _this.filterWithProduct = _this.filterWithProduct.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__["default"])(_this));
+    _this.handleSearchChange = _this.handleSearchChange.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__["default"])(_this));
+
+    _this.getStockOut();
+
+    _this.getProducts();
+
+    _this.getStockIn();
+
     return _this;
   }
 
-  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(AdminStockOutList, [{
+  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__["default"])(AdminStockOutList, [{
+    key: "callBackSaveStockOut",
+    value: function callBackSaveStockOut() {
+      this.getStockOut();
+    }
+  }, {
+    key: "deleteStockOut",
+    value: function deleteStockOut(stockOut, event) {
+      var _this2 = this;
+
+      event.preventDefault();
+      _utils_dialog__WEBPACK_IMPORTED_MODULE_12__["default"].create({
+        header: "Please confirm deletion of Stock Out",
+        text: "Are you sure you want to delete this?",
+        confirmButtonText: "Yes",
+        cancelButtonText: "Cancel",
+        confirmSuccess: function confirmSuccess() {
+          _utils_axios__WEBPACK_IMPORTED_MODULE_11__["default"]["delete"]("/api/stock-out/".concat(stockOut.id, "/"), {}).then(function (res) {
+            _utils_toast__WEBPACK_IMPORTED_MODULE_13__["default"].success(res.data);
+
+            _this2.getStockOut();
+          }).catch(function (error) {
+            _utils_toast__WEBPACK_IMPORTED_MODULE_13__["default"].error(error.response.data.message);
+          });
+        }
+      });
+    }
+  }, {
+    key: "getProductName",
+    value: function getProductName(productId) {
+      var product;
+
+      for (var i in this.state.products) {
+        if (this.state.products[i].id === productId) {
+          product = this.state.products[i].name;
+          break;
+        }
+      }
+
+      return product;
+    }
+  }, {
+    key: "getStockIn",
+    value: function getStockIn() {
+      var _this3 = this;
+
+      var api_url = "/api/stock-in/";
+      _utils_axios__WEBPACK_IMPORTED_MODULE_11__["default"].get(api_url).then(function (res) {
+        res.data.map(function (data) {
+          if (data.created_at) {
+            data.created_at = new Date(data.created_at).toLocaleDateString();
+          }
+
+          if (data.updated_at) {
+            data.updated_at = new Date(data.updated_at).toLocaleDateString();
+          }
+
+          return data;
+        });
+
+        _this3.setState({
+          "stockIn": res.data
+        });
+      }).catch(function (error) {
+        console.log(error);
+        _utils_toast__WEBPACK_IMPORTED_MODULE_13__["default"].error(error.response.data.message);
+      });
+    }
+  }, {
+    key: "getProducts",
+    value: function getProducts() {
+      var _this4 = this;
+
+      _utils_axios__WEBPACK_IMPORTED_MODULE_11__["default"].get("/api/products/").then(function (res) {
+        _this4.setState({
+          "products": res.data
+        });
+      }).catch(function (error) {
+        console.log(error);
+        _utils_toast__WEBPACK_IMPORTED_MODULE_13__["default"].error(error.response.data.message);
+      });
+    }
+  }, {
+    key: "getStockOut",
+    value: function getStockOut() {
+      var _this5 = this;
+
+      var api_url = "/api/stock-out/";
+      var productFilter = this.state.productFilter;
+
+      if (productFilter !== "") {
+        api_url += "?product=".concat(productFilter);
+      }
+
+      _utils_axios__WEBPACK_IMPORTED_MODULE_11__["default"].get(api_url).then(function (res) {
+        res.data.map(function (data) {
+          if (data.created_at) {
+            data.created_at = new Date(data.created_at).toLocaleDateString();
+          }
+
+          if (data.updated_at) {
+            data.updated_at = new Date(data.updated_at).toLocaleDateString();
+          }
+
+          return data;
+        });
+
+        _this5.setState({
+          "stockOut": res.data
+        });
+      }).catch(function (error) {
+        console.log(error);
+        _utils_toast__WEBPACK_IMPORTED_MODULE_13__["default"].error(error.response.data.message);
+      });
+    }
+  }, {
+    key: "filterWithProduct",
+    value: function filterWithProduct(event) {
+      event.preventDefault();
+      this.getStockOut();
+    }
+  }, {
+    key: "handleSearchChange",
+    value: function handleSearchChange(event) {
+      if (event.keyCode) {
+        if (event.keyCode === 13) {
+          this.filterWithProduct(event);
+        }
+      } else {
+        this.setState({
+          "productFilter": event.target.value
+        });
+      }
+    }
+  }, {
+    key: "showCreateUpdateStockOutModal",
+    value: function showCreateUpdateStockOutModal(stockOut) {
+      stockOut = stockOut ? stockOut : {};
+      stockOut["callBackSave"] = this.callBackSaveStockOut;
+      stockOut["products"] = this.state.products;
+      stockOut["stockInOptions"] = this.state.stockIn;
+      _updateCreateStockOutDialog__WEBPACK_IMPORTED_MODULE_10__["default"].show(_objectSpread({}, stockOut));
+    }
+  }, {
     key: "render",
     value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement("div", {
+      var _this6 = this;
+
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
         className: "side-nav-custom"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(_common_Header__WEBPACK_IMPORTED_MODULE_7__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(_common_Header__WEBPACK_IMPORTED_MODULE_9__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
         className: "container-fluid"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
         className: "row"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(_common_SideNav__WEBPACK_IMPORTED_MODULE_6__["default"], {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(_common_SideNav__WEBPACK_IMPORTED_MODULE_8__["default"], {
         active: "stock-out"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement("main", {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("main", {
         className: "col-md-9 ms-sm-auto col-lg-10 px-md-4"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
         className: "d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement("h1", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("h1", {
         className: "h2"
-      }, "Stock Out"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement("button", {
+      }, "Stock Out"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
         type: "button",
-        className: "btn btn-dark"
-      }, "Create"))))));
+        className: "btn btn-dark",
+        onClick: this.showCreateUpdateStockOutModal.bind(this)
+      }, "Create")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "input-group mb-3 w-50 float-lg-end"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("input", {
+        type: "text",
+        className: "form-control",
+        placeholder: "Search product...",
+        onKeyUp: this.handleSearchChange,
+        onChange: this.handleSearchChange
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
+        className: "input-group-text",
+        style: {
+          cursor: "pointer"
+        },
+        onClick: this.filterWithProduct,
+        value: this.state.search
+      }, "Search")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "clearfix"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "table-responsive"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("table", {
+        className: "table table-hover"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
+        scope: "col"
+      }, "Product"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
+        scope: "col"
+      }, "Date"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
+        scope: "col"
+      }, "Quantity"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
+        scope: "col"
+      }, "Delivered to"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
+        scope: "col"
+      }, "Truck driver"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
+        scope: "col"
+      }, "Received by"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
+        scope: "col"
+      }, "Date created"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
+        scope: "col"
+      }, "Action"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("tbody", {
+        className: "table-group-divider"
+      }, this.state.stockOut.length > 0 ? this.state.stockOut.map(function (stockOut) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("tr", {
+          key: stockOut.id
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, _this6.getProductName(stockOut.product)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockOut.date), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockOut.quantity), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockOut.delivered_to), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockOut.truck_driver), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockOut.received_by), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockOut.created_at), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
+          className: "btn btn-sm btn-primary me-1",
+          onClick: _this6.showCreateUpdateStockOutModal.bind(_this6, stockOut)
+        }, "Edit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
+          className: "btn btn-sm btn-danger",
+          onClick: _this6.deleteStockOut.bind(_this6, stockOut)
+        }, "Delete")));
+      }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", {
+        colSpan: "1000",
+        className: "text-center"
+      }, "No transactions yet!")))))))));
     }
   }]);
 
   return AdminStockOutList;
-}((react__WEBPACK_IMPORTED_MODULE_5___default().Component));
+}((react__WEBPACK_IMPORTED_MODULE_7___default().Component));
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AdminStockOutList);
+
+/***/ }),
+
+/***/ "./src/components/admin/stock_out/updateCreateStockOutDialog.js":
+/*!**********************************************************************!*\
+  !*** ./src/components/admin/stock_out/updateCreateStockOutDialog.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js");
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js");
+/* harmony import */ var react_select__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! react-select */ "./node_modules/react-select/dist/react-select.esm.js");
+/* harmony import */ var _utils_axios__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../utils/axios */ "./src/utils/axios.js");
+/* harmony import */ var _utils_alert__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../utils/alert */ "./src/utils/alert.js");
+/* harmony import */ var _utils_toast__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../../utils/toast */ "./src/utils/toast.js");
+
+
+
+
+
+
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__["default"])(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_6__["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_6__["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_5__["default"])(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+
+
+
+
+
+
+var productOptions = [];
+var stockInOptions = [];
+
+var UpdateCreateStockOutDialog = /*#__PURE__*/function (_React$Component) {
+  (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4__["default"])(UpdateCreateStockOutDialog, _React$Component);
+
+  var _super = _createSuper(UpdateCreateStockOutDialog);
+
+  function UpdateCreateStockOutDialog(props) {
+    var _this;
+
+    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__["default"])(this, UpdateCreateStockOutDialog);
+
+    _this = _super.call(this, props);
+    _this.state = {
+      "stock_in": props.product ? props.product : "",
+      "checked_by": props.checked_by ? props.checked_by : "",
+      "received_by": props.received_by ? props.received_by : "",
+      "truck_plate_number": props.truck_plate_number ? props.truck_plate_number : "",
+      "truck_driver": props.truck_driver ? props.truck_driver : "",
+      "quantity": props.quantity ? props.quantity : "",
+      "date": props.date ? props.date : "",
+      "delivered_to": props.delivered_to ? props.delivered_to : "",
+      "available_stock": 0
+    };
+
+    if (props.id) {
+      _this.state["id"] = props.id;
+    }
+
+    if (props.products) {
+      productOptions.splice(0, productOptions.length);
+      props.products.map(function (prod) {
+        productOptions.push({
+          value: prod.id,
+          label: prod.name
+        });
+        return prod;
+      });
+    }
+
+    if (props.stockInOptions) {
+      stockInOptions.splice(0, stockInOptions.length);
+      props.stockInOptions.map(function (stock) {
+        var stockIn = {};
+        stockIn["value"] = stock.id;
+
+        var product = _this.getProduct(stock.product);
+
+        stockIn["label"] = "".concat(product.label, " (Price: ").concat(stock.price, ") (").concat(stock.quantity, " ").concat(stock.unit_of_measure, ")");
+        stockInOptions.push(stockIn);
+        return stock;
+      });
+    }
+
+    if (props.stock_in) {
+      _this.state["stock_in"] = _this.getStockIn(props.stock_in);
+
+      _this.getAvailableStock(props.stock_in, props.quantity);
+    }
+
+    _this.modal = null;
+    _this.handleSaveStockOut = _this.handleSaveStockOut.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__["default"])(_this));
+    _this.handleClose = _this.handleClose.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__["default"])(_this));
+    _this.selectStockInChange = _this.selectStockInChange.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__["default"])(_this));
+    return _this;
+  }
+
+  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__["default"])(UpdateCreateStockOutDialog, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.modal = new window.bootstrap.Modal('#custom-dialog-modal', {
+        keyboard: false
+      });
+      this.modal.show();
+    }
+  }, {
+    key: "getProduct",
+    value: function getProduct(productId) {
+      var product;
+
+      for (var i in productOptions) {
+        if (productOptions[i].value === productId) {
+          product = productOptions[i];
+          break;
+        }
+      }
+
+      return product;
+    }
+  }, {
+    key: "getStockIn",
+    value: function getStockIn(stockInId) {
+      var stock_in;
+
+      for (var i in stockInOptions) {
+        if (stockInOptions[i].value === stockInId) {
+          stock_in = stockInOptions[i];
+          break;
+        }
+      }
+
+      return stock_in;
+    }
+  }, {
+    key: "inputChange",
+    value: function inputChange(input_name, event) {
+      var updated_field = {};
+      updated_field[input_name] = event.target.value;
+      this.setState(_objectSpread({}, updated_field));
+    }
+  }, {
+    key: "selectStockInChange",
+    value: function selectStockInChange(selectedOption) {
+      this.setState({
+        stock_in: selectedOption
+      });
+      this.getAvailableStock(selectedOption.value);
+    }
+  }, {
+    key: "handleSaveStockOut",
+    value: function handleSaveStockOut(event) {
+      var _this2 = this;
+
+      event.preventDefault();
+
+      var data = _objectSpread({}, this.state);
+
+      var api_url = "/api/stock-out/";
+
+      if (data.id) {
+        api_url = "/api/stock-out/".concat(data.id, "/");
+      }
+
+      if (data.stock_in) {
+        data["stock_in"] = data.stock_in.value;
+      }
+
+      if (data.quantity) {
+        if (data.quantity > data.available_stock) {
+          return (0,_utils_alert__WEBPACK_IMPORTED_MODULE_10__["default"])("Quantity must less than the available stocks!", "danger", "error-notification");
+        }
+      }
+
+      _utils_axios__WEBPACK_IMPORTED_MODULE_9__["default"].post(api_url, data).then(function (res) {
+        (0,_utils_alert__WEBPACK_IMPORTED_MODULE_10__["default"])(res.data, "success", "success-notification");
+
+        _this2.props.callBackSave();
+
+        if (!data.id) {
+          _this2.setState({
+            "stock_in": "",
+            "checked_by": "",
+            "received_by": "",
+            "truck_plate_number": "",
+            "truck_driver": "",
+            "quantity": "",
+            "date": "",
+            "delivered_to": "",
+            "available_stock": 0
+          });
+        }
+      }).catch(function (error) {
+        console.log(error);
+        (0,_utils_alert__WEBPACK_IMPORTED_MODULE_10__["default"])(error.response.data.message, "danger", "error-notification");
+      });
+    }
+  }, {
+    key: "handleClose",
+    value: function handleClose(event) {
+      event.preventDefault();
+      this.modal.hide();
+      document.getElementById("stock-in-dialog-container").remove();
+    }
+  }, {
+    key: "getAvailableStock",
+    value: function getAvailableStock(stockIn, addQuantity) {
+      var _this3 = this;
+
+      _utils_axios__WEBPACK_IMPORTED_MODULE_9__["default"].get("/api/stock/available?stock_in=".concat(stockIn)).then(function (res) {
+        if (addQuantity) {
+          res.data.available += addQuantity;
+        }
+
+        _this3.setState({
+          "available_stock": res.data.available
+        });
+      }).catch(function (error) {
+        console.log(error);
+        _utils_toast__WEBPACK_IMPORTED_MODULE_11__["default"].error(error.response.data.message);
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "modal modal-lg fade",
+        id: "custom-dialog-modal",
+        tabIndex: "-1",
+        "aria-labelledby": "exampleModalLabel",
+        "aria-hidden": "true",
+        "data-bs-backdrop": "static"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "modal-dialog modal-dialog-centered modal-dialog-scrollable"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "modal-content"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "modal-header"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("h1", {
+        className: "modal-title fs-5",
+        id: "exampleModalLabel"
+      }, this.props.id ? "Update stock out" : "Create stock out"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
+        type: "button",
+        className: "btn-close",
+        onClick: this.handleClose,
+        "aria-label": "Close"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "modal-body"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("form", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "row mb-2"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "col-sm-6"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("label", {
+        htmlFor: "date",
+        className: "col-form-label"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
+        className: "text-danger"
+      }, "*"), "Date:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("input", {
+        type: "date",
+        className: "form-control",
+        id: "date",
+        placeholder: "Enter here..",
+        onChange: this.inputChange.bind(this, "date"),
+        value: this.state.date
+      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "row mb-2"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "col-sm-12"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("label", {
+        htmlFor: "stock-in",
+        className: "col-form-label text-end"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
+        className: "text-danger"
+      }, "*"), "Stock In:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(react_select__WEBPACK_IMPORTED_MODULE_12__["default"], {
+        value: this.state.stock_in,
+        onChange: this.selectStockInChange,
+        options: stockInOptions
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("small", null, "Available stock: ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("b", null, this.state.available_stock)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "row mb-2"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "col-sm-6"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("label", {
+        htmlFor: "quantity",
+        className: "col-form-label text-end"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
+        className: "text-danger"
+      }, "*"), "Quantity:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("input", {
+        type: "number",
+        className: "form-control",
+        id: "quantity",
+        placeholder: "Enter here..",
+        onChange: this.inputChange.bind(this, "quantity"),
+        value: this.state.quantity
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "col-sm-6"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("label", {
+        htmlFor: "delivered-to",
+        className: "col-form-label text-end"
+      }, "Delivered to:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("input", {
+        type: "text",
+        className: "form-control",
+        id: "delivered-to",
+        placeholder: "Enter here..",
+        onChange: this.inputChange.bind(this, "delivered_to"),
+        value: this.state.delivered_to
+      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "row mb-2"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "col-sm-6"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("label", {
+        htmlFor: "truck-plate-number",
+        className: "col-form-label text-end"
+      }, "Truck plate number:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("input", {
+        type: "text",
+        className: "form-control",
+        id: "truck-plate-number",
+        placeholder: "Enter here..",
+        onChange: this.inputChange.bind(this, "truck_plate_number"),
+        value: this.state.truck_plate_number
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "col-sm-6"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("label", {
+        htmlFor: "truck-driver",
+        className: "col-form-label text-end"
+      }, "Truck driver:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("input", {
+        type: "text",
+        className: "form-control",
+        id: "truck-driver",
+        placeholder: "Enter here..",
+        onChange: this.inputChange.bind(this, "truck_driver"),
+        value: this.state.truck_driver
+      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "row mb-2"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "col-sm-6"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("label", {
+        htmlFor: "received-by",
+        className: "col-form-label text-end"
+      }, "Received by:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("input", {
+        type: "text",
+        className: "form-control",
+        id: "received-by",
+        placeholder: "Enter here..",
+        onChange: this.inputChange.bind(this, "received_by"),
+        value: this.state.received_by
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "col-sm-6"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("label", {
+        htmlFor: "checked-by",
+        className: "col-form-label text-end"
+      }, "Checked by:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("input", {
+        type: "text",
+        className: "form-control",
+        id: "checked-by",
+        placeholder: "Enter here..",
+        onChange: this.inputChange.bind(this, "checked_by"),
+        value: this.state.checked_by
+      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        id: "error-notification",
+        style: {
+          position: "sticky",
+          bottom: 0
+        }
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        id: "success-notification",
+        style: {
+          position: "sticky",
+          bottom: 0
+        }
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "modal-footer"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
+        type: "button",
+        className: "btn btn-light",
+        id: "close-user-modal",
+        onClick: this.handleClose
+      }, "Close"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
+        type: "button",
+        className: "btn btn-primary",
+        onClick: this.handleSaveStockOut
+      }, "Save")))));
+    }
+  }], [{
+    key: "show",
+    value: function show(props) {
+      var containerElement = document.getElementById("stock-in-dialog-container");
+
+      if (!containerElement) {
+        containerElement = document.createElement('div');
+        containerElement.id = "stock-in-dialog-container";
+      }
+
+      document.body.appendChild(containerElement);
+      var root = (0,react_dom_client__WEBPACK_IMPORTED_MODULE_8__.createRoot)(containerElement);
+      return root.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(UpdateCreateStockOutDialog, props));
+    }
+  }]);
+
+  return UpdateCreateStockOutDialog;
+}((react__WEBPACK_IMPORTED_MODULE_7___default().Component));
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (UpdateCreateStockOutDialog);
 
 /***/ }),
 

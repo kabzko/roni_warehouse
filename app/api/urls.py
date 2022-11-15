@@ -17,6 +17,15 @@ from app.api.views.stock_in import (
     StockInDetailAPIView,
 )
 
+from app.api.views.stock_out import (
+    StockOutAPIView,
+    StockOutDetailAPIView,
+)
+
+from app.api.views.available_stock import (
+    AvailableStockAPIView,
+)
+
 urlpatterns = [
     # Authentication URLs
     path("login/", UserLoginAPIView.as_view()),
@@ -33,4 +42,11 @@ urlpatterns = [
     # Stock In URLs
     path("stock-in/", StockInAPIView.as_view()),
     path("stock-in/<int:pk>/", StockInDetailAPIView.as_view()),
+
+    # Stock Out URLs
+    path("stock-out/", StockOutAPIView.as_view()),
+    path("stock-out/<int:pk>/", StockOutDetailAPIView.as_view()),
+
+    # Stocks URLs
+    path("stock/available/", AvailableStockAPIView.as_view()),
 ]
