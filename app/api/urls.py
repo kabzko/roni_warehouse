@@ -10,6 +10,7 @@ from app.api.views.users import (
 from app.api.views.product import (
     ProductAPIView,
     ProductDetailAPIView,
+    ProductAvailableStockAPIView,
 )
 
 from app.api.views.stock_in import (
@@ -38,6 +39,7 @@ urlpatterns = [
     # Product URLs
     path("products/", ProductAPIView.as_view()),
     path("products/<int:pk>/", ProductDetailAPIView.as_view()),
+    path("products/available-stocks/", ProductAvailableStockAPIView.as_view()),
 
     # Stock In URLs
     path("stock-in/", StockInAPIView.as_view()),

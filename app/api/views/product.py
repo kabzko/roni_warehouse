@@ -4,6 +4,9 @@ from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 from app.models.product import Product
+from app.models.stock_in import StockIn
+from app.models.stock_out import StockOut
+
 from app.serializers.product import ProductSerializer
 
 from utils.exceptions import HumanReadableError
@@ -106,3 +109,62 @@ class ProductDetailAPIView(API):
         except Exception as exc:
             debug_exception(exc)
             return self.server_error_response(exc)
+
+class ProductAvailableStockAPIView(API):
+    """Product available stock API view"""
+
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        """Get product"""
+        try:
+            products = []
+            filters = {
+                "product__name__icontains": request.GET.get("search", "")
+            }
+            
+            stock_in_instances = StockIn.objects.filter(**filters)
+            for stock_in in stock_in_instances:
+                available_stocks = self.countAvailableStock(stockIn=stock_in)
+                is_product_exist = self.isProductExist(stockIns=stock_in, productList=products, availableStock=available_stocks)
+
+                if not is_product_exist:
+                    products.append({
+                        "id": stock_in.product.pk,
+                        "name": stock_in.product.name,
+                        "barcode": stock_in.product.barcode,
+                        "unit_of_measure": stock_in.unit_of_measure,
+                        "available_stocks": available_stocks
+                    })
+
+            return self.success_response(products)
+        except HumanReadableError as exc:
+            return self.error_response(exc, self.error_dict, self.status)
+        except Exception as exc:
+            debug_exception(exc)
+            return self.server_error_response(exc)
+
+    def countAvailableStock(self, stockIn:StockIn) -> int:
+        """Count available stock"""
+
+        available_stock = stockIn.quantity
+
+        stock_out_instances = StockOut.objects.filter(stock_in=stockIn)
+        for stock_out in stock_out_instances:
+            available_stock -= stock_out.quantity
+
+        return available_stock
+
+    def isProductExist(self, stockIns:StockIn, productList:list, availableStock:int) -> bool:
+        """Check if the product already exist in the list and update available stock if exist."""
+
+        is_exist = False
+
+        for product in productList:
+            if product["id"] == stockIns.product.pk and product["unit_of_measure"] == stockIns.unit_of_measure:
+                product["available_stocks"] += availableStock
+                is_exist = True
+                break
+
+        return is_exist
