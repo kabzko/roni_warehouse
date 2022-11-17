@@ -42,6 +42,7 @@ class UpdateCreateStockInDialog extends React.Component {
         }
 
         if (props.products) {
+            productOptions.splice(0, productOptions.length);
             props.products.map(prod => {
                 productOptions.push({
                     value: prod.id,
@@ -190,7 +191,7 @@ class UpdateCreateStockInDialog extends React.Component {
                                 <div className="row mb-2">
                                     <div className="col-sm-6">
                                         <label htmlFor="date" className="col-form-label">
-                                            Date:
+                                            <span className="text-danger">*</span>Date:
                                         </label>
                                         <div>
                                             <input type="date" className="form-control" id="date" placeholder="Enter here.."

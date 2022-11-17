@@ -135,7 +135,7 @@ class AdminStockInList extends React.Component {
                             <div className="input-group mb-3 w-50 float-lg-end">
                                 <input type="text" className="form-control" placeholder="Search product..."
                                     onKeyUp={this.handleSearchChange} onChange={this.handleSearchChange}></input>
-                                <span className="input-group-text" style={{cursor: "pointer"}} onClick={this.searchProducts} value={this.state.search}>Search</span>
+                                <span className="input-group-text" style={{cursor: "pointer"}} onClick={this.filterWithProduct} value={this.state.search}>Search</span>
                             </div>
                             <div className="clearfix"></div>
                             <div className="table-responsive">
@@ -147,7 +147,7 @@ class AdminStockInList extends React.Component {
                                             <th scope="col">Supplier name</th>
                                             <th scope="col">Price</th>
                                             <th scope="col">Unit of measure</th>
-                                            <th scope="col">Quanitity</th>
+                                            <th scope="col">Quantity</th>
                                             <th scope="col">Number of pieces</th>
                                             <th scope="col">Received by</th>
                                             <th scope="col">Date created</th>
