@@ -69,11 +69,11 @@ class AdminStockOutList extends React.Component {
         axios.get(api_url).then(res => {
             res.data.map(data => {
                 if (data.created_at) {
-                    data.created_at = new Date(data.created_at).toLocaleDateString()
+                    data.created_at = new Date(data.created_at).toLocaleString()
                 }
 
                 if (data.updated_at) {
-                    data.updated_at = new Date(data.updated_at).toLocaleDateString()
+                    data.updated_at = new Date(data.updated_at).toLocaleString()
                 }
                 
                 return data;
@@ -106,11 +106,11 @@ class AdminStockOutList extends React.Component {
         axios.get(api_url).then(res => {
             res.data.map(data => {
                 if (data.created_at) {
-                    data.created_at = new Date(data.created_at).toLocaleDateString()
+                    data.created_at = new Date(data.created_at).toLocaleString()
                 }
 
                 if (data.updated_at) {
-                    data.updated_at = new Date(data.updated_at).toLocaleDateString()
+                    data.updated_at = new Date(data.updated_at).toLocaleString()
                 }
                 
                 return data;

@@ -2,44 +2,49 @@ import React from "react";
 
 import SideNav from '../common/SideNav';
 import Header from '../common/Header';
-import UpdateCreateStockInDialog from "./UpdateCreateStockInDialog";
+import UpdateCreateListingDialog from "././UpdateCreateListingDialog";
 
 import axios from '../../../utils/axios';
 import ConfirmDialog from "../../../utils/dialog";
 import Toast from "../../../utils/toast";
 
-class AdminStockInList extends React.Component {
+class AdminListingList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             products: [],
+            listing: [],
+            stockOut: [],
             stockIn: [],
             productFilter: "",
         };
 
-        this.callBackSaveStockIn = this.callBackSaveStockIn.bind(this);
+        this.callBackSaveListing = this.callBackSaveListing.bind(this);
         this.filterWithProduct = this.filterWithProduct.bind(this);
         this.handleSearchChange = this.handleSearchChange.bind(this);
-        this.getStockIn();
+        
+        this.getListing();
         this.getProducts();
-    }
-
-    callBackSaveStockIn() {
+        this.getstockOut();
         this.getStockIn();
     }
 
-    deleteStockIn(stockIn, event) {
+    callBackSaveListing() {
+        this.getListing();
+    }
+
+    deleteListing(listing, event) {
         event.preventDefault();
 
         ConfirmDialog.create({
-            header: "Please confirm deletion of Stock In",
+            header: "Please confirm deletion of Stock Out",
             text: "Are you sure you want to delete this?",
             confirmButtonText: "Yes",
             cancelButtonText: "Cancel",
             confirmSuccess: () => {
-                axios.delete(`/api/stock-in/${stockIn.id}/`, {}).then(res => {
+                axios.delete(`/api/listing/${listing.id}/`, {}).then(res => {
                     Toast.success(res.data);
-                    this.getStockIn();
+                    this.getListing();
                 }).catch(error => {
                     Toast.error(error.response.data.message)
                 })
@@ -60,9 +65,23 @@ class AdminStockInList extends React.Component {
         return product;
     }
 
-    getProducts() {
-        axios.get("/api/products/").then(res => {
-            this.setState({"products": res.data});
+    getstockOut() {
+        let api_url = "/api/stock-out/";
+
+        axios.get(api_url).then(res => {
+            res.data.map(data => {
+                if (data.created_at) {
+                    data.created_at = new Date(data.created_at).toLocaleString()
+                }
+
+                if (data.updated_at) {
+                    data.updated_at = new Date(data.updated_at).toLocaleString()
+                }
+                
+                return data;
+            })
+
+            this.setState({"stockOut": res.data});
         }).catch(error => {
             console.log(error);
             Toast.error(error.response.data.message);
@@ -71,11 +90,6 @@ class AdminStockInList extends React.Component {
 
     getStockIn() {
         let api_url = "/api/stock-in/";
-        let { productFilter } = this.state;
-
-        if (productFilter !== "") {
-            api_url += `?product=${productFilter}`;
-        }
 
         axios.get(api_url).then(res => {
             res.data.map(data => {
@@ -97,9 +111,46 @@ class AdminStockInList extends React.Component {
         })
     }
 
+    getProducts() {
+        axios.get("/api/products/").then(res => {
+            this.setState({"products": res.data});
+        }).catch(error => {
+            console.log(error);
+            Toast.error(error.response.data.message);
+        })
+    }
+
+    getListing() {
+        let api_url = "/api/listing/";
+        let { productFilter } = this.state;
+
+        if (productFilter !== "") {
+            api_url += `?product=${productFilter}`;
+        }
+
+        axios.get(api_url).then(res => {
+            res.data.map(data => {
+                if (data.created_at) {
+                    data.created_at = new Date(data.created_at).toLocaleString()
+                }
+
+                if (data.updated_at) {
+                    data.updated_at = new Date(data.updated_at).toLocaleString()
+                }
+                
+                return data;
+            })
+
+            this.setState({"listing": res.data});
+        }).catch(error => {
+            console.log(error);
+            Toast.error(error.response.data.message);
+        })
+    }
+
     filterWithProduct(event) {
         event.preventDefault();
-        this.getStockIn();
+        this.getListing();
     }
 
     handleSearchChange(event) {
@@ -112,12 +163,14 @@ class AdminStockInList extends React.Component {
         }
     }
 
-    showCreateUpdateStockInModal(stockIn) {
-        stockIn = stockIn ? stockIn : {};
-        stockIn["callBackSave"] = this.callBackSaveStockIn;
-        stockIn["products"] = this.state.products;
+    showCreateUpdateListingModal(listing) {
+        listing = listing ? listing : {};
+        listing["callBackSave"] = this.callBackSaveListing;
+        listing["products"] = this.state.products;
+        listing["stockOutOptions"] = this.state.stockOut;
+        listing["stockInOptions"] = this.state.stockIn;
 
-        UpdateCreateStockInDialog.show({...stockIn});
+        UpdateCreateListingDialog.show({...listing});
     }
 
     render() {
@@ -126,11 +179,11 @@ class AdminStockInList extends React.Component {
                 <Header></Header>
                 <div className='container-fluid'>
                     <div className='row'>
-                        <SideNav active="stock-in"></SideNav>
+                        <SideNav active="listing"></SideNav>
                         <main className='col-md-9 ms-sm-auto col-lg-10 px-md-4'>
                             <div className='d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom'>
-                                <h1 className="h2">Stock In</h1>
-                                <button type="button" className="btn btn-dark" onClick={this.showCreateUpdateStockInModal.bind(this)}>Create</button>
+                                <h1 className="h2">Listing</h1>
+                                <button type="button" className="btn btn-dark" onClick={this.showCreateUpdateListingModal.bind(this)}>Create</button>
                             </div>
                             <div className="input-group mb-3 w-50 float-lg-end">
                                 <input type="text" className="form-control" placeholder="Search product..."
@@ -143,41 +196,31 @@ class AdminStockInList extends React.Component {
                                     <thead>
                                         <tr>
                                             <th scope="col">Product</th>
-                                            <th scope="col">Date</th>
-                                            <th scope="col">Supplier name</th>
                                             <th scope="col">Price</th>
-                                            <th scope="col">Unit of measure</th>
-                                            <th scope="col">Quantity</th>
-                                            <th scope="col">Number of pieces</th>
-                                            <th scope="col">Received by</th>
+                                            <th scope="col">Created by</th>
                                             <th scope="col">Date created</th>
                                             <th scope="col">Last changes</th>
                                             <th scope="col">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody className="table-group-divider">
-                                        {this.state.stockIn.length > 0
-                                        ?  this.state.stockIn.map(stockin => {
+                                        {this.state.listing.length > 0
+                                        ?  this.state.listing.map(element => {
                                                 return(
-                                                    <tr key={stockin.id}>
-                                                        <td>{this.getProductName(stockin.product)}</td>
-                                                        <td>{stockin.date}</td>
-                                                        <td>{stockin.supplier_name}</td>
-                                                        <td>{stockin.price}</td>
-                                                        <td>{stockin.unit_of_measure}</td>
-                                                        <td>{stockin.quantity}</td>
-                                                        <td>{stockin.number_of_pieces}</td>
-                                                        <td>{stockin.received_by}</td>
-                                                        <td>{stockin.created_at}</td>
-                                                        <td>{stockin.updated_at}</td>
+                                                    <tr key={element.id}>
+                                                        <td>{this.getProductName(element.product)}</td>
+                                                        <td>{element.price}</td>
+                                                        <td>{element.created_by}</td>
+                                                        <td>{element.created_at}</td>
+                                                        <td>{element.updated_at}</td>
                                                         <td>
-                                                            <button className="btn btn-sm btn-primary me-1" onClick={this.showCreateUpdateStockInModal.bind(this, stockin)}>Edit</button>
-                                                            <button className="btn btn-sm btn-danger" onClick={this.deleteStockIn.bind(this, stockin)}>Delete</button>
+                                                            <button className="btn btn-sm btn-primary me-1" onClick={this.showCreateUpdateListingModal.bind(this, element)}>Edit</button>
+                                                            <button className="btn btn-sm btn-danger" onClick={this.deleteListing.bind(this, element)}>Delete</button>
                                                         </td>
                                                     </tr>
                                                 )
                                             })
-                                        : <tr><td colSpan="1000" className="text-center">No transactions yet!</td></tr>
+                                        : <tr><td colSpan="1000" className="text-center">No listing yet!</td></tr>
                                         }
                                     </tbody>
                                 </table>
@@ -190,4 +233,4 @@ class AdminStockInList extends React.Component {
     }
 }
 
-export default AdminStockInList;
+export default AdminListingList;

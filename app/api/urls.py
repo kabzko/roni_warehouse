@@ -23,6 +23,12 @@ from app.api.views.stock_out import (
     StockOutDetailAPIView,
 )
 
+from app.api.views.listing import (
+    ListingAPIView,
+    ListingDetailAPIView,
+    CashierListingAPIView,
+)
+
 from app.api.views.available_stock import (
     AvailableStockAPIView,
 )
@@ -51,4 +57,11 @@ urlpatterns = [
 
     # Stocks URLs
     path("stock/available/", AvailableStockAPIView.as_view()),
+
+    # Listing URLs
+    path("listing/", ListingAPIView.as_view()),
+    path("listing/<int:pk>/", ListingDetailAPIView.as_view()),
+
+    # Cashier URLs
+    path("cashier/listing/", CashierListingAPIView.as_view()),
 ]

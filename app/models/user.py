@@ -40,8 +40,8 @@ class User(AbstractBaseUser):
     is_superadmin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     user_type = models.CharField(max_length=250, blank=True, null=False)
-    created_at = models.DateTimeField(default=timezone.now)
-    updated_at = models.DateTimeField(default=timezone.now)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     
     USERNAME_FIELD = "system_id"
     

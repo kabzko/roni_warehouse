@@ -12,6 +12,6 @@ class StockOut(models.Model):
     truck_plate_number = models.CharField(max_length=250, blank=True, null=True)
     truck_driver = models.CharField(max_length=250, blank=True, null=True)
     quantity = models.IntegerField()
-    created_at = models.DateTimeField(default=datetime.now)
-    updated_at = models.DateTimeField(default=datetime.now)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     date = models.DateField()

@@ -15,9 +15,6 @@ const unitOfMeasureOptions = [{
 }, {
     value: "box",
     label: "Box"
-}, {
-    value: "bottle",
-    label: "Bottle"
 }];
 
 class UpdateCreateStockInDialog extends React.Component {
@@ -143,6 +140,10 @@ class UpdateCreateStockInDialog extends React.Component {
         if (data.unit_of_measure) {
             data["unit_of_measure"] = data.unit_of_measure.value;
         }
+        
+        if (data.unit_of_measure === "pieces") {
+            data["number_of_pieces"] = data.quantity;
+        }
 
         axios.post(api_url, data).then(res => {
             alert(res.data, "success", "success-notification");
@@ -243,21 +244,32 @@ class UpdateCreateStockInDialog extends React.Component {
                                 <div className="row mb-2">
                                     <div className="col-sm-6">
                                         <label htmlFor="unit-of-measure" className="col-form-label text-end">
-                                            <span className="text-danger">*</span>Unit Of Measure:
+                                            <span className="text-danger">*</span>Unit of Measure:
                                         </label>
                                         <div>
                                             <Select value={this.state.unit_of_measure} onChange={this.selectUnitOfMeasureChange} options={unitOfMeasureOptions} />
                                         </div>
                                     </div>
-                                    <div className="col-sm-6">
-                                        <label htmlFor="number-of-pieces" className="col-form-label text-end">
-                                            <span className="text-danger">*</span>No. of pieces per unit of measure:
-                                        </label>
-                                        <div>
-                                            <input type="number" className="form-control" id="number-of-pieces" placeholder="Enter here.."
-                                                onChange={this.inputChange.bind(this, "number_of_pieces")} value={this.state.number_of_pieces}></input>
+                                    {
+                                        this.state.unit_of_measure.value !== "pieces" ?
+                                        <div className="col-sm-6">
+                                            <label htmlFor="number-of-pieces" className="col-form-label text-end">
+                                                <span className="text-danger">*</span>No. of pieces per unit of measure:
+                                            </label>
+                                            <div>
+                                                <input type="number" className="form-control" id="number-of-pieces" placeholder="Enter here.."
+                                                    onChange={this.inputChange.bind(this, "number_of_pieces")} value={this.state.number_of_pieces}></input>
+                                            </div>
+                                        </div> :
+                                        <div className="col-sm-6">
+                                            <label htmlFor="number-of-pieces" className="col-form-label text-end">
+                                                <span className="text-danger">*</span>No. of pieces per unit of measure:
+                                            </label>
+                                            <div>
+                                                <input type="number" className="form-control" id="number-of-pieces" placeholder="Enter here.." value={this.state.quantity} disabled></input>
+                                            </div>
                                         </div>
-                                    </div>
+                                    }
                                 </div>
 
                                 <div className="row mb-2">

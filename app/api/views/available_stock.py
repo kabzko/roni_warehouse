@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from app.models.stock_out import StockOut
 from app.models.stock_in import StockIn
+from app.models.listing import Listing
 
 from utils.exceptions import HumanReadableError
 from utils.views.api import API
@@ -19,20 +20,24 @@ class AvailableStockAPIView(API):
 
     def get(self, request):
         """Get available stock """
+        
         try:
             parameters = request.GET.dict()
-            stock_in_id = parameters.get("stock_in", None)
+            stock_id = parameters.get("stock", None)
+            stock_type = parameters.get("type", None)
 
-            stock_in_instance = StockIn.objects.get(id=stock_in_id)
-            available_stock = stock_in_instance.quantity
+            try:
+                stock_in_instance = StockIn.objects.get(id=stock_id)
+                available_stock = stock_in_instance.quantity
 
-            stock_out_instances = StockOut.objects.filter(stock_in=stock_in_instance)
-            for stock_out in stock_out_instances:
-                available_stock -= stock_out.quantity
+                stock_out_instances = StockOut.objects.filter(stock_in=stock_in_instance)
+                for stock_out in stock_out_instances:
+                    available_stock -= stock_out.quantity
 
-            return self.success_response({"available": available_stock})
-        except StockIn.DoesNotExist:
-            self.raise_error("Stock In does not exist!")
+                return self.success_response({"available": available_stock})
+            except StockIn.DoesNotExist:
+                self.raise_error("Stock In does not exist!")
+
         except HumanReadableError as exc:
             return self.error_response(exc, self.error_dict, self.status)
         except Exception as exc:

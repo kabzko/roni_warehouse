@@ -46,7 +46,7 @@ class UpdateCreateStockOutDialog extends React.Component {
                 stockIn["value"] = stock.id;
 
                 let product = this.getProduct(stock.product);
-                stockIn["label"] = `${product.label} (Price: ${stock.price}) (${stock.quantity} ${stock.unit_of_measure})`;
+                stockIn["label"] = `${product.label} (${stock.quantity} ${stock.unit_of_measure})`;
 
                 stockInOptions.push(stockIn);
                 return stock;
@@ -170,7 +170,7 @@ class UpdateCreateStockOutDialog extends React.Component {
     }
 
     getAvailableStock(stockIn, addQuantity) {
-        axios.get(`/api/stock/available?stock_in=${stockIn}`).then(res => {
+        axios.get(`/api/stock/available?stock=${stockIn}&type=stock-in`).then(res => {
             if (addQuantity) {
                 res.data.available += addQuantity;
             }

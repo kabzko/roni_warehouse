@@ -23,7 +23,7 @@ def index(request):
             if request.user.user_type == "admin":
                 return redirect("/web/admin/dashboard/")
             elif request.user.user_type == "cashier":
-                return redirect("/web/dashboard/cashier/")
+                return redirect("/web/user/dashboard/")
 
         is_redirect = all((
             not request.user.is_authenticated,
