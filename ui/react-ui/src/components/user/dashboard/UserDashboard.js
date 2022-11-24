@@ -1,4 +1,5 @@
 import React from 'react';
+import { toast } from 'react-toastify';
 
 import * as onScan from 'onscan.js';
 
@@ -44,7 +45,7 @@ class UserDashboard extends React.Component {
             this.setState({"listing": res.data});
         }).catch(error => {
             console.log(error);
-            Toast.error(error.response.data.message);
+            toast.error(error.response.data.message);
         })
     }
 
@@ -53,7 +54,7 @@ class UserDashboard extends React.Component {
             this.setState({"products": res.data});
         }).catch(error => {
             console.log(error);
-            Toast.error(error.response.data.message);
+            toast.error(error.response.data.message);
         })
     }
 
@@ -82,14 +83,19 @@ class UserDashboard extends React.Component {
                 });
             }
         } else {
-            alert("WALA");
+            toast.error("Barcode not found.");
         }
+    }
+
+    priceFormat(value) {
+        const val = (value/1).toFixed(2).replace(",", ".")
+        return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
     }
 
     renderTotalAmount() {
         if (!this.state.cart.length) {
             return (
-                <span className="total-amount">0</span>
+                <label className="total-amount">{this.priceFormat(0)}</label>
             )
         }
         let totalAmount = 0;
@@ -97,7 +103,7 @@ class UserDashboard extends React.Component {
             totalAmount += (element.price * element.quantity);
         });
         return (
-            <span className="total-amount">{totalAmount}</span>
+            <label className="total-amount">{this.priceFormat(totalAmount)}</label>
         )
     }
 
@@ -115,7 +121,7 @@ class UserDashboard extends React.Component {
                     <td>{element.barcode}</td>
                     <td>{element.name}</td>
                     <td>{element.quantity}</td>
-                    <td>{element.price}</td>
+                    <td>{this.priceFormat(element.price)}</td>
                 </tr>
             )
         })
@@ -123,8 +129,8 @@ class UserDashboard extends React.Component {
 
     render() {
         return (
-            <div>
-                <div>
+            <div className="container-fluid">
+                <div className="text-end">
                     {this.renderTotalAmount()}
                 </div>
                 <div>

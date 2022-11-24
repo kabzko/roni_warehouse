@@ -70,14 +70,6 @@ class AdminListingList extends React.Component {
 
         axios.get(api_url).then(res => {
             res.data.map(data => {
-                if (data.created_at) {
-                    data.created_at = new Date(data.created_at).toLocaleString()
-                }
-
-                if (data.updated_at) {
-                    data.updated_at = new Date(data.updated_at).toLocaleString()
-                }
-                
                 return data;
             })
 
@@ -93,14 +85,6 @@ class AdminListingList extends React.Component {
 
         axios.get(api_url).then(res => {
             res.data.map(data => {
-                if (data.created_at) {
-                    data.created_at = new Date(data.created_at).toLocaleString()
-                }
-
-                if (data.updated_at) {
-                    data.updated_at = new Date(data.updated_at).toLocaleString()
-                }
-                
                 return data;
             })
 
@@ -136,6 +120,10 @@ class AdminListingList extends React.Component {
 
                 if (data.updated_at) {
                     data.updated_at = new Date(data.updated_at).toLocaleString()
+                }
+
+                if (data.stock_out) {
+                    data.stock_out = JSON.parse(data.stock_out);
                 }
                 
                 return data;

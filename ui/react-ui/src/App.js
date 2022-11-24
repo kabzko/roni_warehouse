@@ -1,5 +1,6 @@
 import React from 'react';
 import { Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 import LandingPage from './components/landing_page/LandingPage';
 import PageNotFound from './components/page_not_found/PageNotFound';
@@ -15,6 +16,8 @@ import AdminlistingList from './components/admin/listing/AdminListingList';
 import UserLogin from './components/user/login/LoginUser';
 import UserDashboard from './components/user/dashboard/UserDashboard';
 
+import "react-toastify/dist/ReactToastify.css";
+
 class App extends React.Component {
     constructor() {
         super();
@@ -25,6 +28,12 @@ class App extends React.Component {
         
         return (
             <div className="App">
+                <ToastContainer 
+                    position={"top-right"} 
+                    autoClose={3000} 
+                    pauseOnHover={false} 
+                    theme={"colored"}
+                />
                 <Routes>
                     <Route path="*" element={<PageNotFound />} />
                     <Route path="" element={<LandingPage />} />

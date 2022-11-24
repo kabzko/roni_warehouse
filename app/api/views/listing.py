@@ -29,12 +29,12 @@ class ListingAPIView(API):
             if is_listing_exist:
                 return self.raise_error("Product is already in the listing.")
 
-            # listing_serializer = ListingSerializer(data=data)
+            listing_serializer = ListingSerializer(data=data)
 
-            # if listing_serializer.is_valid():
-            #     listing_serializer.save()
-            # else:
-            #     return self.raise_error(beautify_serializer_error(listing_serializer.errors))
+            if listing_serializer.is_valid():
+                listing_serializer.save()
+            else:
+                return self.raise_error(beautify_serializer_error(listing_serializer.errors))
 
             return self.success_response("Listing successfully created!")
         except HumanReadableError as exc:
@@ -56,7 +56,6 @@ class ListingAPIView(API):
             
             for listing_instance in listing_instances:
                 data = ListingSerializer(listing_instance).data
-                data["product"] = listing_instance.stock_out.stock_in.product.id
                 listing.append(data)
 
             return self.success_response(listing)

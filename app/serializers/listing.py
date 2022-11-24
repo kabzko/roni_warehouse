@@ -10,6 +10,7 @@ class ListingSerializer(serializers.ModelSerializer):
         
         fields = [
             "id",
+            "product",
             "stock_out",
             "price",
             "created_by",
@@ -18,6 +19,12 @@ class ListingSerializer(serializers.ModelSerializer):
         ]
 
         extra_kwargs = {
+            "product": {
+                "error_messages": {
+                    "blank": "Product is required!",
+                    "null": "Product by is required!",
+                }
+            },
             "stock_out": {
                 "error_messages": {
                     "blank": "Stock Out is required!",

@@ -7,7 +7,7 @@ import alert from '../../../utils/alert';
 import Toast from "../../../utils/toast";
 
 const productOptions = [];
-const stockOutOptions = [];
+let stockOutOptions = [];
 const unitOfMeasureOptions = [{
     value: "pieces",
     label: "Pieces"
@@ -23,7 +23,8 @@ class UpdateCreateListingDialog extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            "stock_out": props.product ? props.product : "",
+            "product": props.product ? props.product : "",
+            "stock_out": props.stock_out ? props.stock_out : "",
             "price": props.price ? props.price : "",
         };
 
@@ -42,9 +43,14 @@ class UpdateCreateListingDialog extends React.Component {
             })
         }
 
+        if (props.product) {
+            this.state.product = this.getProduct(props.product);
+        }
+
         if (props.stockOutOptions) {
             stockOutOptions.splice(0, stockOutOptions.length);
-            props.stockOutOptions.map(stock => {
+            const filteredStockOutDatas = this.state.product ? props.stockOutOptions.filter(element => element.product === parseInt(this.state.product.value)) : props.stockOutOptions;
+            filteredStockOutDatas.map(stock => {
                 let stockInDatas = props.stockInOptions.find(element => element.id === parseInt(stock.stock_in));
                 let stockOut = {};
                 stockOut["value"] = stock.id;
@@ -59,13 +65,13 @@ class UpdateCreateListingDialog extends React.Component {
 
         if (props.stock_out) {
             this.state["stock_out"] = this.getStockOut(props.stock_out);
-            // this.getAvailableStock(props.stock_out, props.quantity);
         }
 
         this.modal = null;
         this.handleSaveListing = this.handleSaveListing.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.selectStockOutChange = this.selectStockOutChange.bind(this);
+        this.selectProductChange = this.selectProductChange.bind(this);
         this.selectUnitOfMeasureChange = this.selectUnitOfMeasureChange.bind(this);
     }
 
@@ -103,14 +109,9 @@ class UpdateCreateListingDialog extends React.Component {
     }
 
     getStockOut(stockOutId) {
-        let stock_out;
+        let stock_out = [];
 
-        for (let i in stockOutOptions) {
-            if (stockOutOptions[i].value === stockOutId) {
-                stock_out = stockOutOptions[i];
-                break;
-            }
-        }
+        stock_out = stockOutOptions.filter(element => stockOutId.includes(element.value));
 
         return stock_out;
     }
@@ -121,9 +122,26 @@ class UpdateCreateListingDialog extends React.Component {
         this.setState({...updated_field});
     }
 
+    selectProductChange(selectedOption) {
+        stockOutOptions.splice(0, stockOutOptions.length);
+        const filteredStockOutDatas = this.props.stockOutOptions.filter(element => element.product === parseInt(this.state.product.value));
+        filteredStockOutDatas.map(stock => {
+            let stockInDatas = this.props.stockInOptions.find(element => element.id === parseInt(stock.stock_in));
+            let stockOut = {};
+            stockOut["value"] = stock.id;
+
+            let product = this.getProduct(stock.product);
+            stockOut["label"] = `${product.label} (${stock.quantity} ${stockInDatas.unit_of_measure})`;
+
+            stockOutOptions.push(stockOut);
+            return stock;
+        })
+        this.setState({stock_out: []});
+        this.setState({product: selectedOption});
+    }
+
     selectStockOutChange(selectedOption) {
         this.setState({stock_out: selectedOption});
-        // this.getAvailableStock(selectedOption.value);
     }
 
     selectUnitOfMeasureChange(selectedOption) {
@@ -139,8 +157,12 @@ class UpdateCreateListingDialog extends React.Component {
             api_url = `/api/listing/${data.id}/`
         }
 
+        if (data.product) {
+            data["product"] = data.product.value;
+        }
+
         if (data.stock_out) {
-            data["stock_out"] = data.stock_out.value;
+            data["stock_out"] = JSON.stringify(data.stock_out.map(element => element.value));
         }
 
         if (data.quantity) {
@@ -155,6 +177,7 @@ class UpdateCreateListingDialog extends React.Component {
 
             if (!data.id) {
                 this.setState({
+                    "product": "",
                     "stock_out": "",
                     "price": "",
                     "available_stock": 0,
@@ -172,19 +195,6 @@ class UpdateCreateListingDialog extends React.Component {
         document.getElementById("listing-dialog-container").remove();
     }
 
-    getAvailableStock(stockOut, addQuantity) {
-        axios.get(`/api/stock/available?stock=${stockOut}&type=stock-out`).then(res => {
-            if (addQuantity) {
-                res.data.available += addQuantity;
-            }
-
-            this.setState({"available_stock": res.data.available});
-        }).catch(error => {
-            console.log(error);
-            Toast.error(error.response.data.message);
-        })
-    }
-
     render() {
         return (
             <div className="modal modal-lg fade" id="custom-dialog-modal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
@@ -199,14 +209,44 @@ class UpdateCreateListingDialog extends React.Component {
                         <div className="modal-body">
                             <form>
                                 <div className="row mb-2">
-                                    <div className="col-sm-12">
-                                        <label htmlFor="listing" className="col-form-label text-end">
-                                            <span className="text-danger">*</span>Stock Out:
-                                        </label>
-                                        <div>
-                                            <Select value={this.state.stock_out} onChange={this.selectStockOutChange} options={stockOutOptions} />
+                                    {
+                                        this.props.id ? 
+                                        <div className="col-sm-6">
+                                            <label htmlFor="product-name" className="col-form-label text-end">
+                                                <span className="text-danger">*</span>Product:
+                                            </label>
+                                            <div>
+                                                <Select value={this.state.product} isDisabled={true} />
+                                            </div>
+                                        </div> :
+                                        <div className="col-sm-6">
+                                            <label htmlFor="product-name" className="col-form-label text-end">
+                                                <span className="text-danger">*</span>Product:
+                                            </label>
+                                            <div>
+                                                <Select value={this.state.product} onChange={this.selectProductChange} options={productOptions} />
+                                            </div>
                                         </div>
-                                    </div>
+                                    }
+                                    {
+                                        this.state.product ?
+                                        <div className="col-sm-6">
+                                            <label htmlFor="listing" className="col-form-label text-end">
+                                                <span className="text-danger">*</span>Stock Out:
+                                            </label>
+                                            <div>
+                                                <Select value={this.state.stock_out} onChange={this.selectStockOutChange} options={stockOutOptions} isMulti />
+                                            </div>
+                                        </div> :
+                                        <div className="col-sm-6">
+                                            <label htmlFor="listing" className="col-form-label text-end">
+                                                <span className="text-danger">*</span>Stock Out:
+                                            </label>
+                                            <div>
+                                                <Select isDisabled={true} />
+                                            </div>
+                                        </div>
+                                    }
                                 </div>
 
                                 <div className="row mb-2">
