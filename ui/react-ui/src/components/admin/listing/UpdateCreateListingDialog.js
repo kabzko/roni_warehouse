@@ -4,7 +4,6 @@ import Select from 'react-select';
 
 import axios from '../../../utils/axios';
 import alert from '../../../utils/alert';
-import Toast from "../../../utils/toast";
 
 const productOptions = [];
 let stockOutOptions = [];
@@ -124,7 +123,7 @@ class UpdateCreateListingDialog extends React.Component {
 
     selectProductChange(selectedOption) {
         stockOutOptions.splice(0, stockOutOptions.length);
-        const filteredStockOutDatas = this.props.stockOutOptions.filter(element => element.product === parseInt(this.state.product.value));
+        const filteredStockOutDatas = this.props.stockOutOptions.filter(element => element.product === parseInt(selectedOption.value));
         filteredStockOutDatas.map(stock => {
             let stockInDatas = this.props.stockInOptions.find(element => element.id === parseInt(stock.stock_in));
             let stockOut = {};
@@ -162,8 +161,12 @@ class UpdateCreateListingDialog extends React.Component {
         }
 
         if (data.stock_out) {
-            data["stock_out"] = JSON.stringify(data.stock_out.map(element => element.value));
+            data["stock_out"] = data.stock_out.map(element => element.value);
         }
+
+        const stockOutDatas = this.props.stockOutOptions.filter(element => data.stock_out.includes(element.id));
+        const stockInDatas = this.props.stockInOptions.find(element => element.id === parseInt(stockOutDatas[0].stock_in));
+        data["unit_of_measure"] = stockInDatas.unit_of_measure;
 
         if (data.quantity) {
             if (data.quantity > data.available_stock) {

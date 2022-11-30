@@ -52,6 +52,7 @@ class AdminLogin extends React.Component {
                                 type="email" className="form-control"
                                 id="floatingInput" placeholder="email"
                                 value={this.state.email}
+                                autoComplete="off"
                                 onChange={this.inputChange.bind(this, "email")}
                                 onKeyUp={this.inputChange.bind(this, "email")}>
                             </input>

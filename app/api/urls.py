@@ -26,7 +26,10 @@ from app.api.views.stock_out import (
 from app.api.views.listing import (
     ListingAPIView,
     ListingDetailAPIView,
-    CashierListingAPIView,
+)
+
+from app.api.views.cashier import (
+    CashierAPIView,
 )
 
 from app.api.views.available_stock import (
@@ -63,5 +66,6 @@ urlpatterns = [
     path("listing/<int:pk>/", ListingDetailAPIView.as_view()),
 
     # Cashier URLs
-    path("cashier/listing/", CashierListingAPIView.as_view()),
+    path("cashier/listing/", CashierAPIView.as_view()),
+    path("cashier/checkout/", CashierAPIView.as_view()),
 ]

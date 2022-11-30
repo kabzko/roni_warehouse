@@ -13,6 +13,7 @@ class ListingSerializer(serializers.ModelSerializer):
             "product",
             "stock_out",
             "price",
+            "unit_of_measure",
             "created_by",
             "created_at",
             "updated_at",

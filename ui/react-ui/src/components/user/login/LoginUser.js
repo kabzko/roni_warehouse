@@ -51,6 +51,7 @@ class AdminLogin extends React.Component {
                             <input
                                 type="text" className="form-control"
                                 id="floatingInput" placeholder="Cashier ID"
+                                autoComplete="off"
                                 value={this.state.cashier_id}
                                 onChange={this.inputChange.bind(this, "cashier_id")}
                                 onKeyUp={this.inputChange.bind(this, "cashier_id")}>
