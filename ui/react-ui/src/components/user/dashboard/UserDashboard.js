@@ -17,6 +17,7 @@ class UserDashboard extends React.Component {
             listing: [],
             carts: [],
             lastProduct: {},
+            lastTransaction: {},
         };
 
         this.callBackSaveListing = this.callBackSaveListing.bind(this);
@@ -26,11 +27,12 @@ class UserDashboard extends React.Component {
         this.getListing();
     }
 
-    callBackSaveListing() {
+    callBackSaveListing(referenceNo) {
         this.setState({
             carts: [],
             lastProduct: {},
         });
+        this.getLastTransaction(referenceNo);
     }
 
     componentDidMount() {
@@ -43,6 +45,24 @@ class UserDashboard extends React.Component {
     componentWillUnmount() {
         onScan.detachFrom(document);
         document.removeEventListener("scan");
+    }
+
+    priceFormat(value) {
+        const val = (value/1).toFixed(2).replace(",", ".")
+        return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    }
+
+    getProductName(productId) {
+        let product;
+
+        for (let i in this.state.products) {
+            if (this.state.products[i].id === productId) {
+                product = this.state.products[i].name;
+                break;
+            }
+        }
+
+        return product;
     }
 
     logout() {
@@ -120,10 +140,14 @@ class UserDashboard extends React.Component {
 
         UserCheckoutDialog.show({...checkout});
     }
-
-    priceFormat(value) {
-        const val = (value/1).toFixed(2).replace(",", ".")
-        return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    
+    getLastTransaction(referenceNo) {
+        axios.get(`/api/cashier/last-transaction/${referenceNo}`).then(res => {
+            this.setState({"lastTransaction": res.data});
+        }).catch(error => {
+            console.log(error);
+            toast.error(error.response.data.message);
+        })
     }
 
     renderLookUpProducts() {
@@ -220,42 +244,106 @@ class UserDashboard extends React.Component {
         })
     }
 
-    render() {
+    renderLastTransaction() {
+        if (!this.state.lastTransaction) {
+            return (
+                null
+            )
+        }
         return (
-            <div className="container-fluid">
-                <div className="row">
-                    <div className="col-6">
-                        <div className="row">
-                            {this.renderLookUpProducts()}
-                        </div>
-                    </div>
-                    <div className="col-6">
-                        <div className="d-flex justify-content-between border">
-                            {this.renderProductScannedModal()}
-                        </div>
-                        <table className="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Barcode</th>
-                                    <th>Product</th>
-                                    <th>Quantity</th>
-                                    <th>Price</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {this.renderCartData()}
-                            </tbody>
-                        </table>
-                    </div>
+            <div>
+                <div className="d-flex justify-content-between">
+                    <div><b>Ref No. </b>{this.state.lastTransaction.sales.reference_no}</div>
+                    <div>{new Date(this.state.lastTransaction.sales.created_at).toLocaleString("en-US")}</div>
                 </div>
-                <div className="text-end border">
-                    {this.renderTotalAmount()}
+                <table className="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            this.state.lastTransaction.carts.map(element => {
+                                return (
+                                    <tr key={element.id}>
+                                        <td>{this.getProductName(element.product)}</td>
+                                        <td>{element.quantity}</td>
+                                        <td>{this.priceFormat(element.price)}</td>
+                                        <td>{this.priceFormat((element.price * element.quantity))}</td>
+                                    </tr>
+                                )
+                            })
+                        }
+                    </tbody>
+                </table>
+                <div className="d-flex justify-content-between">
+                    <div><b>TOTAL</b></div>
+                    <div>{this.priceFormat(this.state.lastTransaction.sales.total_amount)}</div>
                 </div>
-                <div>
-                    <button className="btn btn-danger" onClick={this.logout}>Logout</button>
-                    <button className="btn btn-success" onClick={this.showUserCheckoutModal}>Checkout</button>
+                <div className="d-flex justify-content-between">
+                    <div><b>CASH</b></div>
+                    <div>{this.priceFormat(this.state.lastTransaction.sales.amount_pay)}</div>
+                </div>
+                <div className="d-flex justify-content-between">
+                    <div><b>CHANGE</b></div>
+                    <div>{this.priceFormat(this.state.lastTransaction.sales.amount_pay - this.state.lastTransaction.sales.total_amount)}</div>
                 </div>
             </div>
+        )
+    }
+
+    render() {
+        return (
+            <>
+                {
+                    !Object.keys(this.state.lastTransaction).length ?
+                    <div className="container-fluid">
+                        <div className="row">
+                            <div className="col-6">
+                                <div className="row">
+                                    {this.renderLookUpProducts()}
+                                </div>
+                            </div>
+                            <div className="col-6">
+                                <div className="d-flex justify-content-between border">
+                                    {this.renderProductScannedModal()}
+                                </div>
+                                <table className="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Barcode</th>
+                                            <th>Description</th>
+                                            <th>Quantity</th>
+                                            <th>Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {this.renderCartData()}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div className="text-end border">
+                            {this.renderTotalAmount()}
+                        </div>
+                        <div>
+                            <button className="btn btn-danger" onClick={this.logout}>Logout</button>
+                            <button className="btn btn-success float-end" onClick={this.showUserCheckoutModal}>Checkout</button>
+                        </div>
+                    </div> :
+                    <div className="container-fluid">
+                        {this.renderLastTransaction()}
+                        <div>
+                            <button className="btn btn-danger" onClick={this.logout}>Logout</button>
+                            <button className="btn btn-primary" onClick={() => this.setState({lastTransaction: {}})}>New transaction</button>
+                        </div>
+                    </div>
+                }
+            </>
         )
     }
 }

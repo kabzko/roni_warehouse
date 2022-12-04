@@ -26,7 +26,7 @@ class CashierAPIView(API):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        """Get listing"""
+        """"""
         try:
             listing = []
             filters = request.GET.dict()
@@ -52,7 +52,7 @@ class CashierAPIView(API):
             return self.server_error_response(exc)
     
     def post(self, request):
-        """Create listing post request"""
+        """"""
         try:
             data = request.data
             data["reference_no"] = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
@@ -71,7 +71,40 @@ class CashierAPIView(API):
             else:
                 return self.raise_error(beautify_serializer_error(sales_serializer.errors))
 
-            return self.success_response("Checkout successfully!")
+            response = {
+                "reference_no": data["reference_no"]
+            }
+
+            return self.success_response(response)
+        except HumanReadableError as exc:
+            return self.error_response(exc, self.error_dict, self.status)
+        except Exception as exc:
+            debug_exception(exc)
+            return self.server_error_response(exc)
+
+class CashierLastTransactionAPIView(API):
+    """"""
+
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, pk):
+        """"""
+        try:
+            transaction = {}
+            
+            sale_instance = Sales.objects.get(reference_no=pk, cashier_by=request.user)
+            cart_instances = Cart.objects.filter(sales=sale_instance)
+
+            transaction["sales"] = SalesSerializer(sale_instance).data
+            transaction["carts"] = []
+
+            transaction["sales"]["total_amount"] = 0
+            for cart_instance in cart_instances:
+                transaction["carts"].append(CartSerializer(cart_instance).data)
+                transaction["sales"]["total_amount"] += (cart_instance.price * cart_instance.quantity)
+
+            return self.success_response(transaction)
         except HumanReadableError as exc:
             return self.error_response(exc, self.error_dict, self.status)
         except Exception as exc:

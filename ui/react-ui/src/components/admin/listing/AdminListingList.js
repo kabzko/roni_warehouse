@@ -16,6 +16,7 @@ class AdminListingList extends React.Component {
             listing: [],
             stockOut: [],
             stockIn: [],
+            users: [],
             productFilter: "",
         };
 
@@ -23,6 +24,7 @@ class AdminListingList extends React.Component {
         this.filterWithProduct = this.filterWithProduct.bind(this);
         this.handleSearchChange = this.handleSearchChange.bind(this);
         
+        this.getUsers();
         this.getListing();
         this.getProducts();
         this.getstockOut();
@@ -31,6 +33,34 @@ class AdminListingList extends React.Component {
 
     callBackSaveListing() {
         this.getListing();
+    }
+
+    getProductName(productId) {
+        let product;
+
+        for (let i in this.state.products) {
+            if (this.state.products[i].id === productId) {
+                product = this.state.products[i].name;
+                break;
+            }
+        }
+
+        return product;
+    }
+
+    getUserName(userId) {
+        let user;
+
+        for (let i in this.state.users) {
+            if (this.state.users[i].id === userId) {
+                user = `${this.state.users[i].last_name}, ${this.state.users[i].first_name}`;
+                break;
+            } else {
+                user = "Superadmin";
+            }
+        }
+
+        return user;
     }
 
     deleteListing(listing, event) {
@@ -52,17 +82,15 @@ class AdminListingList extends React.Component {
         })
     }
 
-    getProductName(productId) {
-        let product;
+    getUsers() {
+        let api_url = "/api/users/";
 
-        for (let i in this.state.products) {
-            if (this.state.products[i].id === productId) {
-                product = this.state.products[i].name;
-                break;
-            }
-        }
-
-        return product;
+        axios.get(api_url).then(res => {
+            this.setState({"users": res.data});
+        }).catch(error => {
+            console.log(error);
+            Toast.error(error.response.data.message);
+        })
     }
 
     getstockOut() {
@@ -194,7 +222,7 @@ class AdminListingList extends React.Component {
                                                     <tr key={element.id}>
                                                         <td>{this.getProductName(element.product)}</td>
                                                         <td>{element.price}</td>
-                                                        <td>{element.created_by}</td>
+                                                        <td>{this.getUserName(element.created_by)}</td>
                                                         <td>{element.created_at}</td>
                                                         <td>{element.updated_at}</td>
                                                         <td>

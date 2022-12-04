@@ -30,6 +30,15 @@ from app.api.views.listing import (
 
 from app.api.views.cashier import (
     CashierAPIView,
+    CashierLastTransactionAPIView,
+)
+
+from app.api.views.invoice import (
+    InvoiceAPIView,
+)
+
+from app.api.views.sales import (
+    SalesAPIView,
 )
 
 from app.api.views.available_stock import (
@@ -68,4 +77,11 @@ urlpatterns = [
     # Cashier URLs
     path("cashier/listing/", CashierAPIView.as_view()),
     path("cashier/checkout/", CashierAPIView.as_view()),
+    path("cashier/last-transaction/<int:pk>/", CashierLastTransactionAPIView.as_view()),
+
+    # Invoice URLs
+    path("invoice/", InvoiceAPIView.as_view()),
+
+    # Sales URLs
+    path("sales/", SalesAPIView.as_view())
 ]

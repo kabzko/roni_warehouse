@@ -63,8 +63,7 @@ class UserCheckoutDialog extends React.Component {
         }
         
         axios.post(api_url, data).then(res => {
-            alert(res.data, "success", "success-notification");
-            this.props.callBackSave();
+            this.props.callBackSave(res.data.reference_no);
 
             if (!data.id) {
                 this.setState({
@@ -103,7 +102,7 @@ class UserCheckoutDialog extends React.Component {
 
                                 <div className="row mb-2">
                                     <label htmlFor="price" className="col-form-label text-start">
-                                        <span className="text-danger">*</span>Pay:
+                                        <span className="text-danger">*</span>Enter customer payment:
                                     </label>
                                     <div>
                                         <input ref={(input) => { this.payInput = input; }} type="number" className="form-control" id="amount_pay" placeholder="Enter here.." onChange={this.inputChange.bind(this, "amount_pay")} value={this.state.amount_pay}></input>

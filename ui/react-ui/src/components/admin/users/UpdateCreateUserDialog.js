@@ -112,6 +112,8 @@ class UpdateCreateUserDialog extends React.Component {
                                             value={this.state.user_type} onChange={this.inputChange.bind(this, "user_type")}>
                                             <option defaultValue="">Select user type</option>
                                             <option value="admin">Admin</option>
+                                            <option value="inventory">Inventory</option>
+                                            <option value="pointOfSale">Point of Sale</option>
                                             <option value="cashier">Cashier</option>
                                         </select>
                                     </div>
