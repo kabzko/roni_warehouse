@@ -64,7 +64,7 @@ class AdminStockOutList extends React.Component {
     }
 
     getStockIn() {
-        let api_url = "/api/stock-in/";
+        let api_url = "/api/stock-in/list/";
 
         axios.get(api_url).then(res => {
             res.data.map(data => {

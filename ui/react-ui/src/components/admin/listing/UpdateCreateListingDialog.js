@@ -7,16 +7,6 @@ import alert from '../../../utils/alert';
 
 const productOptions = [];
 let stockOutOptions = [];
-const unitOfMeasureOptions = [{
-    value: "pieces",
-    label: "Pieces"
-}, {
-    value: "bundle",
-    label: "Bundle"
-}, {
-    value: "box",
-    label: "Box"
-}];
 
 class UpdateCreateListingDialog extends React.Component {
     constructor(props) {

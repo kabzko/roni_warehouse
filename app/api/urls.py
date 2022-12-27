@@ -16,6 +16,7 @@ from app.api.views.product import (
 from app.api.views.stock_in import (
     StockInAPIView,
     StockInDetailAPIView,
+    StockInListAPIView,
 )
 
 from app.api.views.stock_out import (
@@ -61,6 +62,7 @@ urlpatterns = [
 
     # Stock In URLs
     path("stock-in/", StockInAPIView.as_view()),
+    path("stock-in/list/", StockInListAPIView.as_view()),
     path("stock-in/<int:pk>/", StockInDetailAPIView.as_view()),
 
     # Stock Out URLs

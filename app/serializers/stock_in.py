@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from app.models.stock_in import StockIn
+from app.models.stock_in import StockIn, GroupStockIn
 
 class StockInSerializer(serializers.ModelSerializer):
     """Stock In model serializer"""
@@ -11,19 +11,11 @@ class StockInSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "product",
-            "created_by",
-            "supplier_name",
+            "group",
             "unit_of_measure",
-            "checked_by",
-            "received_by",
-            "truck_plate_number",
-            "truck_driver",
             "price",
             "quantity",
             "number_of_pieces",
-            "date",
-            "created_at",
-            "updated_at",
         ]
 
         extra_kwargs = {
@@ -32,13 +24,6 @@ class StockInSerializer(serializers.ModelSerializer):
                     "blank": "Product is required!",
                     "null": "Product is required!",
                     "required": "Product is required!",
-                }
-            },
-            "created_by": {
-                "error_messages": {
-                    "blank": "Created by is required!",
-                    "null": "Created by is required!",
-                    "required": "Created by is required!",
                 }
             },
             "unit_of_measure": {
@@ -62,6 +47,35 @@ class StockInSerializer(serializers.ModelSerializer):
                 "error_messages": {
                     "blank": "Number of pieces is required!",
                     "invalid": "Number of pieces must be a valid number!",
+                }
+            },
+        }
+
+class GroupStockInSerializer(serializers.ModelSerializer):
+    """Group Stock In model serializer"""
+    
+    class Meta:
+        model = GroupStockIn
+        
+        fields = [
+            "id",
+            "created_by",
+            "supplier_name",
+            "checked_by",
+            "received_by",
+            "truck_plate_number",
+            "truck_driver",
+            "created_at",
+            "updated_at",
+            "date",
+        ]
+
+        extra_kwargs = {
+            "created_by": {
+                "error_messages": {
+                    "blank": "Created by is required!",
+                    "null": "Created by is required!",
+                    "required": "Created by is required!",
                 }
             },
             "date": {

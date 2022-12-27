@@ -142,13 +142,8 @@ class AdminStockInList extends React.Component {
                                 <table className="table table-hover">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Product</th>
                                             <th scope="col">Date</th>
                                             <th scope="col">Supplier name</th>
-                                            <th scope="col">Price</th>
-                                            <th scope="col">Unit of measure</th>
-                                            <th scope="col">Quantity</th>
-                                            <th scope="col">Number of pieces</th>
                                             <th scope="col">Received by</th>
                                             <th scope="col">Date created</th>
                                             <th scope="col">Last changes</th>
@@ -160,13 +155,8 @@ class AdminStockInList extends React.Component {
                                         ?  this.state.stockIn.map(stockin => {
                                                 return(
                                                     <tr key={stockin.id}>
-                                                        <td>{this.getProductName(stockin.product)}</td>
                                                         <td>{stockin.date}</td>
                                                         <td>{stockin.supplier_name}</td>
-                                                        <td>{stockin.price}</td>
-                                                        <td>{stockin.unit_of_measure}</td>
-                                                        <td>{stockin.quantity}</td>
-                                                        <td>{stockin.number_of_pieces}</td>
                                                         <td>{stockin.received_by}</td>
                                                         <td>{stockin.created_at}</td>
                                                         <td>{stockin.updated_at}</td>
