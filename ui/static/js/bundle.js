@@ -5587,6 +5587,10 @@ var AdminDashboard = /*#__PURE__*/function (_React$Component) {
 
     (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, AdminDashboard);
 
+    if (sessionStorage.getItem("user_type") !== "admin") {
+      window.location.href = "/";
+    }
+
     _this = _super.call(this, props);
     _this.state = {
       products: [],
@@ -5775,6 +5779,10 @@ var AdminInvoiceList = /*#__PURE__*/function (_React$Component) {
     var _this;
 
     (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__["default"])(this, AdminInvoiceList);
+
+    if (sessionStorage.getItem("user_type") !== "admin") {
+      window.location.href = "/";
+    }
 
     _this = _super.call(this, props);
     _this.state = {
@@ -6314,6 +6322,10 @@ var AdminListingList = /*#__PURE__*/function (_React$Component) {
     var _this;
 
     (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__["default"])(this, AdminListingList);
+
+    if (sessionStorage.getItem("user_type") !== "admin") {
+      window.location.href = "/";
+    }
 
     _this = _super.call(this, props);
     _this.state = {
@@ -7090,7 +7102,8 @@ var AdminLogin = /*#__PURE__*/function (_React$Component) {
       var data = _objectSpread({}, this.state);
 
       data["login_as"] = "admin";
-      _utils_axios__WEBPACK_IMPORTED_MODULE_9__["default"].post("/api/login/", data).then(function () {
+      _utils_axios__WEBPACK_IMPORTED_MODULE_9__["default"].post("/api/login/", data).then(function (res) {
+        sessionStorage.setItem("user_type", res.data.user_type);
         window.location.href = "/web/admin/dashboard";
       }).catch(function (error) {
         var error_msg = error.response.data.message;
@@ -7209,6 +7222,10 @@ var AdminProductList = /*#__PURE__*/function (_React$Component) {
     var _this;
 
     (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__["default"])(this, AdminProductList);
+
+    if (sessionStorage.getItem("user_type") !== "admin") {
+      window.location.href = "/";
+    }
 
     _this = _super.call(this, props);
     _this.state = {
@@ -7678,6 +7695,10 @@ var AdminSalesChart = /*#__PURE__*/function (_React$Component) {
 
     (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, AdminSalesChart);
 
+    if (sessionStorage.getItem("user_type") !== "admin") {
+      window.location.href = "/";
+    }
+
     _this = _super.call(this, props);
     _this.state = {
       sales: []
@@ -7838,6 +7859,10 @@ var AdminStockInList = /*#__PURE__*/function (_React$Component) {
     var _this;
 
     (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__["default"])(this, AdminStockInList);
+
+    if (sessionStorage.getItem("user_type") !== "admin") {
+      window.location.href = "/";
+    }
 
     _this = _super.call(this, props);
     _this.state = {
@@ -8618,6 +8643,10 @@ var AdminStockOutList = /*#__PURE__*/function (_React$Component) {
 
     (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__["default"])(this, AdminStockOutList);
 
+    if (sessionStorage.getItem("user_type") !== "admin") {
+      window.location.href = "/";
+    }
+
     _this = _super.call(this, props);
     _this.state = {
       products: [],
@@ -9348,6 +9377,10 @@ var AdminUsersList = /*#__PURE__*/function (_React$Component) {
     var _this;
 
     (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__["default"])(this, AdminUsersList);
+
+    if (sessionStorage.getItem("user_type") !== "admin") {
+      window.location.href = "/";
+    }
 
     _this = _super.call(this, props);
     _this.state = {
@@ -10302,6 +10335,10 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
 
     (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2__["default"])(this, UserDashboard);
 
+    if (sessionStorage.getItem("user_type") !== "cashier") {
+      window.location.href = "/";
+    }
+
     _this = _super.call(this, props);
     _this.state = {
       products: [],
@@ -10719,7 +10756,8 @@ var AdminLogin = /*#__PURE__*/function (_React$Component) {
       var data = _objectSpread({}, this.state);
 
       data["login_as"] = "cashier";
-      _utils_axios__WEBPACK_IMPORTED_MODULE_9__["default"].post("/api/login/", data).then(function () {
+      _utils_axios__WEBPACK_IMPORTED_MODULE_9__["default"].post("/api/login/", data).then(function (res) {
+        sessionStorage.setItem("user_type", res.data.user_type);
         window.location.href = "/web/user/dashboard";
       }).catch(function (error) {
         var error_msg = error.response.data.message;

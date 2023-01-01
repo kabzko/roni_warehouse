@@ -29,6 +29,10 @@ ChartJS.register(
 
 class AdminSalesChart extends React.Component {
     constructor(props) {
+        if (sessionStorage.getItem("user_type") !== "admin") {
+            window.location.href = "/";
+        }
+        
         super(props);
         this.state = {
             sales: [],

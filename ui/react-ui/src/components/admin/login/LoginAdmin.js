@@ -32,7 +32,8 @@ class AdminLogin extends React.Component {
         let data = {...this.state};
         data["login_as"] = "admin";
         
-        axios.post("/api/login/", data).then(() => {
+        axios.post("/api/login/", data).then((res) => {
+            sessionStorage.setItem("user_type", res.data.user_type);
             window.location.href ="/web/admin/dashboard";
         }).catch(error => {
             let error_msg = error.response.data.message;

@@ -10,6 +10,10 @@ import Toast from "../../../utils/toast";
 
 class AdminProductList extends React.Component {
     constructor(props) {
+        if (sessionStorage.getItem("user_type") !== "admin") {
+            window.location.href = "/";
+        }
+        
         super(props);
         this.state = {
             products: [],

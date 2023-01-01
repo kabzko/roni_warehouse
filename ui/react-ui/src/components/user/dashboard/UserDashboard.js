@@ -11,6 +11,10 @@ import './Dashboard.css';
 
 class UserDashboard extends React.Component {
     constructor(props) {
+        if (sessionStorage.getItem("user_type") !== "cashier") {
+            window.location.href = "/";
+        }
+
         super(props);
         this.state = {
             products: [],

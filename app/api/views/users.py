@@ -57,7 +57,8 @@ class UserLoginAPIView(API):
                 token, created = Token.objects.get_or_create(user=user)
                 response = {
                     "message": "Signin successfully.",
-                    "token": token.key
+                    "token": token.key,
+                    "user_type": user.user_type,
                 }
                 return self.success_response(response)
             else:
