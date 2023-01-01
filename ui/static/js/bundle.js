@@ -8101,9 +8101,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js");
-/* harmony import */ var react_select__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! react-select */ "./node_modules/react-select/dist/react-select.esm.js");
+/* harmony import */ var react_select__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! react-select */ "./node_modules/react-select/dist/react-select.esm.js");
 /* harmony import */ var _utils_axios__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../../utils/axios */ "./src/utils/axios.js");
 /* harmony import */ var _utils_alert__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../../utils/alert */ "./src/utils/alert.js");
+/* harmony import */ var _utils_toast__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../../utils/toast */ "./src/utils/toast.js");
 
 
 
@@ -8121,6 +8122,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_8__["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_8__["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_7__["default"])(this, result); }; }
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
 
 
 
@@ -8157,16 +8159,18 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
       "received_by": props.received_by ? props.received_by : "",
       "truck_plate_number": props.truck_plate_number ? props.truck_plate_number : "",
       "truck_driver": props.truck_driver ? props.truck_driver : "",
-      "date": props.date ? props.date : ""
+      "date": props.date ? props.date : "",
+      "products": props.products ? props.products : []
     };
 
     if (props.id) {
       _this.state["id"] = props.id;
     }
 
-    if (props.products) {
+    if (_this.state.products) {
       productOptions.splice(0, productOptions.length);
-      props.products.map(function (prod) {
+
+      _this.state.products.map(function (prod) {
         productOptions.push({
           value: prod.id,
           label: prod.name
@@ -8205,6 +8209,33 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
         keyboard: false
       });
       this.modal.show();
+    }
+  }, {
+    key: "getProducts",
+    value: function getProducts() {
+      var _this2 = this;
+
+      debugger;
+      _utils_axios__WEBPACK_IMPORTED_MODULE_11__["default"].get("/api/products/").then(function (res) {
+        _this2.setState({
+          "products": res.data
+        }, function () {
+          if (_this2.state.products) {
+            productOptions.splice(0, productOptions.length);
+
+            _this2.state.products.map(function (prod) {
+              productOptions.push({
+                value: prod.id,
+                label: prod.name
+              });
+              return prod;
+            });
+          }
+        });
+      }).catch(function (error) {
+        console.log(error);
+        _utils_toast__WEBPACK_IMPORTED_MODULE_13__["default"].error(error.response.data.message);
+      });
     }
   }, {
     key: "getProduct",
@@ -8296,7 +8327,7 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleSaveStockIn",
     value: function handleSaveStockIn(event) {
-      var _this2 = this;
+      var _this3 = this;
 
       event.preventDefault();
 
@@ -8321,17 +8352,17 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
       _utils_axios__WEBPACK_IMPORTED_MODULE_11__["default"].post(api_url, data).then(function (res) {
         (0,_utils_alert__WEBPACK_IMPORTED_MODULE_12__["default"])(res.data, "success", "success-notification");
 
-        _this2.props.callBackSave();
+        _this3.props.callBackSave();
 
         if (!data.id) {
-          _this2.setState({
+          _this3.setState({
             "supplier_name": "",
             "checked_by": "",
             "received_by": "",
             "truck_plate_number": "",
             "truck_driver": "",
             "date": "",
-            "list": [_this2.getEmptyList()]
+            "list": [_this3.getEmptyList()]
           });
         }
       }).catch(function (error) {
@@ -8378,7 +8409,7 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("div", {
         className: "modal modal-xl fade",
@@ -8479,7 +8510,14 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
         placeholder: "Enter here..",
         onChange: this.inputChange.bind(this, "checked_by"),
         value: this.state.checked_by
-      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("hr", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("h5", null, "Stocks"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("table", {
+      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("hr", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("div", {
+        className: "d-flex align-items-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("h5", null, "Stocks")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("div", {
+        className: "ms-2"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("button", {
+        className: "btn btn-sm btn-primary",
+        onClick: this.getProducts.bind(this)
+      }, "Reload products"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("table", {
         className: "table table-bordered"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("th", {
         style: {
@@ -8492,34 +8530,34 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
       }, "Unit of Measure"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("th", null, "No. of Pieces per UOM"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("th", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("tbody", null, this.state.list.map(function (el, idx) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("tr", {
           key: idx
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement(react_select__WEBPACK_IMPORTED_MODULE_13__["default"], {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement(react_select__WEBPACK_IMPORTED_MODULE_14__["default"], {
           value: el.product,
-          onChange: _this3.selectProductChange.bind(_this3, idx),
+          onChange: _this4.selectProductChange.bind(_this4, idx),
           options: productOptions
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("input", {
           type: "number",
           className: "form-control",
           id: "price",
           placeholder: "Enter here..",
-          onChange: _this3.listInputChange.bind(_this3, "price", idx),
+          onChange: _this4.listInputChange.bind(_this4, "price", idx),
           value: el.price
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("input", {
           type: "number",
           className: "form-control",
           id: "quantity",
           placeholder: "Enter here..",
-          onChange: _this3.listInputChange.bind(_this3, "quantity", idx),
+          onChange: _this4.listInputChange.bind(_this4, "quantity", idx),
           value: el.quantity
-        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement(react_select__WEBPACK_IMPORTED_MODULE_13__["default"], {
+        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement(react_select__WEBPACK_IMPORTED_MODULE_14__["default"], {
           value: el.unit_of_measure,
-          onChange: _this3.selectUnitOfMeasureChange.bind(_this3, idx),
+          onChange: _this4.selectUnitOfMeasureChange.bind(_this4, idx),
           options: unitOfMeasureOptions
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("td", null, el.unit_of_measure.value !== "pieces" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("input", {
           type: "number",
           className: "form-control",
           id: "number-of-pieces",
           placeholder: "Enter here..",
-          onChange: _this3.listInputChange.bind(_this3, "number_of_pieces", idx),
+          onChange: _this4.listInputChange.bind(_this4, "number_of_pieces", idx),
           value: el.number_of_pieces
         }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("input", {
           type: "number",
@@ -8530,7 +8568,7 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
           disabled: true
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("button", {
           className: "btn btn-sm btn-danger",
-          onClick: _this3.removeList.bind(_this3, idx)
+          onClick: _this4.removeList.bind(_this4, idx)
         }, "Delete")));
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("button", {
         className: "btn btn-sm btn-primary",
@@ -9755,7 +9793,7 @@ var UpdateCreateUserDialog = /*#__PURE__*/function (_React$Component) {
         value: "pointOfSale"
       }, "Point of Sale"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("option", {
         value: "cashier"
-      }, "Cashier")))), this.state.user_type ? this.state.user_type === "admin" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+      }, "Cashier")))), this.state.user_type ? this.state.user_type !== "cashier" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
         className: "row mb-2"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("label", {
         htmlFor: "email",
@@ -10533,17 +10571,19 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
           className: "card"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
-          className: "card-body"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("h5", {
+          className: "card-body d-flex"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("h5", {
           className: "card-title"
-        }, listingProduct.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("p", {
+        }, listingProduct.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("span", {
           className: "carts-text"
-        }, elementList.price, " per ", elementList.unit_of_measure), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("button", {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("b", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("small", null, listingProduct.barcode))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("span", {
+          className: "carts-text"
+        }, elementList.price, " per ", elementList.unit_of_measure)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("button", {
           className: "btn btn-primary",
           onClick: function onClick() {
             return _this6.checkScannedBarcode(listingProduct.barcode);
           }
-        }, "Add to carts"))));
+        }, "Add to carts")))));
       });
     }
   }, {
