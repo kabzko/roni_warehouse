@@ -165,10 +165,15 @@ class UserDashboard extends React.Component {
             return (
                 <div key={elementList.id} className="col-4">
                     <div className="card">
-                        <div className="card-body">
-                            <h5 className="card-title">{listingProduct.name}</h5>
-                            <p className="carts-text">{elementList.price} per {elementList.unit_of_measure}</p>
-                            <button className="btn btn-primary" onClick={() => this.checkScannedBarcode(listingProduct.barcode)}>Add to carts</button>
+                        <div className="card-body d-flex">
+                            <div>
+                                <h5 className="card-title">{listingProduct.name}</h5>
+                                <span className="carts-text"><b><small>{listingProduct.barcode}</small></b></span><br />
+                                <span className="carts-text">{elementList.price} per {elementList.unit_of_measure}</span>
+                            </div>
+                            <div>
+                                <button className="btn btn-primary" onClick={() => this.checkScannedBarcode(listingProduct.barcode)}>Add to carts</button>
+                            </div>
                         </div>
                     </div>
                 </div>

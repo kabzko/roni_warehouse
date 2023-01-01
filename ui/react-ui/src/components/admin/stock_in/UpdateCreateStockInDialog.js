@@ -4,6 +4,7 @@ import Select from 'react-select';
 
 import axios from '../../../utils/axios';
 import alert from '../../../utils/alert';
+import Toast from "../../../utils/toast";
 
 const productOptions = [];
 const unitOfMeasureOptions = [{
@@ -28,15 +29,16 @@ class UpdateCreateStockInDialog extends React.Component {
             "truck_plate_number": props.truck_plate_number ? props.truck_plate_number : "",
             "truck_driver": props.truck_driver ? props.truck_driver : "",
             "date": props.date ? props.date : "",
+            "products": props.products ? props.products : [],
         };
 
         if (props.id) {
             this.state["id"] = props.id;
         }
 
-        if (props.products) {
+        if (this.state.products) {
             productOptions.splice(0, productOptions.length);
-            props.products.map(prod => {
+            this.state.products.map(prod => {
                 productOptions.push({
                     value: prod.id,
                     label: prod.name,
@@ -85,6 +87,27 @@ class UpdateCreateStockInDialog extends React.Component {
             keyboard: false
         })
         this.modal.show();
+    }
+
+    getProducts() {
+        debugger;
+        axios.get("/api/products/").then(res => {
+            this.setState({"products": res.data}, () => {
+                if (this.state.products) {
+                    productOptions.splice(0, productOptions.length);
+                    this.state.products.map(prod => {
+                        productOptions.push({
+                            value: prod.id,
+                            label: prod.name,
+                        })
+                        return prod;
+                    })
+                }
+            });
+        }).catch(error => {
+            console.log(error);
+            Toast.error(error.response.data.message);
+        })
     }
 
     getProduct(productId) {
@@ -303,7 +326,14 @@ class UpdateCreateStockInDialog extends React.Component {
                                 </div>
 
                                 <hr></hr>
-                                <h5>Stocks</h5>
+                                <div className="d-flex align-items-center">
+                                    <div>
+                                        <h5>Stocks</h5>
+                                    </div>
+                                    <div className="ms-2">
+                                        <button className="btn btn-sm btn-primary" onClick={this.getProducts.bind(this)}>Reload products</button>
+                                    </div>
+                                </div>
                                 <table className="table table-bordered">
                                     <thead>
                                         <tr>

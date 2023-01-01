@@ -120,7 +120,7 @@ class UpdateCreateUserDialog extends React.Component {
                                 </div>
                                 {
                                     this.state.user_type ? 
-                                        this.state.user_type === "admin" ?
+                                        this.state.user_type !== "cashier" ?
                                         <div className="row mb-2">
                                             <label htmlFor="email" className="col-form-label col-sm-4 text-end">
                                                 <span className="text-danger">*</span>Email:
