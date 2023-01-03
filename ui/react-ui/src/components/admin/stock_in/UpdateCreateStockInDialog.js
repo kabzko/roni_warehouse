@@ -89,8 +89,8 @@ class UpdateCreateStockInDialog extends React.Component {
         this.modal.show();
     }
 
-    getProducts() {
-        debugger;
+    getProducts(event) {
+        event.preventDefault();
         axios.get("/api/products/").then(res => {
             this.setState({"products": res.data}, () => {
                 if (this.state.products) {
