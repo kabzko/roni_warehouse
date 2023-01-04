@@ -49,6 +49,9 @@ class UserCheckoutDialog extends React.Component {
     }
 
     handleCheckout(event) {
+        if (event.keyCode) {
+            if (event.keyCode !== 13) return;
+        }
         event.preventDefault();
         let data = {...this.state};
         let api_url = "/api/cashier/checkout/";
@@ -105,7 +108,7 @@ class UserCheckoutDialog extends React.Component {
                                         <span className="text-danger">*</span>Enter customer payment:
                                     </label>
                                     <div>
-                                        <input ref={(input) => { this.payInput = input; }} type="number" className="form-control" id="amount_pay" placeholder="Enter here.." onChange={this.inputChange.bind(this, "amount_pay")} value={this.state.amount_pay}></input>
+                                        <input ref={(input) => { this.payInput = input; }} type="number" className="form-control" id="amount_pay" placeholder="Enter here.." onChange={this.inputChange.bind(this, "amount_pay")} value={this.state.amount_pay} onKeyDown={this.handleCheckout}></input>
                                     </div>
                                 </div>
 

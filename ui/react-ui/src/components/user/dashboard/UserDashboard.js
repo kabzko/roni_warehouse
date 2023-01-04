@@ -22,6 +22,8 @@ class UserDashboard extends React.Component {
             carts: [],
             lastProduct: {},
             lastTransaction: {},
+            setQuantity: false,
+            settedQuantity: 1,
         };
 
         this.callBackSaveListing = this.callBackSaveListing.bind(this);
@@ -184,18 +186,25 @@ class UserDashboard extends React.Component {
     renderProductScannedModal() {
         if (!Object.keys(this.state.lastProduct).length) {
             return (
-                <>
+                <div className="border">
                     <div></div>
-                    <div className="product-scanned text-end">
-                        <label>
-                            {this.priceFormat(0)}
-                        </label>
+                    <div className="d-flex justify-content-between">
+                        <div className="product-scanned text-start">
+                            <label>
+                                ×{this.state.settedQuantity}
+                            </label>
+                        </div>
+                        <div className="product-scanned text-end">
+                            <label>
+                                {this.priceFormat(0)}
+                            </label>
+                        </div>
                     </div>
-                </>
+                </div>
             )
         }
         return (
-            <>
+            <div className="border">
                 <div>
                     <label>
                         {this.state.lastProduct.name}
@@ -209,12 +218,19 @@ class UserDashboard extends React.Component {
                         ×{this.priceFormat(this.state.lastProduct.quantity)}
                     </label>
                 </div>
-                <div className="product-scanned text-end">
-                    <label>
-                        {this.priceFormat(this.state.lastProduct.price)}
-                    </label>
+                <div className="d-flex justify-content-between">
+                    <div className="product-scanned text-start">
+                        <label>
+                            ×{this.state.settedQuantity}
+                        </label>
+                    </div>
+                    <div className="product-scanned text-end">
+                        <label>
+                            {this.priceFormat(this.state.lastProduct.price)}
+                        </label>
+                    </div>
                 </div>
-            </>
+            </div>
         )
     }
 
@@ -318,9 +334,7 @@ class UserDashboard extends React.Component {
                                 </div>
                             </div>
                             <div className="col-6">
-                                <div className="d-flex justify-content-between border">
-                                    {this.renderProductScannedModal()}
-                                </div>
+                                {this.renderProductScannedModal()}
                                 <table className="table table-bordered">
                                     <thead>
                                         <tr>
@@ -341,6 +355,7 @@ class UserDashboard extends React.Component {
                         </div>
                         <div>
                             <button className="btn btn-danger" onClick={this.logout}>Logout</button>
+                            <button className="btn btn-success float-end" onClick={this.showUserCheckoutModal}>Set Quantity</button>
                             <button className="btn btn-success float-end" onClick={this.showUserCheckoutModal}>Checkout</button>
                         </div>
                     </div> :
