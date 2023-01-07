@@ -27,14 +27,19 @@ class UserLoginAPIView(API):
         """Login User"""
         try:
             payload = request.data
+            filters = Q()
 
             if payload.get("login_as") == "admin":
                 if not payload.get("email"):
                     self.raise_error(title="Error", message="Please provide email!")
+                else:
+                    filters = Q(email=payload.get("email", None))
             
             if payload.get("login_as") == "cashier":
                 if not payload.get("cashier_id"):
                     self.raise_error(title="Error", message="Please provide cashier id!")
+                else:
+                    filters = Q(cashier_id=payload.get("cashier_id", None))
 
             if not payload.get("password"):
                 self.raise_error(title="Error", message="Please provide password!")
@@ -43,15 +48,17 @@ class UserLoginAPIView(API):
                 self.raise_error(title="Error", message="Please specify login type!")
             
             try:
-                user_account = User.objects.get(Q(cashier_id=payload.get("cashier_id", None)) or Q(email=payload.get("email", None)))
+                user_account = User.objects.get(filters)
             except User.DoesNotExist:
                 self.raise_error(title="Error", message="Invalid username or password.")
-
+            print(user_account.system_id, payload.get("password"))
             user = authenticate(system_id=user_account.system_id, password=payload.get("password"))
-
+            print(user)
             if user:
-                if user.user_type != payload.get("login_as"):
-                    self.raise_error(title="Error", message="Invalid username or password!")
+                print(user.user_type)
+                if user.user_type == "cashier":
+                    if user.user_type != payload.get("login_as"):
+                        self.raise_error(title="Error", message="Invalid username or password!")
 
                 login(request, user)
                 token, created = Token.objects.get_or_create(user=user)

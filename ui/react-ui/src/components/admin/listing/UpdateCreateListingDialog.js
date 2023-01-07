@@ -40,12 +40,13 @@ class UpdateCreateListingDialog extends React.Component {
             stockOutOptions.splice(0, stockOutOptions.length);
             const filteredStockOutDatas = this.state.product ? props.stockOutOptions.filter(element => element.product === parseInt(this.state.product.value)) : props.stockOutOptions;
             filteredStockOutDatas.map(stock => {
-                let stockInDatas = props.stockInOptions.find(element => element.id === parseInt(stock.stock_in));
+                let stockInDatas = props.stockInOptions.find(element => element.id === parseInt(stock.stock_in)).list;
                 let stockOut = {};
                 stockOut["value"] = stock.id;
 
                 let product = this.getProduct(stock.product);
-                stockOut["label"] = `${product.label} (${stock.quantity} ${stockInDatas.unit_of_measure})`;
+                let stockInDatasList = stockInDatas.find(element => element.id === stock.product);
+                stockOut["label"] = `${product.label} (${stock.quantity} ${stockInDatasList.unit_of_measure})`;
 
                 stockOutOptions.push(stockOut);
                 return stock;
@@ -115,12 +116,13 @@ class UpdateCreateListingDialog extends React.Component {
         stockOutOptions.splice(0, stockOutOptions.length);
         const filteredStockOutDatas = this.props.stockOutOptions.filter(element => element.product === parseInt(selectedOption.value));
         filteredStockOutDatas.map(stock => {
-            let stockInDatas = this.props.stockInOptions.find(element => element.id === parseInt(stock.stock_in));
+            let stockInDatas = this.props.stockInOptions.find(element => element.id === parseInt(stock.stock_in)).list;
             let stockOut = {};
             stockOut["value"] = stock.id;
 
             let product = this.getProduct(stock.product);
-            stockOut["label"] = `${product.label} (${stock.quantity} ${stockInDatas.unit_of_measure})`;
+            let stockInDatasList = stockInDatas.find(element => element.id === stock.product);
+            stockOut["label"] = `${product.label} (${stock.quantity} ${stockInDatasList.unit_of_measure})`;
 
             stockOutOptions.push(stockOut);
             return stock;
@@ -155,8 +157,9 @@ class UpdateCreateListingDialog extends React.Component {
         }
 
         const stockOutDatas = this.props.stockOutOptions.filter(element => data.stock_out.includes(element.id));
-        const stockInDatas = this.props.stockInOptions.find(element => element.id === parseInt(stockOutDatas[0].stock_in));
-        data["unit_of_measure"] = stockInDatas.unit_of_measure;
+        const stockInDatas = this.props.stockInOptions.find(element => element.id === parseInt(stockOutDatas[0].stock_in)).list;
+        const stockInDatasList = stockInDatas.find(element => element.id === data["product"]);
+        data["unit_of_measure"] = stockInDatasList.unit_of_measure;
 
         if (data.quantity) {
             if (data.quantity > data.available_stock) {

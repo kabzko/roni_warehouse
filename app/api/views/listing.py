@@ -91,6 +91,7 @@ class ListingDetailAPIView(API):
         try:
             data = request.data
             data["created_by"] = request.user.pk
+            data["stock_out"] = json.dumps(data["stock_out"])
             listing_instance = Listing.objects.get(pk=pk)
             listing_serializer = ListingSerializer(listing_instance, data=data)
 

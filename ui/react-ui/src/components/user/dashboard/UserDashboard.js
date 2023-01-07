@@ -2,6 +2,7 @@ import React from 'react';
 import { toast } from 'react-toastify';
 
 import UserCheckoutDialog from './UserCheckoutDialog';
+import UserQuantityDialog from './UserQuantityDialog';
 
 import axios from '../../../utils/axios';
 
@@ -21,14 +22,15 @@ class UserDashboard extends React.Component {
             listing: [],
             carts: [],
             lastProduct: {},
-            lastTransaction: {},
-            setQuantity: false,
-            settedQuantity: 1,
+            lastTransaction: {"sales":{"id":8,"reference_no":"20230107132255","cashier_by":5,"payment_type":"cash","amount_pay":"500.00","created_at":"2023-01-07T13:22:55.725099Z","updated_at":"2023-01-07T13:22:55.725120Z","total_amount":360.0},"carts":[{"id":1,"sales":8,"product":1,"unit_of_measure":"pieces","quantity":6,"price":"60.00","created_at":"2023-01-07T13:22:55.737181Z","updated_at":"2023-01-07T13:22:55.737215Z"}]},
         };
 
         this.callBackSaveListing = this.callBackSaveListing.bind(this);
+        this.callBackFinalizeQuantity = this.callBackFinalizeQuantity.bind(this);
         this.showUserCheckoutModal = this.showUserCheckoutModal.bind(this);
+        this.showUserQuantityModal = this.showUserQuantityModal.bind(this);
 
+        this.getUsers();
         this.getProducts();
         this.getListing();
     }
@@ -41,10 +43,14 @@ class UserDashboard extends React.Component {
         this.getLastTransaction(referenceNo);
     }
 
+    callBackFinalizeQuantity(sScancode, quantity) {
+        this.checkScannedBarcode(sScancode, quantity);
+    }
+
     componentDidMount() {
         onScan.attachTo(document);
         document.addEventListener("scan", (sScancode, iQuantity) => {
-            this.checkScannedBarcode(sScancode.detail.scanCode);
+            this.showUserQuantityModal(sScancode.detail.scanCode);
         });
     }
 
@@ -56,6 +62,21 @@ class UserDashboard extends React.Component {
     priceFormat(value) {
         const val = (value/1).toFixed(2).replace(",", ".")
         return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    }
+
+    getUserName(userId) {
+        let user;
+
+        for (let i in this.state.users) {
+            if (this.state.users[i].id === userId) {
+                user = `${this.state.users[i].first_name}`;
+                break;
+            } else {
+                user = "Superadmin";
+            }
+        }
+
+        return user;
     }
 
     getProductName(productId) {
@@ -79,6 +100,17 @@ class UserDashboard extends React.Component {
         })
     }
 
+    getUsers() {
+        let api_url = "/api/users/";
+
+        axios.get(api_url).then(res => {
+            this.setState({"users": res.data});
+        }).catch(error => {
+            console.log(error);
+            Toast.error(error.response.data.message);
+        })
+    }
+
     getListing() {
         axios.get("/api/cashier/listing/").then(res => {
             this.setState({"listing": res.data});
@@ -97,13 +129,13 @@ class UserDashboard extends React.Component {
         })
     }
 
-    checkScannedBarcode(scanCode) {
+    checkScannedBarcode(scanCode, quantity) {
         let productData = this.state.products.find(element => element.barcode === scanCode);
         if (productData) {
             let listingProduct = this.state.listing.find(element => element.product === parseInt(productData.id));
             let isExistInCart = this.state.carts.find(element => element.id === parseInt(productData.id));
             if (isExistInCart) {
-                let newState = this.state.carts.map(element => element.id === productData.id ? { ...element, quantity: element.quantity += 1 } : element);
+                let newState = this.state.carts.map(element => element.id === productData.id ? { ...element, quantity: element.quantity += quantity } : element);
                 this.setState({
                     carts: newState
                 });
@@ -115,7 +147,7 @@ class UserDashboard extends React.Component {
                             id: productData.id,
                             barcode: productData.barcode,
                             name: productData.name,
-                            quantity: 1,
+                            quantity: quantity,
                             price: listingProduct.price,
                             unit_of_measure: listingProduct.unit_of_measure,
                         },
@@ -127,7 +159,7 @@ class UserDashboard extends React.Component {
                     id: productData.id,
                     barcode: productData.barcode,
                     name: productData.name,
-                    quantity: 1,
+                    quantity: quantity,
                     price: listingProduct.price,
                     unit_of_measure: listingProduct.unit_of_measure,
                 }
@@ -145,6 +177,14 @@ class UserDashboard extends React.Component {
         checkout["carts"] = this.state.carts;
 
         UserCheckoutDialog.show({...checkout});
+    }
+
+    showUserQuantityModal(scanCode) {
+        const quantity = {};
+        quantity["callBackSave"] = this.callBackFinalizeQuantity;
+        quantity["scanCode"] = scanCode;
+
+        UserQuantityDialog.show({...quantity});
     }
     
     getLastTransaction(referenceNo) {
@@ -174,7 +214,7 @@ class UserDashboard extends React.Component {
                                 <span className="carts-text">{elementList.price} per {elementList.unit_of_measure}</span>
                             </div>
                             <div>
-                                <button className="btn btn-primary" onClick={() => this.checkScannedBarcode(listingProduct.barcode)}>Add to carts</button>
+                                <button className="btn btn-primary" onClick={() => this.showUserQuantityModal(listingProduct.barcode)}>Add to carts</button>
                             </div>
                         </div>
                     </div>
@@ -187,13 +227,8 @@ class UserDashboard extends React.Component {
         if (!Object.keys(this.state.lastProduct).length) {
             return (
                 <div className="border">
-                    <div></div>
                     <div className="d-flex justify-content-between">
-                        <div className="product-scanned text-start">
-                            <label>
-                                ×{this.state.settedQuantity}
-                            </label>
-                        </div>
+                        <div></div>
                         <div className="product-scanned text-end">
                             <label>
                                 {this.priceFormat(0)}
@@ -205,28 +240,24 @@ class UserDashboard extends React.Component {
         }
         return (
             <div className="border">
-                <div>
-                    <label>
-                        {this.state.lastProduct.name}
-                    </label>
-                    <br />
-                    <label>
-                        {this.priceFormat(this.state.lastProduct.price)}
-                    </label>
-                    <br />
-                    <label>
-                        ×{this.priceFormat(this.state.lastProduct.quantity)}
-                    </label>
-                </div>
+                
                 <div className="d-flex justify-content-between">
-                    <div className="product-scanned text-start">
+                    <div>
                         <label>
-                            ×{this.state.settedQuantity}
+                            {this.state.lastProduct.name}
+                        </label>
+                        <br />
+                        <label>
+                            {this.priceFormat(this.state.lastProduct.price)}
+                        </label>
+                        <br />
+                        <label>
+                            ×{this.priceFormat(this.state.lastProduct.quantity)}
                         </label>
                     </div>
                     <div className="product-scanned text-end">
                         <label>
-                            {this.priceFormat(this.state.lastProduct.price)}
+                            {this.priceFormat(this.state.lastProduct.price * this.state.lastProduct.quantity)}
                         </label>
                     </div>
                 </div>
@@ -276,18 +307,35 @@ class UserDashboard extends React.Component {
             )
         }
         return (
-            <div>
-                <div className="d-flex justify-content-between">
-                    <div><b>Ref No. </b>{this.state.lastTransaction.sales.reference_no}</div>
-                    <div>{new Date(this.state.lastTransaction.sales.created_at).toLocaleString("en-US")}</div>
+            <div className="receipt">
+                <div className="text-center">
+                    RONI WAREHOUSE CORP.
+                </div>
+                <div className="text-center">
+                    POB. 1, VILLANUEVA, MIS. OR.
+                </div>
+                <div className="text-center">
+                    TIN: 493-862-572-000
+                </div>
+                <div className="text-center">
+                    SN: Z9AXGWFX
+                </div>
+                <div className="text-center">
+                    MIN: 19082817512052915
+                </div>
+                <div className="text-center">
+                    PTU: FP082019098022692300000
+                </div>
+                <div className="text-center">
+                    ACC: 0500003029820000261381
                 </div>
                 <table className="table table-bordered">
                     <thead>
                         <tr>
-                            <th>Description</th>
-                            <th>Quantity</th>
-                            <th>Price</th>
-                            <th>Amount</th>
+                            <th>DESC</th>
+                            <th>QTY</th>
+                            <th>PRICE</th>
+                            <th>AMOUNT</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -306,16 +354,75 @@ class UserDashboard extends React.Component {
                     </tbody>
                 </table>
                 <div className="d-flex justify-content-between">
-                    <div><b>TOTAL</b></div>
+                    <div><b>SUBTOTAL:</b></div>
+                    <div>{this.priceFormat(this.state.lastTransaction.sales.total_amount - (this.state.lastTransaction.sales.total_amount * 0.12))}</div>
+                </div>
+                <div className="d-flex justify-content-between">
+                    <div><b>Vat Amount(12%):</b></div>
+                    <div>{this.priceFormat(this.state.lastTransaction.sales.total_amount * 0.12)}</div>
+                </div>
+                <div className="d-flex justify-content-between">
+                    <div><b>TOTAL:</b></div>
                     <div>{this.priceFormat(this.state.lastTransaction.sales.total_amount)}</div>
                 </div>
                 <div className="d-flex justify-content-between">
-                    <div><b>CASH</b></div>
+                    <div><b>Cash:</b></div>
                     <div>{this.priceFormat(this.state.lastTransaction.sales.amount_pay)}</div>
                 </div>
                 <div className="d-flex justify-content-between">
-                    <div><b>CHANGE</b></div>
+                    <div><b>Change:</b></div>
                     <div>{this.priceFormat(this.state.lastTransaction.sales.amount_pay - this.state.lastTransaction.sales.total_amount)}</div>
+                </div>
+                <hr />
+                <div className="d-flex justify-content-between">
+                    <div><b>Customer:</b></div>
+                    <div></div>
+                </div>
+                <div className="d-flex justify-content-between">
+                    <div><b>Address:</b></div>
+                    <div></div>
+                </div>
+                <div className="d-flex justify-content-between">
+                    <div><b>TIN:</b></div>
+                    <div></div>
+                </div>
+                <div className="d-flex justify-content-between">
+                    <div><b>B. Style:</b></div>
+                    <div></div>
+                </div>
+                <hr />
+                <div className="d-flex justify-content-between">
+                    <div><b>Vat Sales:</b></div>
+                    <div></div>
+                </div>
+                <div className="d-flex justify-content-between">
+                    <div><b>12% Vat:</b></div>
+                    <div></div>
+                </div>
+                <div className="d-flex justify-content-between">
+                    <div><b>VAT-Exempt Sale:</b></div>
+                    <div></div>
+                </div>
+                <div className="d-flex justify-content-between">
+                    <div><b>Zero Rated:</b></div>
+                    <div></div>
+                </div>
+                <hr />
+                <div className="d-flex">
+                    <div><b>No. Of Item(s): {this.state.lastTransaction.carts.length}</b></div>
+                    <div></div>
+                </div>
+                <div className="d-flex">
+                    <div><b>Receipt No.:&nbsp;</b></div>
+                    <div>{this.state.lastTransaction.sales.reference_no}</div>
+                </div>
+                <div className="d-flex">
+                    <div><b>Cashier:&nbsp;</b></div>
+                    <div>{this.getUserName(this.state.lastTransaction.sales.cashier_by)}</div>
+                </div>
+                <div className="d-flex">
+                    <div><b>Date:&nbsp;</b></div>
+                    <div>{new Date(this.state.lastTransaction.sales.created_at).toLocaleString("en-US")}</div>
                 </div>
             </div>
         )
@@ -354,16 +461,16 @@ class UserDashboard extends React.Component {
                             {this.renderTotalAmount()}
                         </div>
                         <div>
-                            <button className="btn btn-danger" onClick={this.logout}>Logout</button>
-                            <button className="btn btn-success float-end" onClick={this.showUserCheckoutModal}>Set Quantity</button>
-                            <button className="btn btn-success float-end" onClick={this.showUserCheckoutModal}>Checkout</button>
+                            <button className="btn btn-danger btn-dashboard" onClick={this.logout}>Logout</button>
+                            <button className="btn btn-success btn-dashboard float-end" onClick={this.showUserCheckoutModal}>Checkout</button>
                         </div>
                     </div> :
-                    <div className="container-fluid">
+                    <div className="container-fluid text-center">
                         {this.renderLastTransaction()}
                         <div>
-                            <button className="btn btn-danger" onClick={this.logout}>Logout</button>
-                            <button className="btn btn-primary" onClick={() => this.setState({lastTransaction: {}})}>New transaction</button>
+                            <button className="btn btn-danger btn-dashboard" onClick={this.logout}>Logout</button>
+                            <button className="btn btn-success btn-dashboard" onClick={() => this.setState({lastTransaction: {}})}>New transaction</button>
+                            <button className="btn btn-primary btn-dashboard">Print</button>
                         </div>
                     </div>
                 }

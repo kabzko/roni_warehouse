@@ -4,3 +4,11 @@
 .product-scanned {
     font-size: 8vh;
 }
+.receipt {
+    display: inline-block;
+    width: 500px;
+}
+.btn-dashboard {
+    width: 150px;
+    margin: 5px;
+}

@@ -68,6 +68,10 @@ class CashierAPIView(API):
                     cart_serializer = CartSerializer(data=cart)
                     if cart_serializer.is_valid():
                         cart_serializer.save()
+                    else:
+                        sales = Sales.objects.get(id=sales_serializer.data["id"])
+                        sales.delete()
+                        self.raise_error(title="Error", message="Something went wrong, Please try again.")
             else:
                 return self.raise_error(beautify_serializer_error(sales_serializer.errors))
 
