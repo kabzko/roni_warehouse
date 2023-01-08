@@ -28,22 +28,37 @@ class SalesAPIView(API):
         """"""
         try:
             sales = []
-            filters = request.GET.dict()
-            year = int(filters.get("year"))
-            month = int(filters.get("month"))
-            
-            calendar_last_day = calendar.monthrange(year, month)[1]
-            start_date = datetime.date(year, month, 1)
-            end_date = datetime.date(year, month, calendar_last_day)
+            query = request.GET.dict()
+            filters = Q()
 
-            sale_instances = Cart.objects.filter(created_at__gte=start_date, created_at__lt=end_date).values("sales__created_at__date").annotate(
-                total_quantity=Sum(F("price") * F("quantity"))
-            )
+            if query.get("type") == "daily":
+                date = f"{query.get('year')}-{query.get('month')}-{query.get('day')}"
+                filters &= Q(created_at__date=date)
+
+                sale_instances = Cart.objects.filter(filters).values("sales__created_at", "sales__reference_no").annotate(
+                    total_quantity=Sum(F("price") * F("quantity"))
+                )
+            else:
+                year = int(query.get("year"))
+                month = int(query.get("month"))
+                calendar_last_day = calendar.monthrange(year, month)[1]
+                start_date = datetime.date(year, month, 1)
+                end_date = datetime.date(year, month, calendar_last_day)
+                filters &= Q(created_at__gte=start_date, created_at__lt=end_date)
+
+                sale_instances = Cart.objects.filter(filters).values("sales__created_at__date").annotate(
+                    total_quantity=Sum(F("price") * F("quantity"))
+                )
             
             for sale_instance in sale_instances:
                 sale = {}
-                sale["day"] = sale_instance["sales__created_at__date"]
                 sale["total_amount"] = sale_instance["total_quantity"]
+
+                if query.get("type") == "daily":
+                    sale["reference_no"] = sale_instance["sales__reference_no"]
+                    sale["day"] = sale_instance["sales__created_at"]
+                else:
+                    sale["day"] = sale_instance["sales__created_at__date"]
                 
                 sales.append(sale)
 

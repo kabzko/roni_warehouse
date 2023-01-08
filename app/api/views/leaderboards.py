@@ -31,9 +31,9 @@ class LeaderboardsAPIView(API):
             
             if query.get("type") == "daily":
                 date = f"{query.get('year')}-{query.get('month')}-{query.get('day')}"
-                filters = Q(created_at__date=date)
+                filters &= Q(created_at__date=date)
             else:
-                filters = Q(created_at__year=query.get("year"), created_at__month=query.get("month"))
+                filters &= Q(created_at__year=query.get("year"), created_at__month=query.get("month"))
 
             leaderboards = Cart.objects.filter(filters).values("product").annotate(total_quantity=Sum("quantity"))
 

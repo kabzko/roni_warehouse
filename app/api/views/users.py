@@ -51,11 +51,8 @@ class UserLoginAPIView(API):
                 user_account = User.objects.get(filters)
             except User.DoesNotExist:
                 self.raise_error(title="Error", message="Invalid username or password.")
-            print(user_account.system_id, payload.get("password"))
             user = authenticate(system_id=user_account.system_id, password=payload.get("password"))
-            print(user)
             if user:
-                print(user.user_type)
                 if user.user_type == "cashier":
                     if user.user_type != payload.get("login_as"):
                         self.raise_error(title="Error", message="Invalid username or password!")

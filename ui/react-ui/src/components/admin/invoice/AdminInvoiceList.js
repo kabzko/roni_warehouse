@@ -11,8 +11,8 @@ class AdminInvoiceList extends React.Component {
   constructor(props) {
     if (
       !(
-        sessionStorage.getItem("user_type") === "admin" ||
-        sessionStorage.getItem("user_type") === "pointOfSale"
+        localStorage.getItem("user_type") === "admin" ||
+        localStorage.getItem("user_type") === "pointOfSale"
       )
     ) {
       window.location.href = "/";
@@ -51,7 +51,7 @@ class AdminInvoiceList extends React.Component {
     let updated_field = {};
     updated_field[input_name] = event.target.value;
     this.setState({ ...updated_field }, () => {
-      this.getSales();
+      this.getInvoices();
     });
   }
 
@@ -70,10 +70,15 @@ class AdminInvoiceList extends React.Component {
 
   getInvoices() {
     let api_url = "/api/invoice/";
-    let { search } = this.state;
+    let { search, daily } = this.state;
+
+    const date = new Date(daily);
+    api_url += `?month=${
+      date.getMonth() + 1
+    }&year=${date.getFullYear()}&day=${date.getDate()}`;
 
     if (search !== "") {
-      api_url += `?search=${search}`;
+      api_url += `&search=${search}`;
     }
 
     axios

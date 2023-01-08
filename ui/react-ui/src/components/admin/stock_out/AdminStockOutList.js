@@ -10,7 +10,7 @@ import Toast from "../../../utils/toast";
 
 class AdminStockOutList extends React.Component {
     constructor(props) {
-        if (!(sessionStorage.getItem("user_type") === "admin" || sessionStorage.getItem("user_type") === "inventory")) {
+        if (!(localStorage.getItem("user_type") === "admin" || localStorage.getItem("user_type") === "inventory")) {
             window.location.href = "/";
         }
         

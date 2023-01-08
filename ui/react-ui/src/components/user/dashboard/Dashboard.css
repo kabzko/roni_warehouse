@@ -6,7 +6,9 @@
 }
 .receipt {
     width: 500px;
-    margin: 40px 0;
+    margin: 25px 0;
+    border: 1px dashed;
+    padding: 20px;
 }
 .receipt-action {
     width: 470px;

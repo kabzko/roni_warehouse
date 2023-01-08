@@ -36,7 +36,7 @@ class SideNav extends React.Component {
                             </Link>
                         </li>
                         {
-                            sessionStorage.getItem("user_type") === "admin" ? <li className="nav-item">
+                            localStorage.getItem("user_type") === "admin" ? <li className="nav-item">
                                 <Link className={(this.state.active === "users-list") ? "nav-link active" : "nav-link"} to="/web/admin/users">
                                     <span className="align-text-bottom">
                                         <i className="bi bi-people-fill"></i>
@@ -46,7 +46,7 @@ class SideNav extends React.Component {
                             </li> : null
                         }
                         {
-                            sessionStorage.getItem("user_type") === "admin" || sessionStorage.getItem("user_type") === "inventory" ? <li className="nav-item">
+                            localStorage.getItem("user_type") === "admin" || localStorage.getItem("user_type") === "inventory" ? <li className="nav-item">
                                 <Link className={(this.state.active === "products") ? "nav-link active" : "nav-link"} to="/web/admin/products">
                                     <span className="align-text-bottom">
                                         <i className="bi bi-box-seam"></i>
@@ -56,7 +56,7 @@ class SideNav extends React.Component {
                             </li> : null
                         }
                         {
-                            sessionStorage.getItem("user_type") === "admin" || sessionStorage.getItem("user_type") === "inventory" ? <li className="nav-item">
+                            localStorage.getItem("user_type") === "admin" || localStorage.getItem("user_type") === "inventory" ? <li className="nav-item">
                                 <Link className={(this.state.active === "stock-in") ? "nav-link active" : "nav-link"} to="/web/admin/stock-in">
                                     <span className="align-text-bottom">
                                         <i className="bi bi-box-arrow-in-down-right"></i>
@@ -66,7 +66,7 @@ class SideNav extends React.Component {
                             </li> : null
                         }
                         {
-                            sessionStorage.getItem("user_type") === "admin" || sessionStorage.getItem("user_type") === "inventory" ? <li className="nav-item">
+                            localStorage.getItem("user_type") === "admin" || localStorage.getItem("user_type") === "inventory" ? <li className="nav-item">
                                 <Link className={(this.state.active === "stock-out") ? "nav-link active" : "nav-link"} to="/web/admin/stock-out">
                                     <span className="align-text-bottom">
                                         <i className="bi bi-box-arrow-up-right"></i>
@@ -76,7 +76,7 @@ class SideNav extends React.Component {
                             </li> : null
                         }
                         {
-                            sessionStorage.getItem("user_type") === "admin" || sessionStorage.getItem("user_type") === "pointOfSale" ? <li className="nav-item">
+                            localStorage.getItem("user_type") === "admin" || localStorage.getItem("user_type") === "pointOfSale" ? <li className="nav-item">
                                 <Link className={(this.state.active === "listing") ? "nav-link active" : "nav-link"} to="/web/admin/listing">
                                     <span className="align-text-bottom">
                                         <i className="bi bi-list-ul"></i>
@@ -86,7 +86,7 @@ class SideNav extends React.Component {
                             </li> : null
                         }
                         {
-                            sessionStorage.getItem("user_type") === "admin" || sessionStorage.getItem("user_type") === "pointOfSale" ? <li className="nav-item">
+                            localStorage.getItem("user_type") === "admin" || localStorage.getItem("user_type") === "pointOfSale" ? <li className="nav-item">
                                 <Link className={(this.state.active === "invoice") ? "nav-link active" : "nav-link"} to="/web/admin/invoice">
                                     <span className="align-text-bottom">
                                         <i className="bi bi-receipt-cutoff"></i>
@@ -96,7 +96,7 @@ class SideNav extends React.Component {
                             </li> : null
                         }
                         {
-                            sessionStorage.getItem("user_type") === "admin" ? <li className="nav-item">
+                            localStorage.getItem("user_type") === "admin" ? <li className="nav-item">
                                 <Link className={(this.state.active === "sales") ? "nav-link active" : "nav-link"} to="/web/admin/sales">
                                     <span className="align-text-bottom">
                                         <i className="bi bi-graph-up-arrow"></i>
@@ -106,7 +106,7 @@ class SideNav extends React.Component {
                             </li> : null
                         }
                         {
-                            sessionStorage.getItem("user_type") === "admin" ? <li className="nav-item">
+                            localStorage.getItem("user_type") === "admin" ? <li className="nav-item">
                                 <Link className={(this.state.active === "leaderboards") ? "nav-link active" : "nav-link"} to="/web/admin/leaderboards">
                                     <span className="align-text-bottom">
                                         <i className="bi bi-trophy"></i>

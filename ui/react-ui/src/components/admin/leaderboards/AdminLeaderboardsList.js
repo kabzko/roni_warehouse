@@ -10,8 +10,8 @@ class AdminLeaderboardsList extends React.Component {
   constructor(props) {
     if (
       !(
-        sessionStorage.getItem("user_type") === "admin" ||
-        sessionStorage.getItem("user_type") === "pointOfSale"
+        localStorage.getItem("user_type") === "admin" ||
+        localStorage.getItem("user_type") === "pointOfSale"
       )
     ) {
       window.location.href = "/";

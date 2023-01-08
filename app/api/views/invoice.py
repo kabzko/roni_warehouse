@@ -26,12 +26,13 @@ class InvoiceAPIView(API):
         """"""
         try:
             transactions = []
-            filters = request.GET.dict()
+            query = request.GET.dict()
+            filters = Q(created_at__date=f"{query.get('year')}-{query.get('month')}-{query.get('day')}")
 
-            if filters.get("search"):
-                filters["reference_no__icontains"] = filters.pop("search")
+            if query.get("search"):
+                filters &= Q(reference_no__icontains=query.get("search"))
             
-            sale_instances = Sales.objects.filter(**filters)
+            sale_instances = Sales.objects.filter(filters)
             for sale_instance in sale_instances:
                 transaction = {}
                 transaction["sales"] = SalesSerializer(sale_instance).data
