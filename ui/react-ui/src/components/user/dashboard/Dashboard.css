@@ -5,10 +5,16 @@
     font-size: 8vh;
 }
 .receipt {
-    display: inline-block;
     width: 500px;
+    margin: 40px 0;
+}
+.receipt-action {
+    width: 470px;
 }
 .btn-dashboard {
     width: 150px;
-    margin: 5px;
+}
+.receipt-btn {
+    top: 20px;
+    left: 20px;
 }

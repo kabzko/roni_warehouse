@@ -36,9 +36,34 @@ class AdminSalesChart extends React.Component {
         super(props);
         this.state = {
             sales: [],
+            type: "daily",
+            daily: new Date(),
+            monthly: new Date(),
         };
 
         this.getSales();
+    }
+
+    inputChange(input_name, event) {
+        let updated_field = {};
+        updated_field[input_name] = event.target.value;
+        this.setState({...updated_field}, () => {
+            this.getSales();
+        });
+    }
+
+    convertFormat(type) {
+        if (type === "daily") {
+            if (this.state.daily) {
+                return new Date(this.state.daily).toLocaleDateString("en-CA");
+            }
+            return "";
+        } else {
+            if (this.state.monthly) {
+                return `${new Date(this.state.monthly).getFullYear()}-${("0" + (new Date(this.state.monthly).getMonth()+1))}`;
+            }
+            return "";
+        }
     }
 
     getSales() {
@@ -58,6 +83,10 @@ class AdminSalesChart extends React.Component {
     priceFormat(value) {
         const val = (value/1).toFixed(2).replace(",", ".")
         return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    }
+
+    capitalize(text) {
+        return text ? text.charAt(0).toUpperCase() + text.slice(1) : text;
     }
 
     renderLineChart() {
@@ -85,7 +114,7 @@ class AdminSalesChart extends React.Component {
                     }),
                     datasets: [
                         {
-                            label: 'Daily Sales',
+                            label: `${this.capitalize(this.state.type)} Sales`,
                             data: this.state.sales.map(element => {
                                 return new Date(element.total_amount)
                             }),
@@ -109,8 +138,26 @@ class AdminSalesChart extends React.Component {
                             <div className='d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom'>
                                 <h1 className="h2">Sales</h1>
                             </div>
+                            <div className="d-flex justify-content-end">
+                                <div className="input-group mb-3 me-2 w-25">
+                                    <select className="form-select" onChange={this.inputChange.bind(this, "type")} value={this.state.type}>
+                                        <option value="daily">Daily</option>
+                                        <option value="monthly">Monthly</option>
+                                    </select>
+                                </div>
+                                {
+                                    this.state.type === "daily" ? <div>
+                                        <input type="date" className="form-control" id="daily" placeholder="Enter here.."
+                                            onChange={this.inputChange.bind(this, "daily")} value={this.convertFormat("daily")}></input>
+                                    </div> : 
+                                    <div>
+                                        <input type="month" className="form-control" id="monthly" placeholder="Enter here.."
+                                            onChange={this.inputChange.bind(this, "monthly")} value={this.convertFormat("monthly")}></input>
+                                    </div>
+                                }
+                            </div>
                             <div className="clearfix"></div>
-                            <div className="mx-5">
+                            <div className="mx-5 mb-5">
                                 {this.renderLineChart()}
                             </div>
                         </main>

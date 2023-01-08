@@ -105,6 +105,16 @@ class SideNav extends React.Component {
                                 </Link>
                             </li> : null
                         }
+                        {
+                            sessionStorage.getItem("user_type") === "admin" ? <li className="nav-item">
+                                <Link className={(this.state.active === "leaderboards") ? "nav-link active" : "nav-link"} to="/web/admin/leaderboards">
+                                    <span className="align-text-bottom">
+                                        <i className="bi bi-trophy"></i>
+                                        Leaderboards
+                                    </span>
+                                </Link>
+                            </li> : null
+                        }
                         <li className="nav-item" onClick={this.logout}>
                             <span className="nav-link" style={{cursor: "pointer"}}>
                                 <span className="align-text-bottom">

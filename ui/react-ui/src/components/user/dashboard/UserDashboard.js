@@ -22,7 +22,7 @@ class UserDashboard extends React.Component {
             listing: [],
             carts: [],
             lastProduct: {},
-            lastTransaction: {"sales":{"id":8,"reference_no":"20230107132255","cashier_by":5,"payment_type":"cash","amount_pay":"500.00","created_at":"2023-01-07T13:22:55.725099Z","updated_at":"2023-01-07T13:22:55.725120Z","total_amount":360.0},"carts":[{"id":1,"sales":8,"product":1,"unit_of_measure":"pieces","quantity":6,"price":"60.00","created_at":"2023-01-07T13:22:55.737181Z","updated_at":"2023-01-07T13:22:55.737215Z"}]},
+            lastTransaction: {},
         };
 
         this.callBackSaveListing = this.callBackSaveListing.bind(this);
@@ -107,7 +107,7 @@ class UserDashboard extends React.Component {
             this.setState({"users": res.data});
         }).catch(error => {
             console.log(error);
-            Toast.error(error.response.data.message);
+            toast.error(error.response.data.message);
         })
     }
 
@@ -307,7 +307,7 @@ class UserDashboard extends React.Component {
             )
         }
         return (
-            <div className="receipt">
+            <div className="receipt d-inline-block">
                 <div className="text-center">
                     RONI WAREHOUSE CORP.
                 </div>
@@ -467,10 +467,12 @@ class UserDashboard extends React.Component {
                     </div> :
                     <div className="container-fluid text-center">
                         {this.renderLastTransaction()}
-                        <div>
-                            <button className="btn btn-danger btn-dashboard" onClick={this.logout}>Logout</button>
-                            <button className="btn btn-success btn-dashboard" onClick={() => this.setState({lastTransaction: {}})}>New transaction</button>
-                            <button className="btn btn-primary btn-dashboard">Print</button>
+                        <div className="receipt-action position-absolute receipt-btn">
+                            <div className="d-flex justify-content-between">
+                                <button className="btn btn-danger btn-dashboard" onClick={this.logout}>Logout</button>
+                                <button className="btn btn-success btn-dashboard" onClick={() => this.setState({lastTransaction: {}})}>New transaction</button>
+                                <button className="btn btn-primary btn-dashboard">Print</button>
+                            </div>
                         </div>
                     </div>
                 }

@@ -46,6 +46,10 @@ from app.api.views.available_stock import (
     AvailableStockAPIView,
 )
 
+from app.api.views.leaderboards import (
+    LeaderboardsAPIView,
+)
+
 urlpatterns = [
     # Authentication URLs
     path("login/", UserLoginAPIView.as_view()),
@@ -85,5 +89,8 @@ urlpatterns = [
     path("invoice/", InvoiceAPIView.as_view()),
 
     # Sales URLs
-    path("sales/", SalesAPIView.as_view())
+    path("sales/", SalesAPIView.as_view()),
+
+    # Leaderboards URLs
+    path("leaderboards/", LeaderboardsAPIView.as_view()),
 ]

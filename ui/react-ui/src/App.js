@@ -14,6 +14,7 @@ import AdminStockOutList from './components/admin/stock_out/AdminStockOutList';
 import AdminlistingList from './components/admin/listing/AdminListingList';
 import AdminInvoiceList from './components/admin/invoice/AdminInvoiceList';
 import AdminSalesChart from "./components/admin/sales/AdminSalesChart";
+import AdminLeaderboardsList from './components/admin/leaderboards/AdminLeaderboardsList';
 
 import UserLogin from './components/user/login/LoginUser';
 import UserDashboard from './components/user/dashboard/UserDashboard';
@@ -49,6 +50,7 @@ class App extends React.Component {
                     <Route path="/web/admin/listing" element={<AdminlistingList />} />
                     <Route path="/web/admin/invoice" element={<AdminInvoiceList />} />
                     <Route path="/web/admin/sales" element={<AdminSalesChart />} />
+                    <Route path="/web/admin/leaderboards" element={<AdminLeaderboardsList />} />
                     <Route path="/web/login/cashier" element={<UserLogin />} />
                     <Route path="/web/user/dashboard" element={<UserDashboard />} />
                 </Routes>
