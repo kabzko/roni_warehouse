@@ -123,6 +123,7 @@ class AdminProductList extends React.Component {
                                             <th scope="col">Name</th>
                                             <th scope="col">Description</th>
                                             <th scope="col">Barcode</th>
+                                            <th scope="col">Net Weight(grams)</th>
                                             <th scope="col">Date created</th>
                                             <th scope="col">Action</th>
                                         </tr>
@@ -135,6 +136,7 @@ class AdminProductList extends React.Component {
                                                         <td>{product.name}</td>
                                                         <td>{product.description}</td>
                                                         <td>{product.barcode}</td>
+                                                        <td>{product.net_weight}</td>
                                                         <td>{product.created_at}</td>
                                                         <td>
                                                             <button className="btn btn-sm btn-primary me-1" onClick={this.showCreateUpdateProductModal.bind(this, product)}>Edit</button>

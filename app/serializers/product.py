@@ -15,6 +15,7 @@ class ProductSerializer(serializers.ModelSerializer):
             "barcode",
             "created_at",
             "updated_at",
+            "net_weight",
         ]
 
         extra_kwargs = {

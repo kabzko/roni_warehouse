@@ -19,6 +19,7 @@ class GroupStockIn(models.Model):
     received_by = models.CharField(max_length=250, blank=True, null=True)
     truck_plate_number = models.CharField(max_length=250, blank=True, null=True)
     truck_driver = models.CharField(max_length=250, blank=True, null=True)
+    sales_invoice_no = models.CharField(max_length=250, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     date = models.DateField()

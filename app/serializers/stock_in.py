@@ -68,6 +68,7 @@ class GroupStockInSerializer(serializers.ModelSerializer):
             "created_at",
             "updated_at",
             "date",
+            "sales_invoice_no",
         ]
 
         extra_kwargs = {

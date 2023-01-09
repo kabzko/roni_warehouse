@@ -26,6 +26,7 @@ class UpdateCreateStockInDialog extends React.Component {
             "supplier_name": props.supplier_name ? props.supplier_name : "",
             "checked_by": props.checked_by ? props.checked_by : "",
             "received_by": props.received_by ? props.received_by : "",
+            "sales_invoice_no": props.sales_invoice_no ? props.sales_invoice_no : "",
             "truck_plate_number": props.truck_plate_number ? props.truck_plate_number : "",
             "truck_driver": props.truck_driver ? props.truck_driver : "",
             "date": props.date ? props.date : "",
@@ -214,6 +215,7 @@ class UpdateCreateStockInDialog extends React.Component {
                     "truck_plate_number": "",
                     "truck_driver": "",
                     "date": "",
+                    "sales_invoice_no": "",
                     "list": [this.getEmptyList()],
                 })
             }
@@ -285,6 +287,15 @@ class UpdateCreateStockInDialog extends React.Component {
                                         <div>
                                             <input type="text" className="form-control" id="supplier-name" placeholder="Enter here.."
                                                 onChange={this.inputChange.bind(this, "supplier_name")} value={this.state.supplier_name}></input>
+                                        </div>
+                                    </div>
+                                    <div className="col-sm-4">
+                                        <label htmlFor="sales-invoice-number" className="col-form-label text-end">
+                                            Sales Invoice Number:
+                                        </label>
+                                        <div>
+                                            <input type="text" className="form-control" id="sales-invoice-number" placeholder="Enter here.."
+                                                onChange={this.inputChange.bind(this, "sales_invoice_no")} value={this.state.sales_invoice_no}></input>
                                         </div>
                                     </div>
                                     <div className="col-sm-4">
