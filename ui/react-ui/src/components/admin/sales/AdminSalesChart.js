@@ -195,8 +195,8 @@ class AdminSalesChart extends React.Component {
               data: this.state.sales.map((element) => {
                 return new Date(element.total_amount);
               }),
-              borderColor: "rgb(255, 99, 132)",
-              backgroundColor: "rgba(255, 99, 132, 0.5)",
+              borderColor: "rgb(2, 48, 156)",
+              backgroundColor: "rgba(2, 48, 156, 0.5)",
             },
           ],
         }}
