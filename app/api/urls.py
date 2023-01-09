@@ -50,6 +50,10 @@ from app.api.views.leaderboards import (
     LeaderboardsAPIView,
 )
 
+from app.api.views.cart import (
+    CartAPIView,
+)
+
 urlpatterns = [
     # Authentication URLs
     path("login/", UserLoginAPIView.as_view()),
@@ -93,4 +97,6 @@ urlpatterns = [
 
     # Leaderboards URLs
     path("leaderboards/", LeaderboardsAPIView.as_view()),
+
+    path("carts/", CartAPIView.as_view()),
 ]

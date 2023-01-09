@@ -55,7 +55,7 @@ class UserCheckoutDialog extends React.Component {
             return alert("Quantity cannot be zero!", "danger", "error-notification");
         }
 
-        this.props.callBackSave(this.props.scanCode, parseInt(this.state.quantity));
+        this.props.callBackSave(this.props.scanCode, this.props.type, parseInt(this.state.quantity));
         this.handleCancel(event);
     }
 

@@ -46,18 +46,14 @@ class UpdateCreateListingDialog extends React.Component {
       filteredStockOutDatas.map((stock) => {
         let stockInDatas = props.stockInOptions.find(
           (element) => element.id === parseInt(stock.stock_in)
-        ).list;
-        console.log(stockInDatas);
+        );
         let stockOut = {};
         stockOut["value"] = stock.id;
 
         let product = this.getProduct(stock.product);
-        let stockInDatasList = stockInDatas.find(
-          (element) => element.product === stock.product
-        );
         stockOut[
           "label"
-        ] = `${product.label} (${stock.quantity} ${stockInDatasList.unit_of_measure})`;
+        ] = `${product.label} (${stock.quantity} ${stockInDatas.unit_of_measure})`;
 
         stockOutOptions.push(stockOut);
         return stock;
@@ -133,17 +129,14 @@ class UpdateCreateListingDialog extends React.Component {
     filteredStockOutDatas.map((stock) => {
       let stockInDatas = this.props.stockInOptions.find(
         (element) => element.id === parseInt(stock.stock_in)
-      ).list;
+      );
       let stockOut = {};
       stockOut["value"] = stock.id;
 
       let product = this.getProduct(stock.product);
-      let stockInDatasList = stockInDatas.find(
-        (element) => element.product === stock.product
-      );
       stockOut[
         "label"
-      ] = `${product.label} (${stock.quantity} ${stockInDatasList.unit_of_measure})`;
+      ] = `${product.label} (${stock.quantity} ${stockInDatas.unit_of_measure})`;
 
       stockOutOptions.push(stockOut);
       return stock;
@@ -182,11 +175,8 @@ class UpdateCreateListingDialog extends React.Component {
     );
     const stockInDatas = this.props.stockInOptions.find(
       (element) => element.id === parseInt(stockOutDatas[0].stock_in)
-    ).list;
-    const stockInDatasList = stockInDatas.find(
-      (element) => element.product === data["product"]
     );
-    data["unit_of_measure"] = stockInDatasList.unit_of_measure;
+    data["unit_of_measure"] = stockInDatas.unit_of_measure;
 
     if (data.quantity) {
       if (data.quantity > data.available_stock) {

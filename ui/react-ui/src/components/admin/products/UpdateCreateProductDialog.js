@@ -127,7 +127,7 @@ class UpdateCreateProductDialog extends React.Component {
                                     </div>
                                 </div>
                                 <div className="row mb-2">
-                                    <label htmlFor="net_weight" className="col-form-label col-sm-4 text-end">Net Weight (grams):</label>
+                                    <label htmlFor="net_weight" className="col-form-label col-sm-4 text-end">Net Weight:</label>
                                     <div className="col-sm-8">
                                         <input type="number" className="form-control" id="net_weight" placeholder="Enter here.."
                                             onChange={this.inputChange.bind(this, "net_weight")} value={this.state.net_weight}></input>

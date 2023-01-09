@@ -35,3 +35,21 @@
 .cursor-point {
     cursor: pointer;
 }
+.cursor-point td {
+    padding: unset !important;
+}
+.react-contextmenu {
+    border-radius: 5px !important;
+    background: #ebebeb !important;
+    padding: 10px 15px !important;
+}
+.react-contextmenu-wrapper {
+    padding: 10px !important;
+}
+.react-contextmenu-item {
+    cursor: pointer;
+    padding: 3px 0 !important;
+}
+.react-contextmenu-item:hover {
+    opacity: 0.8 !important;
+}

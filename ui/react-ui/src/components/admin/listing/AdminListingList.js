@@ -8,6 +8,15 @@ import axios from "../../../utils/axios";
 import ConfirmDialog from "../../../utils/dialog";
 import Toast from "../../../utils/toast";
 
+const colorSafe = {
+  color: "green",
+  fontWeight: "bold",
+};
+const colorDanger = {
+  color: "red",
+  fontWeight: "bold",
+};
+
 class AdminListingList extends React.Component {
   constructor(props) {
     if (
@@ -26,6 +35,7 @@ class AdminListingList extends React.Component {
       stockOut: [],
       stockIn: [],
       users: [],
+      carts: [],
       productFilter: "",
     };
 
@@ -33,6 +43,7 @@ class AdminListingList extends React.Component {
     this.filterWithProduct = this.filterWithProduct.bind(this);
     this.handleSearchChange = this.handleSearchChange.bind(this);
 
+    this.getCarts();
     this.getUsers();
     this.getListing();
     this.getProducts();
@@ -42,6 +53,30 @@ class AdminListingList extends React.Component {
 
   callBackSaveListing() {
     this.getListing();
+  }
+
+  getStockQuantity(stockId) {
+    let stockOut = 0;
+
+    for (let i in this.state.stockOut) {
+      if (stockId.includes(this.state.stockOut[i].id)) {
+        stockOut += this.state.stockOut[i].quantity;
+      }
+    }
+
+    return stockOut;
+  }
+
+  getStockBought(productId) {
+    let stockBought = 0;
+
+    for (let i in this.state.carts) {
+      if (this.state.carts[i].product === parseInt(productId)) {
+        stockBought += this.state.carts[i].quantity;
+      }
+    }
+
+    return stockBought;
   }
 
   getProductName(productId) {
@@ -94,6 +129,20 @@ class AdminListingList extends React.Component {
     });
   }
 
+  getCarts() {
+    let api_url = "/api/carts/";
+
+    axios
+      .get(api_url)
+      .then((res) => {
+        this.setState({ carts: res.data });
+      })
+      .catch((error) => {
+        console.log(error);
+        Toast.error(error.response.data.message);
+      });
+  }
+
   getUsers() {
     let api_url = "/api/users/";
 
@@ -127,7 +176,7 @@ class AdminListingList extends React.Component {
   }
 
   getStockIn() {
-    let api_url = "/api/stock-in/";
+    let api_url = "/api/stock-in/list/";
 
     axios
       .get(api_url)
@@ -254,7 +303,9 @@ class AdminListingList extends React.Component {
                     <tr>
                       <th scope="col">Product</th>
                       <th scope="col">Price</th>
-                      <th scope="col">Created by</th>
+                      <th scope="col">Unit of Measure</th>
+                      <th scope="col">Stock</th>
+                      <th scope="col">Bought-out</th>
                       <th scope="col">Date created</th>
                       <th scope="col">Last changes</th>
                       <th scope="col">Action</th>
@@ -267,6 +318,20 @@ class AdminListingList extends React.Component {
                           <tr key={element.id}>
                             <td>{this.getProductName(element.product)}</td>
                             <td>{element.price}</td>
+                            <td>{element.unit_of_measure}</td>
+                            <td>{this.getStockQuantity(element.stock_out)}</td>
+                            <td>
+                              {this.getStockBought(element.product) >
+                              this.getStockQuantity(element.stock_out) ? (
+                                <span style={colorDanger}>
+                                  {this.getStockBought(element.product)}
+                                </span>
+                              ) : (
+                                <span style={colorSafe}>
+                                  {this.getStockBought(element.product)}
+                                </span>
+                              )}
+                            </td>
                             <td>{this.getUserName(element.created_by)}</td>
                             <td>{element.created_at}</td>
                             <td>{element.updated_at}</td>

@@ -123,7 +123,7 @@ class AdminProductList extends React.Component {
                                             <th scope="col">Name</th>
                                             <th scope="col">Description</th>
                                             <th scope="col">Barcode</th>
-                                            <th scope="col">Net Weight(grams)</th>
+                                            <th scope="col">Net Weight</th>
                                             <th scope="col">Date created</th>
                                             <th scope="col">Action</th>
                                         </tr>
