@@ -1,8 +1,8 @@
 .total-amount {
-    font-size: 10vh;
+    font-size: 14vh;
 }
 .product-scanned {
-    font-size: 8vh;
+    font-size: 12vh;
 }
 .receipt {
     width: 500px;
@@ -19,4 +19,19 @@
 .receipt-btn {
     top: 20px;
     left: 20px;
+}
+.product-scanned-item {
+    margin: 18px;
+}
+.product-scanned-item div:nth-child(1) {
+    font-size: 4.2vh;
+}
+.product-scanned-item div:nth-child(2) {
+    font-size: 2.5vh;
+}
+.product-scanned-item div:nth-child(3) {
+    font-size: 2.5vh;
+}
+.cursor-point {
+    cursor: pointer;
 }

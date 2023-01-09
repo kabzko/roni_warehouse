@@ -23,10 +23,15 @@ class UserDashboard extends React.Component {
             carts: [],
             lastProduct: {},
             lastTransaction: {},
+            windowHeight: window.innerHeight - 295,
+            isShowQuantity: false,
+            isShowCheckout: false,
         };
 
         this.callBackSaveListing = this.callBackSaveListing.bind(this);
+        this.callBackCancelCheckout = this.callBackCancelCheckout.bind(this);
         this.callBackFinalizeQuantity = this.callBackFinalizeQuantity.bind(this);
+        this.callBackCancelQuantity = this.callBackCancelQuantity.bind(this);
         this.showUserCheckoutModal = this.showUserCheckoutModal.bind(this);
         this.showUserQuantityModal = this.showUserQuantityModal.bind(this);
 
@@ -43,8 +48,16 @@ class UserDashboard extends React.Component {
         this.getLastTransaction(referenceNo);
     }
 
+    callBackCancelCheckout() {
+        this.setState({isShowCheckout: !this.state.isShowCheckout});
+    }
+
     callBackFinalizeQuantity(sScancode, quantity) {
         this.checkScannedBarcode(sScancode, quantity);
+    }
+
+    callBackCancelQuantity() {
+        this.setState({isShowQuantity: !this.state.isShowQuantity});
     }
 
     componentDidMount() {
@@ -174,14 +187,18 @@ class UserDashboard extends React.Component {
 
         const checkout = {};
         checkout["callBackSave"] = this.callBackSaveListing;
+        checkout["callBackCancel"] = this.callBackCancelCheckout;
         checkout["carts"] = this.state.carts;
 
         UserCheckoutDialog.show({...checkout});
     }
 
     showUserQuantityModal(scanCode) {
+        this.setState({isShowQuantity: !this.state.isShowQuantity});
+
         const quantity = {};
         quantity["callBackSave"] = this.callBackFinalizeQuantity;
+        quantity["callBackCancel"] = this.callBackCancelQuantity;
         quantity["scanCode"] = scanCode;
 
         UserQuantityDialog.show({...quantity});
@@ -207,14 +224,14 @@ class UserDashboard extends React.Component {
             return (
                 <div key={elementList.id} className="col-4">
                     <div className="card">
-                        <div className="card-body d-flex">
+                        <div className="card-body">
                             <div>
                                 <h5 className="card-title">{listingProduct.name}</h5>
                                 <span className="carts-text"><b><small>{listingProduct.barcode}</small></b></span><br />
                                 <span className="carts-text">{elementList.price} per {elementList.unit_of_measure}</span>
                             </div>
-                            <div>
-                                <button className="btn btn-primary" onClick={() => this.showUserQuantityModal(listingProduct.barcode)}>Add to carts</button>
+                            <div className="mt-2">
+                                <button className="btn btn-primary w-100" onClick={() => this.showUserQuantityModal(listingProduct.barcode)} disabled={this.state.isShowQuantity}>Add to carts</button>
                             </div>
                         </div>
                     </div>
@@ -226,7 +243,7 @@ class UserDashboard extends React.Component {
     renderProductScannedModal() {
         if (!Object.keys(this.state.lastProduct).length) {
             return (
-                <div className="border">
+                <div className="border border-bottom-0">
                     <div className="d-flex justify-content-between">
                         <div></div>
                         <div className="product-scanned text-end">
@@ -239,21 +256,19 @@ class UserDashboard extends React.Component {
             )
         }
         return (
-            <div className="border">
+            <div className="border border-bottom-0">
                 
                 <div className="d-flex justify-content-between">
-                    <div>
-                        <label>
+                    <div className="product-scanned-item">
+                        <div>
                             {this.state.lastProduct.name}
-                        </label>
-                        <br />
-                        <label>
+                        </div>
+                        <div>
                             {this.priceFormat(this.state.lastProduct.price)}
-                        </label>
-                        <br />
-                        <label>
+                        </div>
+                        <div>
                             ×{this.priceFormat(this.state.lastProduct.quantity)}
-                        </label>
+                        </div>
                     </div>
                     <div className="product-scanned text-end">
                         <label>
@@ -290,7 +305,7 @@ class UserDashboard extends React.Component {
         }
         return this.state.carts.map(element => {
             return (
-                <tr key={element.id}>
+                <tr key={element.id} className="cursor-point">
                     <td>{element.barcode}</td>
                     <td>{element.name}</td>
                     <td>{element.quantity}</td>
@@ -433,11 +448,13 @@ class UserDashboard extends React.Component {
             <>
                 {
                     !Object.keys(this.state.lastTransaction).length ?
-                    <div className="container-fluid">
+                    <div className="container-fluid pt-3">
                         <div className="row">
                             <div className="col-6">
-                                <div className="row">
-                                    {this.renderLookUpProducts()}
+                                <div className="mb-3" style={{height: this.state.windowHeight}}>
+                                    <div className="row">
+                                        {this.renderLookUpProducts()}
+                                    </div>
                                 </div>
                             </div>
                             <div className="col-6">
@@ -460,7 +477,7 @@ class UserDashboard extends React.Component {
                         <div className="text-end border">
                             {this.renderTotalAmount()}
                         </div>
-                        <div>
+                        <div className="mt-3">
                             <button className="btn btn-danger btn-dashboard" onClick={this.logout}>Logout</button>
                             <button className="btn btn-success btn-dashboard float-end" onClick={this.showUserCheckoutModal}>Checkout</button>
                         </div>

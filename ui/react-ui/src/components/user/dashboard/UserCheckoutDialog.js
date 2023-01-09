@@ -10,7 +10,7 @@ class UserCheckoutDialog extends React.Component {
         this.state = {
             "carts": props.carts ? props.carts : "",
             "payment_type": "cash",
-            "amount_pay": "",
+            "amount_pay": 0,
         };
 
         this.modal = null;
@@ -62,7 +62,7 @@ class UserCheckoutDialog extends React.Component {
         });
 
         if (totalAmount > parseInt(data.amount_pay)) {
-            return alert("Your payment must be greater than balance!", "danger", "error-notification");
+            return alert("Enter cash is lesser than the total amount!", "danger", "error-notification");
         }
         
         axios.post(api_url, data).then(res => {
@@ -85,6 +85,7 @@ class UserCheckoutDialog extends React.Component {
 
     handleCancel(event) {
         event.preventDefault();
+        this.props.callBackCancel();
         this.modal.hide();
         document.getElementById("listing-dialog-container").remove();
     }
@@ -105,10 +106,10 @@ class UserCheckoutDialog extends React.Component {
 
                                 <div className="row mb-2">
                                     <label htmlFor="price" className="col-form-label text-start">
-                                        <span className="text-danger">*</span>Enter customer payment:
+                                        <span className="text-danger">*</span>Enter customer cash:
                                     </label>
                                     <div>
-                                        <input ref={(input) => { this.payInput = input; }} type="number" className="form-control" id="amount_pay" placeholder="Enter here.." onChange={this.inputChange.bind(this, "amount_pay")} value={this.state.amount_pay} onKeyDown={this.handleCheckout}></input>
+                                        <input ref={(input) => { this.payInput = input; }} type="number" className="form-control" id="amount_pay" placeholder={this.state.amount_pay} onChange={this.inputChange.bind(this, "amount_pay")} value={this.state.amount_pay === 0 ? "" : this.state.amount_pay} onKeyDown={this.handleCheckout}></input>
                                     </div>
                                 </div>
 

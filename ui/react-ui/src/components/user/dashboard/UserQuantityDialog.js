@@ -1,6 +1,8 @@
 import React from "react";
 import { createRoot } from 'react-dom/client';
 
+import alert from '../../../utils/alert';
+
 class UserCheckoutDialog extends React.Component {
     constructor(props) {
         super(props);
@@ -48,12 +50,18 @@ class UserCheckoutDialog extends React.Component {
             if (event.keyCode !== 13) return;
         }
         event.preventDefault();
+        
+        if (!parseInt(this.state.quantity)) {
+            return alert("Quantity cannot be zero!", "danger", "error-notification");
+        }
+
         this.props.callBackSave(this.props.scanCode, parseInt(this.state.quantity));
         this.handleCancel(event);
     }
 
     handleCancel(event) {
         event.preventDefault();
+        this.props.callBackCancel();
         this.modal.hide();
         document.getElementById("listing-dialog-container").remove();
     }
@@ -73,10 +81,10 @@ class UserCheckoutDialog extends React.Component {
 
                                 <div className="row mb-2">
                                     <label htmlFor="price" className="col-form-label text-start">
-                                        <span className="text-danger">*</span>Enter customer payment:
+                                        <span className="text-danger">*</span>Enter quantity:
                                     </label>
                                     <div>
-                                        <input ref={(input) => { this.quantityInput = input; }} type="number" className="form-control" id="quantity" placeholder="Enter here.." onChange={this.inputChange.bind(this, "quantity")} value={this.state.quantity} onKeyDown={this.handleCheckout}></input>
+                                        <input ref={(input) => { this.quantityInput = input; }} type="number" className="form-control" id="quantity" placeholder={this.state.quantity} onChange={this.inputChange.bind(this, "quantity")} value={this.state.quantity === 1 ? "" : this.state.quantity} onKeyDown={this.handleCheckout}></input>
                                     </div>
                                 </div>
 
