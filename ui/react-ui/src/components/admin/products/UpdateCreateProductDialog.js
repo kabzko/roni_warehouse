@@ -11,7 +11,7 @@ class UpdateCreateProductDialog extends React.Component {
             "name": props.name ? props.name : "",
             "description": props.description ? props.description : "",
             "barcode": props.barcode ? props.barcode : "",
-            "net_weight": props.net_weight ? props.net_weight : 0,
+            "net_weight": props.net_weight ? props.net_weight : "",
         };
 
         if (props.id) {
@@ -51,12 +51,8 @@ class UpdateCreateProductDialog extends React.Component {
 
     handleSaveProduct(event) {
         event.preventDefault();
-        let data = {...this.state};
 
-        if (data.net_weight) {
-            data.net_weight = parseFloat(data.net_weight);
-        }
-        console.log("Data: ", data)
+        let data = {...this.state};
         let api_url = "/api/products/";
 
         if (data.id) {
@@ -72,7 +68,7 @@ class UpdateCreateProductDialog extends React.Component {
                     "name": "",
                     "description": "",
                     "barcode": "",
-                    "net_weight": 0,
+                    "net_weight": "",
                 })
             }
         }).catch(error => {
@@ -129,7 +125,7 @@ class UpdateCreateProductDialog extends React.Component {
                                 <div className="row mb-2">
                                     <label htmlFor="net_weight" className="col-form-label col-sm-4 text-end">Net Weight:</label>
                                     <div className="col-sm-8">
-                                        <input type="number" className="form-control" id="net_weight" placeholder="Enter here.."
+                                        <input type="text" className="form-control" id="net_weight" placeholder="Enter here.."
                                             onChange={this.inputChange.bind(this, "net_weight")} value={this.state.net_weight}></input>
                                     </div>
                                 </div>

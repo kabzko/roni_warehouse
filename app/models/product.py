@@ -9,4 +9,4 @@ class Product(models.Model):
     barcode = models.CharField(max_length=100, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    net_weight = models.DecimalField(default=0.0, decimal_places=2, max_digits=6)
+    net_weight = models.CharField(max_length=250, blank=True, null=True)

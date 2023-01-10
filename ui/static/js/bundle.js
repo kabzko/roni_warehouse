@@ -6639,6 +6639,14 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 
 
+var colorSafe = {
+  color: "green",
+  fontWeight: "bold"
+};
+var colorDanger = {
+  color: "red",
+  fontWeight: "bold"
+};
 
 var AdminListingList = /*#__PURE__*/function (_React$Component) {
   (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4__["default"])(AdminListingList, _React$Component);
@@ -6661,11 +6669,14 @@ var AdminListingList = /*#__PURE__*/function (_React$Component) {
       stockOut: [],
       stockIn: [],
       users: [],
+      carts: [],
       productFilter: ""
     };
     _this.callBackSaveListing = _this.callBackSaveListing.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__["default"])(_this));
     _this.filterWithProduct = _this.filterWithProduct.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__["default"])(_this));
     _this.handleSearchChange = _this.handleSearchChange.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__["default"])(_this));
+
+    _this.getCarts();
 
     _this.getUsers();
 
@@ -6684,6 +6695,32 @@ var AdminListingList = /*#__PURE__*/function (_React$Component) {
     key: "callBackSaveListing",
     value: function callBackSaveListing() {
       this.getListing();
+    }
+  }, {
+    key: "getStockQuantity",
+    value: function getStockQuantity(stockId) {
+      var stockOut = 0;
+
+      for (var i in this.state.stockOut) {
+        if (stockId.includes(this.state.stockOut[i].id)) {
+          stockOut += this.state.stockOut[i].quantity;
+        }
+      }
+
+      return stockOut;
+    }
+  }, {
+    key: "getStockBought",
+    value: function getStockBought(productId) {
+      var stockBought = 0;
+
+      for (var i in this.state.carts) {
+        if (this.state.carts[i].product === parseInt(productId)) {
+          stockBought += this.state.carts[i].quantity;
+        }
+      }
+
+      return stockBought;
     }
   }, {
     key: "getProductName",
@@ -6738,13 +6775,28 @@ var AdminListingList = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "getCarts",
+    value: function getCarts() {
+      var _this3 = this;
+
+      var api_url = "/api/carts/";
+      _utils_axios__WEBPACK_IMPORTED_MODULE_11__["default"].get(api_url).then(function (res) {
+        _this3.setState({
+          carts: res.data
+        });
+      }).catch(function (error) {
+        console.log(error);
+        _utils_toast__WEBPACK_IMPORTED_MODULE_13__["default"].error(error.response.data.message);
+      });
+    }
+  }, {
     key: "getUsers",
     value: function getUsers() {
-      var _this3 = this;
+      var _this4 = this;
 
       var api_url = "/api/users/";
       _utils_axios__WEBPACK_IMPORTED_MODULE_11__["default"].get(api_url).then(function (res) {
-        _this3.setState({
+        _this4.setState({
           users: res.data
         });
       }).catch(function (error) {
@@ -6755,7 +6807,7 @@ var AdminListingList = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "getstockOut",
     value: function getstockOut() {
-      var _this4 = this;
+      var _this5 = this;
 
       var api_url = "/api/stock-out/";
       _utils_axios__WEBPACK_IMPORTED_MODULE_11__["default"].get(api_url).then(function (res) {
@@ -6763,7 +6815,7 @@ var AdminListingList = /*#__PURE__*/function (_React$Component) {
           return data;
         });
 
-        _this4.setState({
+        _this5.setState({
           stockOut: res.data
         });
       }).catch(function (error) {
@@ -6774,15 +6826,15 @@ var AdminListingList = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "getStockIn",
     value: function getStockIn() {
-      var _this5 = this;
+      var _this6 = this;
 
-      var api_url = "/api/stock-in/";
+      var api_url = "/api/stock-in/list/";
       _utils_axios__WEBPACK_IMPORTED_MODULE_11__["default"].get(api_url).then(function (res) {
         res.data.map(function (data) {
           return data;
         });
 
-        _this5.setState({
+        _this6.setState({
           stockIn: res.data
         });
       }).catch(function (error) {
@@ -6793,10 +6845,10 @@ var AdminListingList = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "getProducts",
     value: function getProducts() {
-      var _this6 = this;
+      var _this7 = this;
 
       _utils_axios__WEBPACK_IMPORTED_MODULE_11__["default"].get("/api/products/").then(function (res) {
-        _this6.setState({
+        _this7.setState({
           products: res.data
         });
       }).catch(function (error) {
@@ -6807,7 +6859,7 @@ var AdminListingList = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "getListing",
     value: function getListing() {
-      var _this7 = this;
+      var _this8 = this;
 
       var api_url = "/api/listing/";
       var productFilter = this.state.productFilter;
@@ -6829,7 +6881,7 @@ var AdminListingList = /*#__PURE__*/function (_React$Component) {
           return data;
         });
 
-        _this7.setState({
+        _this8.setState({
           listing: res.data
         });
       }).catch(function (error) {
@@ -6869,7 +6921,7 @@ var AdminListingList = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this8 = this;
+      var _this9 = this;
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
         className: "side-nav-custom"
@@ -6916,7 +6968,11 @@ var AdminListingList = /*#__PURE__*/function (_React$Component) {
         scope: "col"
       }, "Price"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
         scope: "col"
-      }, "Created by"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
+      }, "Unit of Measure"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
+        scope: "col"
+      }, "Stock"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
+        scope: "col"
+      }, "Bought-out"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
         scope: "col"
       }, "Date created"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
         scope: "col"
@@ -6927,12 +6983,16 @@ var AdminListingList = /*#__PURE__*/function (_React$Component) {
       }, this.state.listing.length > 0 ? this.state.listing.map(function (element) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("tr", {
           key: element.id
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, _this8.getProductName(element.product)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, element.price), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, _this8.getUserName(element.created_by)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, element.created_at), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, element.updated_at), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, _this9.getProductName(element.product)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, element.price), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, element.unit_of_measure), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, _this9.getStockQuantity(element.stock_out)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, _this9.getStockBought(element.product) > _this9.getStockQuantity(element.stock_out) ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
+          style: colorDanger
+        }, _this9.getStockBought(element.product)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
+          style: colorSafe
+        }, _this9.getStockBought(element.product))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, _this9.getUserName(element.created_by)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, element.created_at), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, element.updated_at), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
           className: "btn btn-sm btn-primary me-1",
-          onClick: _this8.showCreateUpdateListingModal.bind(_this8, element)
+          onClick: _this9.showCreateUpdateListingModal.bind(_this9, element)
         }, "Edit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
           className: "btn btn-sm btn-danger",
-          onClick: _this8.deleteListing.bind(_this8, element)
+          onClick: _this9.deleteListing.bind(_this9, element)
         }, "Delete")));
       }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", {
         colSpan: "1000",
@@ -7040,17 +7100,13 @@ var UpdateCreateListingDialog = /*#__PURE__*/function (_React$Component) {
       filteredStockOutDatas.map(function (stock) {
         var stockInDatas = props.stockInOptions.find(function (element) {
           return element.id === parseInt(stock.stock_in);
-        }).list;
-        console.log(stockInDatas);
+        });
         var stockOut = {};
         stockOut["value"] = stock.id;
 
         var product = _this.getProduct(stock.product);
 
-        var stockInDatasList = stockInDatas.find(function (element) {
-          return element.product === stock.product;
-        });
-        stockOut["label"] = "".concat(product.label, " (").concat(stock.quantity, " ").concat(stockInDatasList.unit_of_measure, ")");
+        stockOut["label"] = "".concat(product.label, " (").concat(stock.quantity, " ").concat(stockInDatas.unit_of_measure, ")");
         stockOutOptions.push(stockOut);
         return stock;
       });
@@ -7119,17 +7175,14 @@ var UpdateCreateListingDialog = /*#__PURE__*/function (_React$Component) {
       filteredStockOutDatas.map(function (stock) {
         var stockInDatas = _this2.props.stockInOptions.find(function (element) {
           return element.id === parseInt(stock.stock_in);
-        }).list;
+        });
 
         var stockOut = {};
         stockOut["value"] = stock.id;
 
         var product = _this2.getProduct(stock.product);
 
-        var stockInDatasList = stockInDatas.find(function (element) {
-          return element.product === stock.product;
-        });
-        stockOut["label"] = "".concat(product.label, " (").concat(stock.quantity, " ").concat(stockInDatasList.unit_of_measure, ")");
+        stockOut["label"] = "".concat(product.label, " (").concat(stock.quantity, " ").concat(stockInDatas.unit_of_measure, ")");
         stockOutOptions.push(stockOut);
         return stock;
       });
@@ -7184,11 +7237,8 @@ var UpdateCreateListingDialog = /*#__PURE__*/function (_React$Component) {
       });
       var stockInDatas = this.props.stockInOptions.find(function (element) {
         return element.id === parseInt(stockOutDatas[0].stock_in);
-      }).list;
-      var stockInDatasList = stockInDatas.find(function (element) {
-        return element.product === data["product"];
       });
-      data["unit_of_measure"] = stockInDatasList.unit_of_measure;
+      data["unit_of_measure"] = stockInDatas.unit_of_measure;
 
       if (data.quantity) {
         if (data.quantity > data.available_stock) {
@@ -7716,7 +7766,7 @@ var AdminProductList = /*#__PURE__*/function (_React$Component) {
         scope: "col"
       }, "Barcode"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
         scope: "col"
-      }, "Net Weight(grams)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
+      }, "Net Weight"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
         scope: "col"
       }, "Date created"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
         scope: "col"
@@ -7805,7 +7855,7 @@ var UpdateCreateProductDialog = /*#__PURE__*/function (_React$Component) {
       "name": props.name ? props.name : "",
       "description": props.description ? props.description : "",
       "barcode": props.barcode ? props.barcode : "",
-      "net_weight": props.net_weight ? props.net_weight : 0
+      "net_weight": props.net_weight ? props.net_weight : ""
     };
 
     if (props.id) {
@@ -7842,11 +7892,6 @@ var UpdateCreateProductDialog = /*#__PURE__*/function (_React$Component) {
 
       var data = _objectSpread({}, this.state);
 
-      if (data.net_weight) {
-        data.net_weight = parseFloat(data.net_weight);
-      }
-
-      console.log("Data: ", data);
       var api_url = "/api/products/";
 
       if (data.id) {
@@ -7863,7 +7908,7 @@ var UpdateCreateProductDialog = /*#__PURE__*/function (_React$Component) {
             "name": "",
             "description": "",
             "barcode": "",
-            "net_weight": 0
+            "net_weight": ""
           });
         }
       }).catch(function (error) {
@@ -7957,10 +8002,10 @@ var UpdateCreateProductDialog = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("label", {
         htmlFor: "net_weight",
         className: "col-form-label col-sm-4 text-end"
-      }, "Net Weight (grams):"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+      }, "Net Weight:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
         className: "col-sm-8"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("input", {
-        type: "number",
+        type: "text",
         className: "form-control",
         id: "net_weight",
         placeholder: "Enter here..",
@@ -10838,22 +10883,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/toConsumableArray */ "./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js");
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
-/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
-/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
-/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js");
-/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js");
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js");
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js");
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.mjs");
-/* harmony import */ var _UserCheckoutDialog__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./UserCheckoutDialog */ "./src/components/user/dashboard/UserCheckoutDialog.js");
-/* harmony import */ var _UserQuantityDialog__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./UserQuantityDialog */ "./src/components/user/dashboard/UserQuantityDialog.js");
-/* harmony import */ var _utils_axios__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../../utils/axios */ "./src/utils/axios.js");
-/* harmony import */ var onscan_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! onscan.js */ "./node_modules/onscan.js/onscan.js");
-/* harmony import */ var onscan_js__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(onscan_js__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _Dashboard_css__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Dashboard.css */ "./src/components/user/dashboard/Dashboard.css");
+/* harmony import */ var react_contextmenu__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-contextmenu */ "./node_modules/react-contextmenu/es6/index.js");
+/* harmony import */ var _UserCheckoutDialog__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./UserCheckoutDialog */ "./src/components/user/dashboard/UserCheckoutDialog.js");
+/* harmony import */ var _UserQuantityDialog__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./UserQuantityDialog */ "./src/components/user/dashboard/UserQuantityDialog.js");
+/* harmony import */ var _utils_axios__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../../utils/axios */ "./src/utils/axios.js");
+/* harmony import */ var onscan_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! onscan.js */ "./node_modules/onscan.js/onscan.js");
+/* harmony import */ var onscan_js__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(onscan_js__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var _Dashboard_css__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Dashboard.css */ "./src/components/user/dashboard/Dashboard.css");
 
 
 
@@ -10865,9 +10911,9 @@ __webpack_require__.r(__webpack_exports__);
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1__["default"])(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7__["default"])(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_7__["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_7__["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_6__["default"])(this, result); }; }
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_6__["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_6__["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_5__["default"])(this, result); }; }
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
@@ -10879,21 +10925,41 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 
 
+
 var UserDashboard = /*#__PURE__*/function (_React$Component) {
-  (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5__["default"])(UserDashboard, _React$Component);
+  (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4__["default"])(UserDashboard, _React$Component);
 
   var _super = _createSuper(UserDashboard);
 
   function UserDashboard(props) {
     var _this;
 
-    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2__["default"])(this, UserDashboard);
+    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__["default"])(this, UserDashboard);
 
     if (localStorage.getItem("user_type") !== "cashier") {
       window.location.href = "/";
     }
 
     _this = _super.call(this, props);
+
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7__["default"])((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__["default"])(_this), "updateCart", function (e, data) {
+      var newCarts = _this.state.carts.find(function (element) {
+        return element.id === parseInt(data.item);
+      });
+
+      _this.showUserQuantityModal(newCarts.barcode, "update");
+    });
+
+    (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7__["default"])((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__["default"])(_this), "removeCart", function (e, data) {
+      var newCarts = _this.state.carts.filter(function (element) {
+        return element.id !== parseInt(data.item);
+      });
+
+      _this.setState({
+        carts: newCarts
+      });
+    });
+
     _this.state = {
       products: [],
       listing: [],
@@ -10904,12 +10970,12 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
       isShowQuantity: false,
       isShowCheckout: false
     };
-    _this.callBackSaveListing = _this.callBackSaveListing.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4__["default"])(_this));
-    _this.callBackCancelCheckout = _this.callBackCancelCheckout.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4__["default"])(_this));
-    _this.callBackFinalizeQuantity = _this.callBackFinalizeQuantity.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4__["default"])(_this));
-    _this.callBackCancelQuantity = _this.callBackCancelQuantity.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4__["default"])(_this));
-    _this.showUserCheckoutModal = _this.showUserCheckoutModal.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4__["default"])(_this));
-    _this.showUserQuantityModal = _this.showUserQuantityModal.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4__["default"])(_this));
+    _this.callBackSaveListing = _this.callBackSaveListing.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__["default"])(_this));
+    _this.callBackCancelCheckout = _this.callBackCancelCheckout.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__["default"])(_this));
+    _this.callBackFinalizeQuantity = _this.callBackFinalizeQuantity.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__["default"])(_this));
+    _this.callBackCancelQuantity = _this.callBackCancelQuantity.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__["default"])(_this));
+    _this.showUserCheckoutModal = _this.showUserCheckoutModal.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__["default"])(_this));
+    _this.showUserQuantityModal = _this.showUserQuantityModal.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__["default"])(_this));
 
     _this.getUsers();
 
@@ -10920,7 +10986,7 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
     return _this;
   }
 
-  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3__["default"])(UserDashboard, [{
+  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__["default"])(UserDashboard, [{
     key: "callBackSaveListing",
     value: function callBackSaveListing(referenceNo) {
       this.setState({
@@ -10938,8 +11004,8 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
     }
   }, {
     key: "callBackFinalizeQuantity",
-    value: function callBackFinalizeQuantity(sScancode, quantity) {
-      this.checkScannedBarcode(sScancode, quantity);
+    value: function callBackFinalizeQuantity(sScancode, type, quantity) {
+      this.checkScannedBarcode(sScancode, type, quantity);
     }
   }, {
     key: "callBackCancelQuantity",
@@ -10953,15 +11019,15 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      onscan_js__WEBPACK_IMPORTED_MODULE_13__.attachTo(document);
+      onscan_js__WEBPACK_IMPORTED_MODULE_14__.attachTo(document);
       document.addEventListener("scan", function (sScancode, iQuantity) {
-        _this2.showUserQuantityModal(sScancode.detail.scanCode);
+        _this2.showUserQuantityModal(sScancode.detail.scanCode, "add");
       });
     }
   }, {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
-      onscan_js__WEBPACK_IMPORTED_MODULE_13__.detachFrom(document);
+      onscan_js__WEBPACK_IMPORTED_MODULE_14__.detachFrom(document);
       document.removeEventListener("scan");
     }
   }, {
@@ -11003,7 +11069,7 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "logout",
     value: function logout() {
-      _utils_axios__WEBPACK_IMPORTED_MODULE_12__["default"].post("/api/logout/", {}).then(function (res) {
+      _utils_axios__WEBPACK_IMPORTED_MODULE_13__["default"].post("/api/logout/", {}).then(function (res) {
         window.location.reload();
       }).catch(function (error) {
         console.log(error);
@@ -11015,9 +11081,9 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
       var _this3 = this;
 
       var api_url = "/api/users/";
-      _utils_axios__WEBPACK_IMPORTED_MODULE_12__["default"].get(api_url).then(function (res) {
+      _utils_axios__WEBPACK_IMPORTED_MODULE_13__["default"].get(api_url).then(function (res) {
         _this3.setState({
-          "users": res.data
+          users: res.data
         });
       }).catch(function (error) {
         console.log(error);
@@ -11029,9 +11095,9 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
     value: function getListing() {
       var _this4 = this;
 
-      _utils_axios__WEBPACK_IMPORTED_MODULE_12__["default"].get("/api/cashier/listing/").then(function (res) {
+      _utils_axios__WEBPACK_IMPORTED_MODULE_13__["default"].get("/api/cashier/listing/").then(function (res) {
         _this4.setState({
-          "listing": res.data
+          listing: res.data
         });
       }).catch(function (error) {
         console.log(error);
@@ -11043,9 +11109,9 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
     value: function getProducts() {
       var _this5 = this;
 
-      _utils_axios__WEBPACK_IMPORTED_MODULE_12__["default"].get("/api/products/").then(function (res) {
+      _utils_axios__WEBPACK_IMPORTED_MODULE_13__["default"].get("/api/products/").then(function (res) {
         _this5.setState({
-          "products": res.data
+          products: res.data
         });
       }).catch(function (error) {
         console.log(error);
@@ -11054,7 +11120,7 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
     }
   }, {
     key: "checkScannedBarcode",
-    value: function checkScannedBarcode(scanCode, quantity) {
+    value: function checkScannedBarcode(scanCode, type, quantity) {
       var productData = this.state.products.find(function (element) {
         return element.barcode === scanCode;
       });
@@ -11070,7 +11136,7 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
         if (isExistInCart) {
           var newState = this.state.carts.map(function (element) {
             return element.id === productData.id ? _objectSpread(_objectSpread({}, element), {}, {
-              quantity: element.quantity += quantity
+              quantity: type === "add" ? element.quantity += quantity : element.quantity = quantity
             }) : element;
           });
           this.setState({
@@ -11078,14 +11144,14 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
           });
         } else {
           this.setState({
-            carts: [].concat((0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(this.state.carts), [{
+            carts: [].concat((0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(this.state.carts.reverse()), [{
               id: productData.id,
               barcode: productData.barcode,
               name: productData.name,
               quantity: quantity,
               price: listingProduct.price,
               unit_of_measure: listingProduct.unit_of_measure
-            }])
+            }]).reverse()
           });
         }
 
@@ -11111,11 +11177,11 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
       checkout["callBackSave"] = this.callBackSaveListing;
       checkout["callBackCancel"] = this.callBackCancelCheckout;
       checkout["carts"] = this.state.carts;
-      _UserCheckoutDialog__WEBPACK_IMPORTED_MODULE_10__["default"].show(_objectSpread({}, checkout));
+      _UserCheckoutDialog__WEBPACK_IMPORTED_MODULE_11__["default"].show(_objectSpread({}, checkout));
     }
   }, {
     key: "showUserQuantityModal",
-    value: function showUserQuantityModal(scanCode) {
+    value: function showUserQuantityModal(scanCode, type) {
       this.setState({
         isShowQuantity: !this.state.isShowQuantity
       });
@@ -11123,16 +11189,17 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
       quantity["callBackSave"] = this.callBackFinalizeQuantity;
       quantity["callBackCancel"] = this.callBackCancelQuantity;
       quantity["scanCode"] = scanCode;
-      _UserQuantityDialog__WEBPACK_IMPORTED_MODULE_11__["default"].show(_objectSpread({}, quantity));
+      quantity["type"] = type;
+      _UserQuantityDialog__WEBPACK_IMPORTED_MODULE_12__["default"].show(_objectSpread({}, quantity));
     }
   }, {
     key: "getLastTransaction",
     value: function getLastTransaction(referenceNo) {
       var _this6 = this;
 
-      _utils_axios__WEBPACK_IMPORTED_MODULE_12__["default"].get("/api/cashier/last-transaction/".concat(referenceNo)).then(function (res) {
+      _utils_axios__WEBPACK_IMPORTED_MODULE_13__["default"].get("/api/cashier/last-transaction/".concat(referenceNo)).then(function (res) {
         _this6.setState({
-          "lastTransaction": res.data
+          lastTransaction: res.data
         });
       }).catch(function (error) {
         console.log(error);
@@ -11157,7 +11224,7 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
           key: elementList.id,
           className: "col-4"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
-          className: "card"
+          className: "card mb-3"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
           className: "card-body"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("h5", {
@@ -11171,7 +11238,7 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("button", {
           className: "btn btn-primary w-100",
           onClick: function onClick() {
-            return _this7.showUserQuantityModal(listingProduct.barcode);
+            return _this7.showUserQuantityModal(listingProduct.barcode, "add");
           },
           disabled: _this7.state.isShowQuantity
         }, "Add to carts")))));
@@ -11233,10 +11300,34 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
       }
 
       return this.state.carts.map(function (element) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("tr", {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement((react__WEBPACK_IMPORTED_MODULE_8___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement(react_contextmenu__WEBPACK_IMPORTED_MODULE_10__.ContextMenu, {
           key: element.id,
+          id: element.id
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement(react_contextmenu__WEBPACK_IMPORTED_MODULE_10__.MenuItem, {
+          onClick: _this8.updateCart,
+          data: {
+            item: element.id
+          }
+        }, "Change Quantity"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement(react_contextmenu__WEBPACK_IMPORTED_MODULE_10__.MenuItem, {
+          onClick: _this8.removeCart,
+          data: {
+            item: element.id
+          }
+        }, "Remove")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("tr", {
           className: "cursor-point"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("td", null, element.barcode), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("td", null, element.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("td", null, element.quantity), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("td", null, _this8.priceFormat(element.price)));
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement(react_contextmenu__WEBPACK_IMPORTED_MODULE_10__.ContextMenuTrigger, {
+          id: element.id,
+          holdToDisplay: 1000
+        }, element.barcode)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement(react_contextmenu__WEBPACK_IMPORTED_MODULE_10__.ContextMenuTrigger, {
+          id: element.id,
+          holdToDisplay: 1000
+        }, element.name)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement(react_contextmenu__WEBPACK_IMPORTED_MODULE_10__.ContextMenuTrigger, {
+          id: element.id,
+          holdToDisplay: 1000
+        }, element.quantity)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement(react_contextmenu__WEBPACK_IMPORTED_MODULE_10__.ContextMenuTrigger, {
+          id: element.id,
+          holdToDisplay: 1000
+        }, _this8.priceFormat(element.price)))));
       });
     }
   }, {
@@ -11462,7 +11553,7 @@ var UserCheckoutDialog = /*#__PURE__*/function (_React$Component) {
         return (0,_utils_alert__WEBPACK_IMPORTED_MODULE_9__["default"])("Quantity cannot be zero!", "danger", "error-notification");
       }
 
-      this.props.callBackSave(this.props.scanCode, parseInt(this.state.quantity));
+      this.props.callBackSave(this.props.scanCode, this.props.type, parseInt(this.state.quantity));
       this.handleCancel(event);
     }
   }, {
@@ -12075,6 +12166,75 @@ var Toast = /*#__PURE__*/function (_React$Component) {
 
 /***/ }),
 
+/***/ "./node_modules/classnames/index.js":
+/*!******************************************!*\
+  !*** ./node_modules/classnames/index.js ***!
+  \******************************************/
+/***/ ((module, exports) => {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	Copyright (c) 2018 Jed Watson.
+	Licensed under the MIT License (MIT), see
+	http://jedwatson.github.io/classnames
+*/
+/* global define */
+
+(function () {
+	'use strict';
+
+	var hasOwn = {}.hasOwnProperty;
+	var nativeCodeString = '[native code]';
+
+	function classNames() {
+		var classes = [];
+
+		for (var i = 0; i < arguments.length; i++) {
+			var arg = arguments[i];
+			if (!arg) continue;
+
+			var argType = typeof arg;
+
+			if (argType === 'string' || argType === 'number') {
+				classes.push(arg);
+			} else if (Array.isArray(arg)) {
+				if (arg.length) {
+					var inner = classNames.apply(null, arg);
+					if (inner) {
+						classes.push(inner);
+					}
+				}
+			} else if (argType === 'object') {
+				if (arg.toString !== Object.prototype.toString && !arg.toString.toString().includes('[native code]')) {
+					classes.push(arg.toString());
+					continue;
+				}
+
+				for (var key in arg) {
+					if (hasOwn.call(arg, key) && arg[key]) {
+						classes.push(key);
+					}
+				}
+			}
+		}
+
+		return classes.join(' ');
+	}
+
+	if ( true && module.exports) {
+		classNames.default = classNames;
+		module.exports = classNames;
+	} else if (true) {
+		// register as 'classnames', consistent with npm package name
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function () {
+			return classNames;
+		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	} else {}
+}());
+
+
+/***/ }),
+
 /***/ "./node_modules/clsx/dist/clsx.m.js":
 /*!******************************************!*\
   !*** ./node_modules/clsx/dist/clsx.m.js ***!
@@ -12246,7 +12406,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".total-amount {\n    font-size: 14vh;\n}\n.product-scanned {\n    font-size: 12vh;\n}\n.receipt {\n    width: 500px;\n    margin: 25px 0;\n    border: 1px dashed;\n    padding: 20px;\n}\n.receipt-action {\n    width: 470px;\n}\n.btn-dashboard {\n    width: 150px;\n}\n.receipt-btn {\n    top: 20px;\n    left: 20px;\n}\n.product-scanned-item {\n    margin: 18px;\n}\n.product-scanned-item div:nth-child(1) {\n    font-size: 4.2vh;\n}\n.product-scanned-item div:nth-child(2) {\n    font-size: 2.5vh;\n}\n.product-scanned-item div:nth-child(3) {\n    font-size: 2.5vh;\n}\n.cursor-point {\n    cursor: pointer;\n}", "",{"version":3,"sources":["webpack://./src/components/user/dashboard/Dashboard.css"],"names":[],"mappings":"AAAA;IACI,eAAe;AACnB;AACA;IACI,eAAe;AACnB;AACA;IACI,YAAY;IACZ,cAAc;IACd,kBAAkB;IAClB,aAAa;AACjB;AACA;IACI,YAAY;AAChB;AACA;IACI,YAAY;AAChB;AACA;IACI,SAAS;IACT,UAAU;AACd;AACA;IACI,YAAY;AAChB;AACA;IACI,gBAAgB;AACpB;AACA;IACI,gBAAgB;AACpB;AACA;IACI,gBAAgB;AACpB;AACA;IACI,eAAe;AACnB","sourcesContent":[".total-amount {\n    font-size: 14vh;\n}\n.product-scanned {\n    font-size: 12vh;\n}\n.receipt {\n    width: 500px;\n    margin: 25px 0;\n    border: 1px dashed;\n    padding: 20px;\n}\n.receipt-action {\n    width: 470px;\n}\n.btn-dashboard {\n    width: 150px;\n}\n.receipt-btn {\n    top: 20px;\n    left: 20px;\n}\n.product-scanned-item {\n    margin: 18px;\n}\n.product-scanned-item div:nth-child(1) {\n    font-size: 4.2vh;\n}\n.product-scanned-item div:nth-child(2) {\n    font-size: 2.5vh;\n}\n.product-scanned-item div:nth-child(3) {\n    font-size: 2.5vh;\n}\n.cursor-point {\n    cursor: pointer;\n}"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".total-amount {\n    font-size: 14vh;\n}\n.product-scanned {\n    font-size: 12vh;\n}\n.receipt {\n    width: 500px;\n    margin: 25px 0;\n    border: 1px dashed;\n    padding: 20px;\n}\n.receipt-action {\n    width: 470px;\n}\n.btn-dashboard {\n    width: 150px;\n}\n.receipt-btn {\n    top: 20px;\n    left: 20px;\n}\n.product-scanned-item {\n    margin: 18px;\n}\n.product-scanned-item div:nth-child(1) {\n    font-size: 4.2vh;\n}\n.product-scanned-item div:nth-child(2) {\n    font-size: 2.5vh;\n}\n.product-scanned-item div:nth-child(3) {\n    font-size: 2.5vh;\n}\n.cursor-point {\n    cursor: pointer;\n}\n.cursor-point td {\n    padding: unset !important;\n}\n.react-contextmenu {\n    border-radius: 5px !important;\n    background: #ebebeb !important;\n    padding: 10px 15px !important;\n}\n.react-contextmenu-wrapper {\n    padding: 10px !important;\n}\n.react-contextmenu-item {\n    cursor: pointer;\n    padding: 3px 0 !important;\n}\n.react-contextmenu-item:hover {\n    opacity: 0.8 !important;\n}", "",{"version":3,"sources":["webpack://./src/components/user/dashboard/Dashboard.css"],"names":[],"mappings":"AAAA;IACI,eAAe;AACnB;AACA;IACI,eAAe;AACnB;AACA;IACI,YAAY;IACZ,cAAc;IACd,kBAAkB;IAClB,aAAa;AACjB;AACA;IACI,YAAY;AAChB;AACA;IACI,YAAY;AAChB;AACA;IACI,SAAS;IACT,UAAU;AACd;AACA;IACI,YAAY;AAChB;AACA;IACI,gBAAgB;AACpB;AACA;IACI,gBAAgB;AACpB;AACA;IACI,gBAAgB;AACpB;AACA;IACI,eAAe;AACnB;AACA;IACI,yBAAyB;AAC7B;AACA;IACI,6BAA6B;IAC7B,8BAA8B;IAC9B,6BAA6B;AACjC;AACA;IACI,wBAAwB;AAC5B;AACA;IACI,eAAe;IACf,yBAAyB;AAC7B;AACA;IACI,uBAAuB;AAC3B","sourcesContent":[".total-amount {\n    font-size: 14vh;\n}\n.product-scanned {\n    font-size: 12vh;\n}\n.receipt {\n    width: 500px;\n    margin: 25px 0;\n    border: 1px dashed;\n    padding: 20px;\n}\n.receipt-action {\n    width: 470px;\n}\n.btn-dashboard {\n    width: 150px;\n}\n.receipt-btn {\n    top: 20px;\n    left: 20px;\n}\n.product-scanned-item {\n    margin: 18px;\n}\n.product-scanned-item div:nth-child(1) {\n    font-size: 4.2vh;\n}\n.product-scanned-item div:nth-child(2) {\n    font-size: 2.5vh;\n}\n.product-scanned-item div:nth-child(3) {\n    font-size: 2.5vh;\n}\n.cursor-point {\n    cursor: pointer;\n}\n.cursor-point td {\n    padding: unset !important;\n}\n.react-contextmenu {\n    border-radius: 5px !important;\n    background: #ebebeb !important;\n    padding: 10px 15px !important;\n}\n.react-contextmenu-wrapper {\n    padding: 10px !important;\n}\n.react-contextmenu-item {\n    cursor: pointer;\n    padding: 3px 0 !important;\n}\n.react-contextmenu-item:hover {\n    opacity: 0.8 !important;\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -22785,6 +22945,107 @@ function memoizeOne(resultFn, isEqual) {
 
 /***/ }),
 
+/***/ "./node_modules/object-assign/index.js":
+/*!*********************************************!*\
+  !*** ./node_modules/object-assign/index.js ***!
+  \*********************************************/
+/***/ ((module) => {
+
+"use strict";
+/*
+object-assign
+(c) Sindre Sorhus
+@license MIT
+*/
+
+
+/* eslint-disable no-unused-vars */
+var getOwnPropertySymbols = Object.getOwnPropertySymbols;
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+var propIsEnumerable = Object.prototype.propertyIsEnumerable;
+
+function toObject(val) {
+	if (val === null || val === undefined) {
+		throw new TypeError('Object.assign cannot be called with null or undefined');
+	}
+
+	return Object(val);
+}
+
+function shouldUseNative() {
+	try {
+		if (!Object.assign) {
+			return false;
+		}
+
+		// Detect buggy property enumeration order in older V8 versions.
+
+		// https://bugs.chromium.org/p/v8/issues/detail?id=4118
+		var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
+		test1[5] = 'de';
+		if (Object.getOwnPropertyNames(test1)[0] === '5') {
+			return false;
+		}
+
+		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
+		var test2 = {};
+		for (var i = 0; i < 10; i++) {
+			test2['_' + String.fromCharCode(i)] = i;
+		}
+		var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
+			return test2[n];
+		});
+		if (order2.join('') !== '0123456789') {
+			return false;
+		}
+
+		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
+		var test3 = {};
+		'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
+			test3[letter] = letter;
+		});
+		if (Object.keys(Object.assign({}, test3)).join('') !==
+				'abcdefghijklmnopqrst') {
+			return false;
+		}
+
+		return true;
+	} catch (err) {
+		// We don't expect any of the above to throw, but better to be safe.
+		return false;
+	}
+}
+
+module.exports = shouldUseNative() ? Object.assign : function (target, source) {
+	var from;
+	var to = toObject(target);
+	var symbols;
+
+	for (var s = 1; s < arguments.length; s++) {
+		from = Object(arguments[s]);
+
+		for (var key in from) {
+			if (hasOwnProperty.call(from, key)) {
+				to[key] = from[key];
+			}
+		}
+
+		if (getOwnPropertySymbols) {
+			symbols = getOwnPropertySymbols(from);
+			for (var i = 0; i < symbols.length; i++) {
+				if (propIsEnumerable.call(from, symbols[i])) {
+					to[symbols[i]] = from[symbols[i]];
+				}
+			}
+		}
+	}
+
+	return to;
+};
+
+
+/***/ }),
+
 /***/ "./node_modules/onscan.js/onscan.js":
 /*!******************************************!*\
   !*** ./node_modules/onscan.js/onscan.js ***!
@@ -23316,6 +23577,2340 @@ function memoizeOne(resultFn, isEqual) {
 	
 	return onScan;
 })));
+
+/***/ }),
+
+/***/ "./node_modules/prop-types/checkPropTypes.js":
+/*!***************************************************!*\
+  !*** ./node_modules/prop-types/checkPropTypes.js ***!
+  \***************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+var printWarning = function() {};
+
+if (true) {
+  var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ "./node_modules/prop-types/lib/ReactPropTypesSecret.js");
+  var loggedTypeFailures = {};
+  var has = __webpack_require__(/*! ./lib/has */ "./node_modules/prop-types/lib/has.js");
+
+  printWarning = function(text) {
+    var message = 'Warning: ' + text;
+    if (typeof console !== 'undefined') {
+      console.error(message);
+    }
+    try {
+      // --- Welcome to debugging React ---
+      // This error was thrown as a convenience so that you can use this stack
+      // to find the callsite that caused this warning to fire.
+      throw new Error(message);
+    } catch (x) { /**/ }
+  };
+}
+
+/**
+ * Assert that the values match with the type specs.
+ * Error messages are memorized and will only be shown once.
+ *
+ * @param {object} typeSpecs Map of name to a ReactPropType
+ * @param {object} values Runtime values that need to be type-checked
+ * @param {string} location e.g. "prop", "context", "child context"
+ * @param {string} componentName Name of the component for error messages.
+ * @param {?Function} getStack Returns the component stack.
+ * @private
+ */
+function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
+  if (true) {
+    for (var typeSpecName in typeSpecs) {
+      if (has(typeSpecs, typeSpecName)) {
+        var error;
+        // Prop type validation may throw. In case they do, we don't want to
+        // fail the render phase where it didn't fail before. So we log it.
+        // After these have been cleaned up, we'll let them throw.
+        try {
+          // This is intentionally an invariant that gets caught. It's the same
+          // behavior as without this statement except with a better message.
+          if (typeof typeSpecs[typeSpecName] !== 'function') {
+            var err = Error(
+              (componentName || 'React class') + ': ' + location + ' type `' + typeSpecName + '` is invalid; ' +
+              'it must be a function, usually from the `prop-types` package, but received `' + typeof typeSpecs[typeSpecName] + '`.' +
+              'This often happens because of typos such as `PropTypes.function` instead of `PropTypes.func`.'
+            );
+            err.name = 'Invariant Violation';
+            throw err;
+          }
+          error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
+        } catch (ex) {
+          error = ex;
+        }
+        if (error && !(error instanceof Error)) {
+          printWarning(
+            (componentName || 'React class') + ': type specification of ' +
+            location + ' `' + typeSpecName + '` is invalid; the type checker ' +
+            'function must return `null` or an `Error` but returned a ' + typeof error + '. ' +
+            'You may have forgotten to pass an argument to the type checker ' +
+            'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' +
+            'shape all require an argument).'
+          );
+        }
+        if (error instanceof Error && !(error.message in loggedTypeFailures)) {
+          // Only monitor this failure once because there tends to be a lot of the
+          // same error.
+          loggedTypeFailures[error.message] = true;
+
+          var stack = getStack ? getStack() : '';
+
+          printWarning(
+            'Failed ' + location + ' type: ' + error.message + (stack != null ? stack : '')
+          );
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Resets warning cache when testing.
+ *
+ * @private
+ */
+checkPropTypes.resetWarningCache = function() {
+  if (true) {
+    loggedTypeFailures = {};
+  }
+}
+
+module.exports = checkPropTypes;
+
+
+/***/ }),
+
+/***/ "./node_modules/prop-types/factoryWithTypeCheckers.js":
+/*!************************************************************!*\
+  !*** ./node_modules/prop-types/factoryWithTypeCheckers.js ***!
+  \************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+var ReactIs = __webpack_require__(/*! react-is */ "./node_modules/react-is/index.js");
+var assign = __webpack_require__(/*! object-assign */ "./node_modules/object-assign/index.js");
+
+var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ "./node_modules/prop-types/lib/ReactPropTypesSecret.js");
+var has = __webpack_require__(/*! ./lib/has */ "./node_modules/prop-types/lib/has.js");
+var checkPropTypes = __webpack_require__(/*! ./checkPropTypes */ "./node_modules/prop-types/checkPropTypes.js");
+
+var printWarning = function() {};
+
+if (true) {
+  printWarning = function(text) {
+    var message = 'Warning: ' + text;
+    if (typeof console !== 'undefined') {
+      console.error(message);
+    }
+    try {
+      // --- Welcome to debugging React ---
+      // This error was thrown as a convenience so that you can use this stack
+      // to find the callsite that caused this warning to fire.
+      throw new Error(message);
+    } catch (x) {}
+  };
+}
+
+function emptyFunctionThatReturnsNull() {
+  return null;
+}
+
+module.exports = function(isValidElement, throwOnDirectAccess) {
+  /* global Symbol */
+  var ITERATOR_SYMBOL = typeof Symbol === 'function' && Symbol.iterator;
+  var FAUX_ITERATOR_SYMBOL = '@@iterator'; // Before Symbol spec.
+
+  /**
+   * Returns the iterator method function contained on the iterable object.
+   *
+   * Be sure to invoke the function with the iterable as context:
+   *
+   *     var iteratorFn = getIteratorFn(myIterable);
+   *     if (iteratorFn) {
+   *       var iterator = iteratorFn.call(myIterable);
+   *       ...
+   *     }
+   *
+   * @param {?object} maybeIterable
+   * @return {?function}
+   */
+  function getIteratorFn(maybeIterable) {
+    var iteratorFn = maybeIterable && (ITERATOR_SYMBOL && maybeIterable[ITERATOR_SYMBOL] || maybeIterable[FAUX_ITERATOR_SYMBOL]);
+    if (typeof iteratorFn === 'function') {
+      return iteratorFn;
+    }
+  }
+
+  /**
+   * Collection of methods that allow declaration and validation of props that are
+   * supplied to React components. Example usage:
+   *
+   *   var Props = require('ReactPropTypes');
+   *   var MyArticle = React.createClass({
+   *     propTypes: {
+   *       // An optional string prop named "description".
+   *       description: Props.string,
+   *
+   *       // A required enum prop named "category".
+   *       category: Props.oneOf(['News','Photos']).isRequired,
+   *
+   *       // A prop named "dialog" that requires an instance of Dialog.
+   *       dialog: Props.instanceOf(Dialog).isRequired
+   *     },
+   *     render: function() { ... }
+   *   });
+   *
+   * A more formal specification of how these methods are used:
+   *
+   *   type := array|bool|func|object|number|string|oneOf([...])|instanceOf(...)
+   *   decl := ReactPropTypes.{type}(.isRequired)?
+   *
+   * Each and every declaration produces a function with the same signature. This
+   * allows the creation of custom validation functions. For example:
+   *
+   *  var MyLink = React.createClass({
+   *    propTypes: {
+   *      // An optional string or URI prop named "href".
+   *      href: function(props, propName, componentName) {
+   *        var propValue = props[propName];
+   *        if (propValue != null && typeof propValue !== 'string' &&
+   *            !(propValue instanceof URI)) {
+   *          return new Error(
+   *            'Expected a string or an URI for ' + propName + ' in ' +
+   *            componentName
+   *          );
+   *        }
+   *      }
+   *    },
+   *    render: function() {...}
+   *  });
+   *
+   * @internal
+   */
+
+  var ANONYMOUS = '<<anonymous>>';
+
+  // Important!
+  // Keep this list in sync with production version in `./factoryWithThrowingShims.js`.
+  var ReactPropTypes = {
+    array: createPrimitiveTypeChecker('array'),
+    bigint: createPrimitiveTypeChecker('bigint'),
+    bool: createPrimitiveTypeChecker('boolean'),
+    func: createPrimitiveTypeChecker('function'),
+    number: createPrimitiveTypeChecker('number'),
+    object: createPrimitiveTypeChecker('object'),
+    string: createPrimitiveTypeChecker('string'),
+    symbol: createPrimitiveTypeChecker('symbol'),
+
+    any: createAnyTypeChecker(),
+    arrayOf: createArrayOfTypeChecker,
+    element: createElementTypeChecker(),
+    elementType: createElementTypeTypeChecker(),
+    instanceOf: createInstanceTypeChecker,
+    node: createNodeChecker(),
+    objectOf: createObjectOfTypeChecker,
+    oneOf: createEnumTypeChecker,
+    oneOfType: createUnionTypeChecker,
+    shape: createShapeTypeChecker,
+    exact: createStrictShapeTypeChecker,
+  };
+
+  /**
+   * inlined Object.is polyfill to avoid requiring consumers ship their own
+   * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
+   */
+  /*eslint-disable no-self-compare*/
+  function is(x, y) {
+    // SameValue algorithm
+    if (x === y) {
+      // Steps 1-5, 7-10
+      // Steps 6.b-6.e: +0 != -0
+      return x !== 0 || 1 / x === 1 / y;
+    } else {
+      // Step 6.a: NaN == NaN
+      return x !== x && y !== y;
+    }
+  }
+  /*eslint-enable no-self-compare*/
+
+  /**
+   * We use an Error-like object for backward compatibility as people may call
+   * PropTypes directly and inspect their output. However, we don't use real
+   * Errors anymore. We don't inspect their stack anyway, and creating them
+   * is prohibitively expensive if they are created too often, such as what
+   * happens in oneOfType() for any type before the one that matched.
+   */
+  function PropTypeError(message, data) {
+    this.message = message;
+    this.data = data && typeof data === 'object' ? data: {};
+    this.stack = '';
+  }
+  // Make `instanceof Error` still work for returned errors.
+  PropTypeError.prototype = Error.prototype;
+
+  function createChainableTypeChecker(validate) {
+    if (true) {
+      var manualPropTypeCallCache = {};
+      var manualPropTypeWarningCount = 0;
+    }
+    function checkType(isRequired, props, propName, componentName, location, propFullName, secret) {
+      componentName = componentName || ANONYMOUS;
+      propFullName = propFullName || propName;
+
+      if (secret !== ReactPropTypesSecret) {
+        if (throwOnDirectAccess) {
+          // New behavior only for users of `prop-types` package
+          var err = new Error(
+            'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
+            'Use `PropTypes.checkPropTypes()` to call them. ' +
+            'Read more at http://fb.me/use-check-prop-types'
+          );
+          err.name = 'Invariant Violation';
+          throw err;
+        } else if ( true && typeof console !== 'undefined') {
+          // Old behavior for people using React.PropTypes
+          var cacheKey = componentName + ':' + propName;
+          if (
+            !manualPropTypeCallCache[cacheKey] &&
+            // Avoid spamming the console because they are often not actionable except for lib authors
+            manualPropTypeWarningCount < 3
+          ) {
+            printWarning(
+              'You are manually calling a React.PropTypes validation ' +
+              'function for the `' + propFullName + '` prop on `' + componentName + '`. This is deprecated ' +
+              'and will throw in the standalone `prop-types` package. ' +
+              'You may be seeing this warning due to a third-party PropTypes ' +
+              'library. See https://fb.me/react-warning-dont-call-proptypes ' + 'for details.'
+            );
+            manualPropTypeCallCache[cacheKey] = true;
+            manualPropTypeWarningCount++;
+          }
+        }
+      }
+      if (props[propName] == null) {
+        if (isRequired) {
+          if (props[propName] === null) {
+            return new PropTypeError('The ' + location + ' `' + propFullName + '` is marked as required ' + ('in `' + componentName + '`, but its value is `null`.'));
+          }
+          return new PropTypeError('The ' + location + ' `' + propFullName + '` is marked as required in ' + ('`' + componentName + '`, but its value is `undefined`.'));
+        }
+        return null;
+      } else {
+        return validate(props, propName, componentName, location, propFullName);
+      }
+    }
+
+    var chainedCheckType = checkType.bind(null, false);
+    chainedCheckType.isRequired = checkType.bind(null, true);
+
+    return chainedCheckType;
+  }
+
+  function createPrimitiveTypeChecker(expectedType) {
+    function validate(props, propName, componentName, location, propFullName, secret) {
+      var propValue = props[propName];
+      var propType = getPropType(propValue);
+      if (propType !== expectedType) {
+        // `propValue` being instance of, say, date/regexp, pass the 'object'
+        // check, but we can offer a more precise error message here rather than
+        // 'of type `object`'.
+        var preciseType = getPreciseType(propValue);
+
+        return new PropTypeError(
+          'Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + preciseType + '` supplied to `' + componentName + '`, expected ') + ('`' + expectedType + '`.'),
+          {expectedType: expectedType}
+        );
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createAnyTypeChecker() {
+    return createChainableTypeChecker(emptyFunctionThatReturnsNull);
+  }
+
+  function createArrayOfTypeChecker(typeChecker) {
+    function validate(props, propName, componentName, location, propFullName) {
+      if (typeof typeChecker !== 'function') {
+        return new PropTypeError('Property `' + propFullName + '` of component `' + componentName + '` has invalid PropType notation inside arrayOf.');
+      }
+      var propValue = props[propName];
+      if (!Array.isArray(propValue)) {
+        var propType = getPropType(propValue);
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an array.'));
+      }
+      for (var i = 0; i < propValue.length; i++) {
+        var error = typeChecker(propValue, i, componentName, location, propFullName + '[' + i + ']', ReactPropTypesSecret);
+        if (error instanceof Error) {
+          return error;
+        }
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createElementTypeChecker() {
+    function validate(props, propName, componentName, location, propFullName) {
+      var propValue = props[propName];
+      if (!isValidElement(propValue)) {
+        var propType = getPropType(propValue);
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected a single ReactElement.'));
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createElementTypeTypeChecker() {
+    function validate(props, propName, componentName, location, propFullName) {
+      var propValue = props[propName];
+      if (!ReactIs.isValidElementType(propValue)) {
+        var propType = getPropType(propValue);
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected a single ReactElement type.'));
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createInstanceTypeChecker(expectedClass) {
+    function validate(props, propName, componentName, location, propFullName) {
+      if (!(props[propName] instanceof expectedClass)) {
+        var expectedClassName = expectedClass.name || ANONYMOUS;
+        var actualClassName = getClassName(props[propName]);
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + actualClassName + '` supplied to `' + componentName + '`, expected ') + ('instance of `' + expectedClassName + '`.'));
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createEnumTypeChecker(expectedValues) {
+    if (!Array.isArray(expectedValues)) {
+      if (true) {
+        if (arguments.length > 1) {
+          printWarning(
+            'Invalid arguments supplied to oneOf, expected an array, got ' + arguments.length + ' arguments. ' +
+            'A common mistake is to write oneOf(x, y, z) instead of oneOf([x, y, z]).'
+          );
+        } else {
+          printWarning('Invalid argument supplied to oneOf, expected an array.');
+        }
+      }
+      return emptyFunctionThatReturnsNull;
+    }
+
+    function validate(props, propName, componentName, location, propFullName) {
+      var propValue = props[propName];
+      for (var i = 0; i < expectedValues.length; i++) {
+        if (is(propValue, expectedValues[i])) {
+          return null;
+        }
+      }
+
+      var valuesString = JSON.stringify(expectedValues, function replacer(key, value) {
+        var type = getPreciseType(value);
+        if (type === 'symbol') {
+          return String(value);
+        }
+        return value;
+      });
+      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of value `' + String(propValue) + '` ' + ('supplied to `' + componentName + '`, expected one of ' + valuesString + '.'));
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createObjectOfTypeChecker(typeChecker) {
+    function validate(props, propName, componentName, location, propFullName) {
+      if (typeof typeChecker !== 'function') {
+        return new PropTypeError('Property `' + propFullName + '` of component `' + componentName + '` has invalid PropType notation inside objectOf.');
+      }
+      var propValue = props[propName];
+      var propType = getPropType(propValue);
+      if (propType !== 'object') {
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an object.'));
+      }
+      for (var key in propValue) {
+        if (has(propValue, key)) {
+          var error = typeChecker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
+          if (error instanceof Error) {
+            return error;
+          }
+        }
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createUnionTypeChecker(arrayOfTypeCheckers) {
+    if (!Array.isArray(arrayOfTypeCheckers)) {
+       true ? printWarning('Invalid argument supplied to oneOfType, expected an instance of array.') : 0;
+      return emptyFunctionThatReturnsNull;
+    }
+
+    for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
+      var checker = arrayOfTypeCheckers[i];
+      if (typeof checker !== 'function') {
+        printWarning(
+          'Invalid argument supplied to oneOfType. Expected an array of check functions, but ' +
+          'received ' + getPostfixForTypeWarning(checker) + ' at index ' + i + '.'
+        );
+        return emptyFunctionThatReturnsNull;
+      }
+    }
+
+    function validate(props, propName, componentName, location, propFullName) {
+      var expectedTypes = [];
+      for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
+        var checker = arrayOfTypeCheckers[i];
+        var checkerResult = checker(props, propName, componentName, location, propFullName, ReactPropTypesSecret);
+        if (checkerResult == null) {
+          return null;
+        }
+        if (checkerResult.data && has(checkerResult.data, 'expectedType')) {
+          expectedTypes.push(checkerResult.data.expectedType);
+        }
+      }
+      var expectedTypesMessage = (expectedTypes.length > 0) ? ', expected one of type [' + expectedTypes.join(', ') + ']': '';
+      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`' + expectedTypesMessage + '.'));
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createNodeChecker() {
+    function validate(props, propName, componentName, location, propFullName) {
+      if (!isNode(props[propName])) {
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`, expected a ReactNode.'));
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function invalidValidatorError(componentName, location, propFullName, key, type) {
+    return new PropTypeError(
+      (componentName || 'React class') + ': ' + location + ' type `' + propFullName + '.' + key + '` is invalid; ' +
+      'it must be a function, usually from the `prop-types` package, but received `' + type + '`.'
+    );
+  }
+
+  function createShapeTypeChecker(shapeTypes) {
+    function validate(props, propName, componentName, location, propFullName) {
+      var propValue = props[propName];
+      var propType = getPropType(propValue);
+      if (propType !== 'object') {
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type `' + propType + '` ' + ('supplied to `' + componentName + '`, expected `object`.'));
+      }
+      for (var key in shapeTypes) {
+        var checker = shapeTypes[key];
+        if (typeof checker !== 'function') {
+          return invalidValidatorError(componentName, location, propFullName, key, getPreciseType(checker));
+        }
+        var error = checker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
+        if (error) {
+          return error;
+        }
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createStrictShapeTypeChecker(shapeTypes) {
+    function validate(props, propName, componentName, location, propFullName) {
+      var propValue = props[propName];
+      var propType = getPropType(propValue);
+      if (propType !== 'object') {
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type `' + propType + '` ' + ('supplied to `' + componentName + '`, expected `object`.'));
+      }
+      // We need to check all keys in case some are required but missing from props.
+      var allKeys = assign({}, props[propName], shapeTypes);
+      for (var key in allKeys) {
+        var checker = shapeTypes[key];
+        if (has(shapeTypes, key) && typeof checker !== 'function') {
+          return invalidValidatorError(componentName, location, propFullName, key, getPreciseType(checker));
+        }
+        if (!checker) {
+          return new PropTypeError(
+            'Invalid ' + location + ' `' + propFullName + '` key `' + key + '` supplied to `' + componentName + '`.' +
+            '\nBad object: ' + JSON.stringify(props[propName], null, '  ') +
+            '\nValid keys: ' + JSON.stringify(Object.keys(shapeTypes), null, '  ')
+          );
+        }
+        var error = checker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
+        if (error) {
+          return error;
+        }
+      }
+      return null;
+    }
+
+    return createChainableTypeChecker(validate);
+  }
+
+  function isNode(propValue) {
+    switch (typeof propValue) {
+      case 'number':
+      case 'string':
+      case 'undefined':
+        return true;
+      case 'boolean':
+        return !propValue;
+      case 'object':
+        if (Array.isArray(propValue)) {
+          return propValue.every(isNode);
+        }
+        if (propValue === null || isValidElement(propValue)) {
+          return true;
+        }
+
+        var iteratorFn = getIteratorFn(propValue);
+        if (iteratorFn) {
+          var iterator = iteratorFn.call(propValue);
+          var step;
+          if (iteratorFn !== propValue.entries) {
+            while (!(step = iterator.next()).done) {
+              if (!isNode(step.value)) {
+                return false;
+              }
+            }
+          } else {
+            // Iterator will provide entry [k,v] tuples rather than values.
+            while (!(step = iterator.next()).done) {
+              var entry = step.value;
+              if (entry) {
+                if (!isNode(entry[1])) {
+                  return false;
+                }
+              }
+            }
+          }
+        } else {
+          return false;
+        }
+
+        return true;
+      default:
+        return false;
+    }
+  }
+
+  function isSymbol(propType, propValue) {
+    // Native Symbol.
+    if (propType === 'symbol') {
+      return true;
+    }
+
+    // falsy value can't be a Symbol
+    if (!propValue) {
+      return false;
+    }
+
+    // 19.4.3.5 Symbol.prototype[@@toStringTag] === 'Symbol'
+    if (propValue['@@toStringTag'] === 'Symbol') {
+      return true;
+    }
+
+    // Fallback for non-spec compliant Symbols which are polyfilled.
+    if (typeof Symbol === 'function' && propValue instanceof Symbol) {
+      return true;
+    }
+
+    return false;
+  }
+
+  // Equivalent of `typeof` but with special handling for array and regexp.
+  function getPropType(propValue) {
+    var propType = typeof propValue;
+    if (Array.isArray(propValue)) {
+      return 'array';
+    }
+    if (propValue instanceof RegExp) {
+      // Old webkits (at least until Android 4.0) return 'function' rather than
+      // 'object' for typeof a RegExp. We'll normalize this here so that /bla/
+      // passes PropTypes.object.
+      return 'object';
+    }
+    if (isSymbol(propType, propValue)) {
+      return 'symbol';
+    }
+    return propType;
+  }
+
+  // This handles more types than `getPropType`. Only used for error messages.
+  // See `createPrimitiveTypeChecker`.
+  function getPreciseType(propValue) {
+    if (typeof propValue === 'undefined' || propValue === null) {
+      return '' + propValue;
+    }
+    var propType = getPropType(propValue);
+    if (propType === 'object') {
+      if (propValue instanceof Date) {
+        return 'date';
+      } else if (propValue instanceof RegExp) {
+        return 'regexp';
+      }
+    }
+    return propType;
+  }
+
+  // Returns a string that is postfixed to a warning about an invalid type.
+  // For example, "undefined" or "of type array"
+  function getPostfixForTypeWarning(value) {
+    var type = getPreciseType(value);
+    switch (type) {
+      case 'array':
+      case 'object':
+        return 'an ' + type;
+      case 'boolean':
+      case 'date':
+      case 'regexp':
+        return 'a ' + type;
+      default:
+        return type;
+    }
+  }
+
+  // Returns class name of the object, if any.
+  function getClassName(propValue) {
+    if (!propValue.constructor || !propValue.constructor.name) {
+      return ANONYMOUS;
+    }
+    return propValue.constructor.name;
+  }
+
+  ReactPropTypes.checkPropTypes = checkPropTypes;
+  ReactPropTypes.resetWarningCache = checkPropTypes.resetWarningCache;
+  ReactPropTypes.PropTypes = ReactPropTypes;
+
+  return ReactPropTypes;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/prop-types/index.js":
+/*!******************************************!*\
+  !*** ./node_modules/prop-types/index.js ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+if (true) {
+  var ReactIs = __webpack_require__(/*! react-is */ "./node_modules/react-is/index.js");
+
+  // By explicitly using `prop-types` you are opting into new development behavior.
+  // http://fb.me/prop-types-in-prod
+  var throwOnDirectAccess = true;
+  module.exports = __webpack_require__(/*! ./factoryWithTypeCheckers */ "./node_modules/prop-types/factoryWithTypeCheckers.js")(ReactIs.isElement, throwOnDirectAccess);
+} else {}
+
+
+/***/ }),
+
+/***/ "./node_modules/prop-types/lib/ReactPropTypesSecret.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/prop-types/lib/ReactPropTypesSecret.js ***!
+  \*************************************************************/
+/***/ ((module) => {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
+
+module.exports = ReactPropTypesSecret;
+
+
+/***/ }),
+
+/***/ "./node_modules/prop-types/lib/has.js":
+/*!********************************************!*\
+  !*** ./node_modules/prop-types/lib/has.js ***!
+  \********************************************/
+/***/ ((module) => {
+
+module.exports = Function.call.bind(Object.prototype.hasOwnProperty);
+
+
+/***/ }),
+
+/***/ "./node_modules/react-contextmenu/es6/AbstractMenu.js":
+/*!************************************************************!*\
+  !*** ./node_modules/react-contextmenu/es6/AbstractMenu.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _MenuItem__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MenuItem */ "./node_modules/react-contextmenu/es6/MenuItem.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+var AbstractMenu = function (_Component) {
+    _inherits(AbstractMenu, _Component);
+
+    function AbstractMenu(props) {
+        _classCallCheck(this, AbstractMenu);
+
+        var _this = _possibleConstructorReturn(this, (AbstractMenu.__proto__ || Object.getPrototypeOf(AbstractMenu)).call(this, props));
+
+        _initialiseProps.call(_this);
+
+        _this.seletedItemRef = null;
+        _this.state = {
+            selectedItem: null,
+            forceSubMenuOpen: false
+        };
+        return _this;
+    }
+
+    return AbstractMenu;
+}(react__WEBPACK_IMPORTED_MODULE_0__.Component);
+
+AbstractMenu.propTypes = {
+    children: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().node.isRequired)
+};
+
+var _initialiseProps = function _initialiseProps() {
+    var _this2 = this;
+
+    this.handleKeyNavigation = function (e) {
+        // check for isVisible strictly here as it might be undefined when this code executes in the context of SubMenu
+        // but we only need to check when it runs in the ContextMenu context
+        if (_this2.state.isVisible === false) {
+            return;
+        }
+
+        switch (e.keyCode) {
+            case 37: // left arrow
+            case 27:
+                // escape
+                e.preventDefault();
+                _this2.hideMenu(e);
+                break;
+            case 38:
+                // up arrow
+                e.preventDefault();
+                _this2.selectChildren(true);
+                break;
+            case 40:
+                // down arrow
+                e.preventDefault();
+                _this2.selectChildren(false);
+                break;
+            case 39:
+                // right arrow
+                _this2.tryToOpenSubMenu(e);
+                break;
+            case 13:
+                // enter
+                e.preventDefault();
+                _this2.tryToOpenSubMenu(e);
+                {
+                    // determine the selected item is disabled or not
+                    var disabled = _this2.seletedItemRef && _this2.seletedItemRef.props && _this2.seletedItemRef.props.disabled;
+
+                    if (_this2.seletedItemRef && _this2.seletedItemRef.ref instanceof HTMLElement && !disabled) {
+                        _this2.seletedItemRef.ref.click();
+                    } else {
+                        _this2.hideMenu(e);
+                    }
+                }
+                break;
+            default:
+            // do nothing
+        }
+    };
+
+    this.handleForceClose = function () {
+        _this2.setState({ forceSubMenuOpen: false });
+    };
+
+    this.tryToOpenSubMenu = function (e) {
+        if (_this2.state.selectedItem && _this2.state.selectedItem.type === _this2.getSubMenuType()) {
+            e.preventDefault();
+            _this2.setState({ forceSubMenuOpen: true });
+        }
+    };
+
+    this.selectChildren = function (forward) {
+        var selectedItem = _this2.state.selectedItem;
+
+        var children = [];
+        var disabledChildrenCount = 0;
+        var disabledChildIndexes = {};
+
+        var childCollector = function childCollector(child, index) {
+            // child can be empty in case you do conditional rendering of components, in which
+            // case it should not be accounted for as a real child
+            if (!child) {
+                return;
+            }
+
+            if ([_MenuItem__WEBPACK_IMPORTED_MODULE_1__["default"], _this2.getSubMenuType()].indexOf(child.type) < 0) {
+                // Maybe the MenuItem or SubMenu is capsuled in a wrapper div or something else
+                react__WEBPACK_IMPORTED_MODULE_0___default().Children.forEach(child.props.children, childCollector);
+            } else if (!child.props.divider) {
+                if (child.props.disabled) {
+                    ++disabledChildrenCount;
+                    disabledChildIndexes[index] = true;
+                }
+
+                children.push(child);
+            }
+        };
+
+        react__WEBPACK_IMPORTED_MODULE_0___default().Children.forEach(_this2.props.children, childCollector);
+        if (disabledChildrenCount === children.length) {
+            // All menu items are disabled, so none can be selected, don't do anything
+            return;
+        }
+
+        function findNextEnabledChildIndex(currentIndex) {
+            var i = currentIndex;
+            var incrementCounter = function incrementCounter() {
+                if (forward) {
+                    --i;
+                } else {
+                    ++i;
+                }
+
+                if (i < 0) {
+                    i = children.length - 1;
+                } else if (i >= children.length) {
+                    i = 0;
+                }
+            };
+
+            do {
+                incrementCounter();
+            } while (i !== currentIndex && disabledChildIndexes[i]);
+
+            return i === currentIndex ? null : i;
+        }
+
+        var currentIndex = children.indexOf(selectedItem);
+        var nextEnabledChildIndex = findNextEnabledChildIndex(currentIndex);
+
+        if (nextEnabledChildIndex !== null) {
+            _this2.setState({
+                selectedItem: children[nextEnabledChildIndex],
+                forceSubMenuOpen: false
+            });
+        }
+    };
+
+    this.onChildMouseMove = function (child) {
+        if (_this2.state.selectedItem !== child) {
+            _this2.setState({ selectedItem: child, forceSubMenuOpen: false });
+        }
+    };
+
+    this.onChildMouseLeave = function () {
+        _this2.setState({ selectedItem: null, forceSubMenuOpen: false });
+    };
+
+    this.renderChildren = function (children) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default().Children.map(children, function (child) {
+            var props = {};
+            if (!react__WEBPACK_IMPORTED_MODULE_0___default().isValidElement(child)) return child;
+            if ([_MenuItem__WEBPACK_IMPORTED_MODULE_1__["default"], _this2.getSubMenuType()].indexOf(child.type) < 0) {
+                // Maybe the MenuItem or SubMenu is capsuled in a wrapper div or something else
+                props.children = _this2.renderChildren(child.props.children);
+                return react__WEBPACK_IMPORTED_MODULE_0___default().cloneElement(child, props);
+            }
+            props.onMouseLeave = _this2.onChildMouseLeave.bind(_this2);
+            if (child.type === _this2.getSubMenuType()) {
+                // special props for SubMenu only
+                props.forceOpen = _this2.state.forceSubMenuOpen && _this2.state.selectedItem === child;
+                props.forceClose = _this2.handleForceClose;
+                props.parentKeyNavigationHandler = _this2.handleKeyNavigation;
+            }
+            if (!child.props.divider && _this2.state.selectedItem === child) {
+                // special props for selected item only
+                props.selected = true;
+                props.ref = function (ref) {
+                    _this2.seletedItemRef = ref;
+                };
+                return react__WEBPACK_IMPORTED_MODULE_0___default().cloneElement(child, props);
+            }
+            // onMouseMove is only needed for non selected items
+            props.onMouseMove = function () {
+                return _this2.onChildMouseMove(child);
+            };
+            return react__WEBPACK_IMPORTED_MODULE_0___default().cloneElement(child, props);
+        });
+    };
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AbstractMenu);
+
+/***/ }),
+
+/***/ "./node_modules/react-contextmenu/es6/ContextMenu.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/react-contextmenu/es6/ContextMenu.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var object_assign__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! object-assign */ "./node_modules/object-assign/index.js");
+/* harmony import */ var object_assign__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(object_assign__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _globalEventListener__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./globalEventListener */ "./node_modules/react-contextmenu/es6/globalEventListener.js");
+/* harmony import */ var _AbstractMenu__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./AbstractMenu */ "./node_modules/react-contextmenu/es6/AbstractMenu.js");
+/* harmony import */ var _SubMenu__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./SubMenu */ "./node_modules/react-contextmenu/es6/SubMenu.js");
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./actions */ "./node_modules/react-contextmenu/es6/actions.js");
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./helpers */ "./node_modules/react-contextmenu/es6/helpers.js");
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+
+
+
+
+
+
+var ContextMenu = function (_AbstractMenu) {
+    _inherits(ContextMenu, _AbstractMenu);
+
+    function ContextMenu(props) {
+        _classCallCheck(this, ContextMenu);
+
+        var _this = _possibleConstructorReturn(this, (ContextMenu.__proto__ || Object.getPrototypeOf(ContextMenu)).call(this, props));
+
+        _this.registerHandlers = function () {
+            document.addEventListener('mousedown', _this.handleOutsideClick);
+            document.addEventListener('touchstart', _this.handleOutsideClick);
+            if (!_this.props.preventHideOnScroll) document.addEventListener('scroll', _this.handleHide);
+            if (!_this.props.preventHideOnContextMenu) document.addEventListener('contextmenu', _this.handleHide);
+            document.addEventListener('keydown', _this.handleKeyNavigation);
+            if (!_this.props.preventHideOnResize) window.addEventListener('resize', _this.handleHide);
+        };
+
+        _this.unregisterHandlers = function () {
+            document.removeEventListener('mousedown', _this.handleOutsideClick);
+            document.removeEventListener('touchstart', _this.handleOutsideClick);
+            document.removeEventListener('scroll', _this.handleHide);
+            document.removeEventListener('contextmenu', _this.handleHide);
+            document.removeEventListener('keydown', _this.handleKeyNavigation);
+            window.removeEventListener('resize', _this.handleHide);
+        };
+
+        _this.handleShow = function (e) {
+            if (e.detail.id !== _this.props.id || _this.state.isVisible) return;
+
+            var _e$detail$position = e.detail.position,
+                x = _e$detail$position.x,
+                y = _e$detail$position.y;
+
+
+            _this.setState({ isVisible: true, x: x, y: y });
+            _this.registerHandlers();
+            (0,_helpers__WEBPACK_IMPORTED_MODULE_7__.callIfExists)(_this.props.onShow, e);
+        };
+
+        _this.handleHide = function (e) {
+            if (_this.state.isVisible && (!e.detail || !e.detail.id || e.detail.id === _this.props.id)) {
+                _this.unregisterHandlers();
+                _this.setState({ isVisible: false, selectedItem: null, forceSubMenuOpen: false });
+                (0,_helpers__WEBPACK_IMPORTED_MODULE_7__.callIfExists)(_this.props.onHide, e);
+            }
+        };
+
+        _this.handleOutsideClick = function (e) {
+            if (!_this.menu.contains(e.target)) (0,_actions__WEBPACK_IMPORTED_MODULE_6__.hideMenu)();
+        };
+
+        _this.handleMouseLeave = function (event) {
+            event.preventDefault();
+
+            (0,_helpers__WEBPACK_IMPORTED_MODULE_7__.callIfExists)(_this.props.onMouseLeave, event, object_assign__WEBPACK_IMPORTED_MODULE_2___default()({}, _this.props.data, _helpers__WEBPACK_IMPORTED_MODULE_7__.store.data), _helpers__WEBPACK_IMPORTED_MODULE_7__.store.target);
+
+            if (_this.props.hideOnLeave) (0,_actions__WEBPACK_IMPORTED_MODULE_6__.hideMenu)();
+        };
+
+        _this.handleContextMenu = function (e) {
+            if (false) {}
+            _this.handleHide(e);
+        };
+
+        _this.hideMenu = function (e) {
+            if (e.keyCode === 27 || e.keyCode === 13) {
+                // ECS or enter
+                (0,_actions__WEBPACK_IMPORTED_MODULE_6__.hideMenu)();
+            }
+        };
+
+        _this.getMenuPosition = function () {
+            var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+            var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+            var menuStyles = {
+                top: y,
+                left: x
+            };
+
+            if (!_this.menu) return menuStyles;
+
+            var _window = window,
+                innerWidth = _window.innerWidth,
+                innerHeight = _window.innerHeight;
+
+            var rect = _this.menu.getBoundingClientRect();
+
+            if (y + rect.height > innerHeight) {
+                menuStyles.top -= rect.height;
+            }
+
+            if (x + rect.width > innerWidth) {
+                menuStyles.left -= rect.width;
+            }
+
+            if (menuStyles.top < 0) {
+                menuStyles.top = rect.height < innerHeight ? (innerHeight - rect.height) / 2 : 0;
+            }
+
+            if (menuStyles.left < 0) {
+                menuStyles.left = rect.width < innerWidth ? (innerWidth - rect.width) / 2 : 0;
+            }
+
+            return menuStyles;
+        };
+
+        _this.getRTLMenuPosition = function () {
+            var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+            var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+            var menuStyles = {
+                top: y,
+                left: x
+            };
+
+            if (!_this.menu) return menuStyles;
+
+            var _window2 = window,
+                innerWidth = _window2.innerWidth,
+                innerHeight = _window2.innerHeight;
+
+            var rect = _this.menu.getBoundingClientRect();
+
+            // Try to position the menu on the left side of the cursor
+            menuStyles.left = x - rect.width;
+
+            if (y + rect.height > innerHeight) {
+                menuStyles.top -= rect.height;
+            }
+
+            if (menuStyles.left < 0) {
+                menuStyles.left += rect.width;
+            }
+
+            if (menuStyles.top < 0) {
+                menuStyles.top = rect.height < innerHeight ? (innerHeight - rect.height) / 2 : 0;
+            }
+
+            if (menuStyles.left + rect.width > innerWidth) {
+                menuStyles.left = rect.width < innerWidth ? (innerWidth - rect.width) / 2 : 0;
+            }
+
+            return menuStyles;
+        };
+
+        _this.menuRef = function (c) {
+            _this.menu = c;
+        };
+
+        _this.state = object_assign__WEBPACK_IMPORTED_MODULE_2___default()({}, _this.state, {
+            x: 0,
+            y: 0,
+            isVisible: false
+        });
+        return _this;
+    }
+
+    _createClass(ContextMenu, [{
+        key: 'getSubMenuType',
+        value: function getSubMenuType() {
+            // eslint-disable-line class-methods-use-this
+            return _SubMenu__WEBPACK_IMPORTED_MODULE_5__["default"];
+        }
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            this.listenId = _globalEventListener__WEBPACK_IMPORTED_MODULE_3__["default"].register(this.handleShow, this.handleHide);
+        }
+    }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate() {
+            var _this2 = this;
+
+            var wrapper = window.requestAnimationFrame || setTimeout;
+            if (this.state.isVisible) {
+                wrapper(function () {
+                    var _state = _this2.state,
+                        x = _state.x,
+                        y = _state.y;
+
+                    var _ref = _this2.props.rtl ? _this2.getRTLMenuPosition(x, y) : _this2.getMenuPosition(x, y),
+                        top = _ref.top,
+                        left = _ref.left;
+
+                    wrapper(function () {
+                        if (!_this2.menu) return;
+                        _this2.menu.style.top = top + 'px';
+                        _this2.menu.style.left = left + 'px';
+                        _this2.menu.style.opacity = 1;
+                        _this2.menu.style.pointerEvents = 'auto';
+                    });
+                });
+            } else {
+                wrapper(function () {
+                    if (!_this2.menu) return;
+                    _this2.menu.style.opacity = 0;
+                    _this2.menu.style.pointerEvents = 'none';
+                });
+            }
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            if (this.listenId) {
+                _globalEventListener__WEBPACK_IMPORTED_MODULE_3__["default"].unregister(this.listenId);
+            }
+
+            this.unregisterHandlers();
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _props = this.props,
+                children = _props.children,
+                className = _props.className,
+                style = _props.style;
+            var isVisible = this.state.isVisible;
+
+            var inlineStyle = object_assign__WEBPACK_IMPORTED_MODULE_2___default()({}, style, { position: 'fixed', opacity: 0, pointerEvents: 'none' });
+            var menuClassnames = classnames__WEBPACK_IMPORTED_MODULE_1___default()(_helpers__WEBPACK_IMPORTED_MODULE_7__.cssClasses.menu, className, _defineProperty({}, _helpers__WEBPACK_IMPORTED_MODULE_7__.cssClasses.menuVisible, isVisible));
+
+            return react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
+                'nav',
+                {
+                    role: 'menu', tabIndex: '-1', ref: this.menuRef, style: inlineStyle, className: menuClassnames,
+                    onContextMenu: this.handleContextMenu, onMouseLeave: this.handleMouseLeave },
+                this.renderChildren(children)
+            );
+        }
+    }]);
+
+    return ContextMenu;
+}(_AbstractMenu__WEBPACK_IMPORTED_MODULE_4__["default"]);
+
+ContextMenu.propTypes = {
+    id: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().string.isRequired),
+    children: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().node.isRequired),
+    data: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().object),
+    className: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().string),
+    hideOnLeave: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().bool),
+    rtl: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().bool),
+    onHide: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().func),
+    onMouseLeave: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().func),
+    onShow: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().func),
+    preventHideOnContextMenu: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().bool),
+    preventHideOnResize: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().bool),
+    preventHideOnScroll: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().bool),
+    style: (prop_types__WEBPACK_IMPORTED_MODULE_8___default().object)
+};
+ContextMenu.defaultProps = {
+    className: '',
+    data: {},
+    hideOnLeave: false,
+    rtl: false,
+    onHide: function onHide() {
+        return null;
+    },
+    onMouseLeave: function onMouseLeave() {
+        return null;
+    },
+    onShow: function onShow() {
+        return null;
+    },
+
+    preventHideOnContextMenu: false,
+    preventHideOnResize: false,
+    preventHideOnScroll: false,
+    style: {}
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ContextMenu);
+
+/***/ }),
+
+/***/ "./node_modules/react-contextmenu/es6/ContextMenuTrigger.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/react-contextmenu/es6/ContextMenuTrigger.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var object_assign__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! object-assign */ "./node_modules/object-assign/index.js");
+/* harmony import */ var object_assign__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(object_assign__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./actions */ "./node_modules/react-contextmenu/es6/actions.js");
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./helpers */ "./node_modules/react-contextmenu/es6/helpers.js");
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+
+
+
+var ContextMenuTrigger = function (_Component) {
+    _inherits(ContextMenuTrigger, _Component);
+
+    function ContextMenuTrigger() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
+        _classCallCheck(this, ContextMenuTrigger);
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ContextMenuTrigger.__proto__ || Object.getPrototypeOf(ContextMenuTrigger)).call.apply(_ref, [this].concat(args))), _this), _this.touchHandled = false, _this.handleMouseDown = function (event) {
+            if (_this.props.holdToDisplay >= 0 && event.button === 0) {
+                event.persist();
+                event.stopPropagation();
+
+                _this.mouseDownTimeoutId = setTimeout(function () {
+                    return _this.handleContextClick(event);
+                }, _this.props.holdToDisplay);
+            }
+            (0,_helpers__WEBPACK_IMPORTED_MODULE_4__.callIfExists)(_this.props.attributes.onMouseDown, event);
+        }, _this.handleMouseUp = function (event) {
+            if (event.button === 0) {
+                clearTimeout(_this.mouseDownTimeoutId);
+            }
+            (0,_helpers__WEBPACK_IMPORTED_MODULE_4__.callIfExists)(_this.props.attributes.onMouseUp, event);
+        }, _this.handleMouseOut = function (event) {
+            if (event.button === 0) {
+                clearTimeout(_this.mouseDownTimeoutId);
+            }
+            (0,_helpers__WEBPACK_IMPORTED_MODULE_4__.callIfExists)(_this.props.attributes.onMouseOut, event);
+        }, _this.handleTouchstart = function (event) {
+            _this.touchHandled = false;
+
+            if (_this.props.holdToDisplay >= 0) {
+                event.persist();
+                event.stopPropagation();
+
+                _this.touchstartTimeoutId = setTimeout(function () {
+                    _this.handleContextClick(event);
+                    _this.touchHandled = true;
+                }, _this.props.holdToDisplay);
+            }
+            (0,_helpers__WEBPACK_IMPORTED_MODULE_4__.callIfExists)(_this.props.attributes.onTouchStart, event);
+        }, _this.handleTouchEnd = function (event) {
+            if (_this.touchHandled) {
+                event.preventDefault();
+            }
+            clearTimeout(_this.touchstartTimeoutId);
+            (0,_helpers__WEBPACK_IMPORTED_MODULE_4__.callIfExists)(_this.props.attributes.onTouchEnd, event);
+        }, _this.handleContextMenu = function (event) {
+            if (event.button === _this.props.mouseButton) {
+                _this.handleContextClick(event);
+            }
+            (0,_helpers__WEBPACK_IMPORTED_MODULE_4__.callIfExists)(_this.props.attributes.onContextMenu, event);
+        }, _this.handleMouseClick = function (event) {
+            if (event.button === _this.props.mouseButton) {
+                _this.handleContextClick(event);
+            }
+            (0,_helpers__WEBPACK_IMPORTED_MODULE_4__.callIfExists)(_this.props.attributes.onClick, event);
+        }, _this.handleContextClick = function (event) {
+            if (_this.props.disable) return;
+            if (_this.props.disableIfShiftIsPressed && event.shiftKey) return;
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            var x = event.clientX || event.touches && event.touches[0].pageX;
+            var y = event.clientY || event.touches && event.touches[0].pageY;
+
+            if (_this.props.posX) {
+                x -= _this.props.posX;
+            }
+            if (_this.props.posY) {
+                y -= _this.props.posY;
+            }
+
+            (0,_actions__WEBPACK_IMPORTED_MODULE_3__.hideMenu)();
+
+            var data = (0,_helpers__WEBPACK_IMPORTED_MODULE_4__.callIfExists)(_this.props.collect, _this.props);
+            var showMenuConfig = {
+                position: { x: x, y: y },
+                target: _this.elem,
+                id: _this.props.id
+            };
+            if (data && typeof data.then === 'function') {
+                // it's promise
+                data.then(function (resp) {
+                    showMenuConfig.data = object_assign__WEBPACK_IMPORTED_MODULE_2___default()({}, resp, {
+                        target: event.target
+                    });
+                    (0,_actions__WEBPACK_IMPORTED_MODULE_3__.showMenu)(showMenuConfig);
+                });
+            } else {
+                showMenuConfig.data = object_assign__WEBPACK_IMPORTED_MODULE_2___default()({}, data, {
+                    target: event.target
+                });
+                (0,_actions__WEBPACK_IMPORTED_MODULE_3__.showMenu)(showMenuConfig);
+            }
+        }, _this.elemRef = function (c) {
+            _this.elem = c;
+        }, _temp), _possibleConstructorReturn(_this, _ret);
+    }
+
+    _createClass(ContextMenuTrigger, [{
+        key: 'render',
+        value: function render() {
+            var _props = this.props,
+                renderTag = _props.renderTag,
+                attributes = _props.attributes,
+                children = _props.children;
+
+            var newAttrs = object_assign__WEBPACK_IMPORTED_MODULE_2___default()({}, attributes, {
+                className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_helpers__WEBPACK_IMPORTED_MODULE_4__.cssClasses.menuWrapper, attributes.className),
+                onContextMenu: this.handleContextMenu,
+                onClick: this.handleMouseClick,
+                onMouseDown: this.handleMouseDown,
+                onMouseUp: this.handleMouseUp,
+                onTouchStart: this.handleTouchstart,
+                onTouchEnd: this.handleTouchEnd,
+                onMouseOut: this.handleMouseOut,
+                ref: this.elemRef
+            });
+
+            return react__WEBPACK_IMPORTED_MODULE_0___default().createElement(renderTag, newAttrs, children);
+        }
+    }]);
+
+    return ContextMenuTrigger;
+}(react__WEBPACK_IMPORTED_MODULE_0__.Component);
+
+ContextMenuTrigger.propTypes = {
+    id: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().string.isRequired),
+    children: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().node.isRequired),
+    attributes: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().object),
+    collect: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().func),
+    disable: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().bool),
+    holdToDisplay: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().number),
+    posX: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().number),
+    posY: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().number),
+    renderTag: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().elementType),
+    mouseButton: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().number),
+    disableIfShiftIsPressed: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().bool)
+};
+ContextMenuTrigger.defaultProps = {
+    attributes: {},
+    collect: function collect() {
+        return null;
+    },
+
+    disable: false,
+    holdToDisplay: 1000,
+    renderTag: 'div',
+    posX: 0,
+    posY: 0,
+    mouseButton: 2, // 0 is left click, 2 is right click
+    disableIfShiftIsPressed: false
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ContextMenuTrigger);
+
+/***/ }),
+
+/***/ "./node_modules/react-contextmenu/es6/MenuItem.js":
+/*!********************************************************!*\
+  !*** ./node_modules/react-contextmenu/es6/MenuItem.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var object_assign__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! object-assign */ "./node_modules/object-assign/index.js");
+/* harmony import */ var object_assign__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(object_assign__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./actions */ "./node_modules/react-contextmenu/es6/actions.js");
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./helpers */ "./node_modules/react-contextmenu/es6/helpers.js");
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+
+
+
+var MenuItem = function (_Component) {
+    _inherits(MenuItem, _Component);
+
+    function MenuItem() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
+        _classCallCheck(this, MenuItem);
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = MenuItem.__proto__ || Object.getPrototypeOf(MenuItem)).call.apply(_ref, [this].concat(args))), _this), _this.handleClick = function (event) {
+            if (event.button !== 0 && event.button !== 1) {
+                event.preventDefault();
+            }
+
+            if (_this.props.disabled || _this.props.divider) return;
+
+            (0,_helpers__WEBPACK_IMPORTED_MODULE_4__.callIfExists)(_this.props.onClick, event, object_assign__WEBPACK_IMPORTED_MODULE_2___default()({}, _this.props.data, _helpers__WEBPACK_IMPORTED_MODULE_4__.store.data), _helpers__WEBPACK_IMPORTED_MODULE_4__.store.target);
+
+            if (_this.props.preventClose) return;
+
+            (0,_actions__WEBPACK_IMPORTED_MODULE_3__.hideMenu)();
+        }, _temp), _possibleConstructorReturn(_this, _ret);
+    }
+
+    _createClass(MenuItem, [{
+        key: 'render',
+        value: function render() {
+            var _cx,
+                _this2 = this;
+
+            var _props = this.props,
+                attributes = _props.attributes,
+                children = _props.children,
+                className = _props.className,
+                disabled = _props.disabled,
+                divider = _props.divider,
+                selected = _props.selected;
+
+
+            var menuItemClassNames = classnames__WEBPACK_IMPORTED_MODULE_1___default()(className, _helpers__WEBPACK_IMPORTED_MODULE_4__.cssClasses.menuItem, attributes.className, (_cx = {}, _defineProperty(_cx, classnames__WEBPACK_IMPORTED_MODULE_1___default()(_helpers__WEBPACK_IMPORTED_MODULE_4__.cssClasses.menuItemDisabled, attributes.disabledClassName), disabled), _defineProperty(_cx, classnames__WEBPACK_IMPORTED_MODULE_1___default()(_helpers__WEBPACK_IMPORTED_MODULE_4__.cssClasses.menuItemDivider, attributes.dividerClassName), divider), _defineProperty(_cx, classnames__WEBPACK_IMPORTED_MODULE_1___default()(_helpers__WEBPACK_IMPORTED_MODULE_4__.cssClasses.menuItemSelected, attributes.selectedClassName), selected), _cx));
+
+            return react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
+                'div',
+                _extends({}, attributes, { className: menuItemClassNames,
+                    role: 'menuitem', tabIndex: '-1', 'aria-disabled': disabled ? 'true' : 'false',
+                    'aria-orientation': divider ? 'horizontal' : null,
+                    ref: function ref(_ref2) {
+                        _this2.ref = _ref2;
+                    },
+                    onMouseMove: this.props.onMouseMove, onMouseLeave: this.props.onMouseLeave,
+                    onTouchEnd: this.handleClick, onClick: this.handleClick }),
+                divider ? null : children
+            );
+        }
+    }]);
+
+    return MenuItem;
+}(react__WEBPACK_IMPORTED_MODULE_0__.Component);
+
+MenuItem.propTypes = {
+    attributes: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().object),
+    children: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().node),
+    className: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().string),
+    data: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().object),
+    disabled: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().bool),
+    divider: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().bool),
+    onClick: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().func),
+    onMouseLeave: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().func),
+    onMouseMove: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().func),
+    preventClose: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().bool),
+    selected: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().bool)
+};
+MenuItem.defaultProps = {
+    attributes: {},
+    children: null,
+    className: '',
+    data: {},
+    disabled: false,
+    divider: false,
+    onClick: function onClick() {
+        return null;
+    },
+
+    onMouseMove: function onMouseMove() {
+        return null;
+    },
+    onMouseLeave: function onMouseLeave() {
+        return null;
+    },
+    preventClose: false,
+    selected: false
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MenuItem);
+
+/***/ }),
+
+/***/ "./node_modules/react-contextmenu/es6/SubMenu.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/react-contextmenu/es6/SubMenu.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var object_assign__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! object-assign */ "./node_modules/object-assign/index.js");
+/* harmony import */ var object_assign__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(object_assign__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./actions */ "./node_modules/react-contextmenu/es6/actions.js");
+/* harmony import */ var _AbstractMenu__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./AbstractMenu */ "./node_modules/react-contextmenu/es6/AbstractMenu.js");
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./helpers */ "./node_modules/react-contextmenu/es6/helpers.js");
+/* harmony import */ var _globalEventListener__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./globalEventListener */ "./node_modules/react-contextmenu/es6/globalEventListener.js");
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+
+
+
+
+
+var SubMenu = function (_AbstractMenu) {
+    _inherits(SubMenu, _AbstractMenu);
+
+    function SubMenu(props) {
+        _classCallCheck(this, SubMenu);
+
+        var _this = _possibleConstructorReturn(this, (SubMenu.__proto__ || Object.getPrototypeOf(SubMenu)).call(this, props));
+
+        _this.getMenuPosition = function () {
+            var _window = window,
+                innerWidth = _window.innerWidth,
+                innerHeight = _window.innerHeight;
+
+            var rect = _this.subMenu.getBoundingClientRect();
+            var position = {};
+
+            if (rect.bottom > innerHeight) {
+                position.bottom = 0;
+            } else {
+                position.top = 0;
+            }
+
+            if (rect.right < innerWidth) {
+                position.left = '100%';
+            } else {
+                position.right = '100%';
+            }
+
+            return position;
+        };
+
+        _this.getRTLMenuPosition = function () {
+            var _window2 = window,
+                innerHeight = _window2.innerHeight;
+
+            var rect = _this.subMenu.getBoundingClientRect();
+            var position = {};
+
+            if (rect.bottom > innerHeight) {
+                position.bottom = 0;
+            } else {
+                position.top = 0;
+            }
+
+            if (rect.left < 0) {
+                position.left = '100%';
+            } else {
+                position.right = '100%';
+            }
+
+            return position;
+        };
+
+        _this.hideSubMenu = function (e) {
+            // avoid closing submenus of a different menu tree
+            if (e.detail && e.detail.id && _this.menu && e.detail.id !== _this.menu.id) {
+                return;
+            }
+
+            if (_this.props.forceOpen) {
+                _this.props.forceClose();
+            }
+            _this.setState({ visible: false, selectedItem: null });
+            _this.unregisterHandlers();
+        };
+
+        _this.handleClick = function (event) {
+            event.preventDefault();
+
+            if (_this.props.disabled) return;
+
+            (0,_helpers__WEBPACK_IMPORTED_MODULE_5__.callIfExists)(_this.props.onClick, event, object_assign__WEBPACK_IMPORTED_MODULE_2___default()({}, _this.props.data, _helpers__WEBPACK_IMPORTED_MODULE_5__.store.data), _helpers__WEBPACK_IMPORTED_MODULE_5__.store.target);
+
+            if (!_this.props.onClick || _this.props.preventCloseOnClick) return;
+
+            (0,_actions__WEBPACK_IMPORTED_MODULE_3__.hideMenu)();
+        };
+
+        _this.handleMouseEnter = function () {
+            if (_this.closetimer) clearTimeout(_this.closetimer);
+
+            if (_this.props.disabled || _this.state.visible) return;
+
+            _this.opentimer = setTimeout(function () {
+                return _this.setState({
+                    visible: true,
+                    selectedItem: null
+                });
+            }, _this.props.hoverDelay);
+        };
+
+        _this.handleMouseLeave = function () {
+            if (_this.opentimer) clearTimeout(_this.opentimer);
+
+            if (!_this.state.visible) return;
+
+            _this.closetimer = setTimeout(function () {
+                return _this.setState({
+                    visible: false,
+                    selectedItem: null
+                });
+            }, _this.props.hoverDelay);
+        };
+
+        _this.menuRef = function (c) {
+            _this.menu = c;
+        };
+
+        _this.subMenuRef = function (c) {
+            _this.subMenu = c;
+        };
+
+        _this.registerHandlers = function () {
+            document.removeEventListener('keydown', _this.props.parentKeyNavigationHandler);
+            document.addEventListener('keydown', _this.handleKeyNavigation);
+        };
+
+        _this.unregisterHandlers = function (dismounting) {
+            document.removeEventListener('keydown', _this.handleKeyNavigation);
+            if (!dismounting) {
+                document.addEventListener('keydown', _this.props.parentKeyNavigationHandler);
+            }
+        };
+
+        _this.state = object_assign__WEBPACK_IMPORTED_MODULE_2___default()({}, _this.state, {
+            visible: false
+        });
+        return _this;
+    }
+
+    _createClass(SubMenu, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            this.listenId = _globalEventListener__WEBPACK_IMPORTED_MODULE_6__["default"].register(function () {}, this.hideSubMenu);
+        }
+    }, {
+        key: 'getSubMenuType',
+        value: function getSubMenuType() {
+            // eslint-disable-line class-methods-use-this
+            return SubMenu;
+        }
+    }, {
+        key: 'shouldComponentUpdate',
+        value: function shouldComponentUpdate(nextProps, nextState) {
+            this.isVisibilityChange = (this.state.visible !== nextState.visible || this.props.forceOpen !== nextProps.forceOpen) && !(this.state.visible && nextProps.forceOpen) && !(this.props.forceOpen && nextState.visible);
+            return true;
+        }
+    }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate() {
+            var _this2 = this;
+
+            if (!this.isVisibilityChange) return;
+            if (this.props.forceOpen || this.state.visible) {
+                var wrapper = window.requestAnimationFrame || setTimeout;
+                wrapper(function () {
+                    var styles = _this2.props.rtl ? _this2.getRTLMenuPosition() : _this2.getMenuPosition();
+
+                    _this2.subMenu.style.removeProperty('top');
+                    _this2.subMenu.style.removeProperty('bottom');
+                    _this2.subMenu.style.removeProperty('left');
+                    _this2.subMenu.style.removeProperty('right');
+
+                    if ((0,_helpers__WEBPACK_IMPORTED_MODULE_5__.hasOwnProp)(styles, 'top')) _this2.subMenu.style.top = styles.top;
+                    if ((0,_helpers__WEBPACK_IMPORTED_MODULE_5__.hasOwnProp)(styles, 'left')) _this2.subMenu.style.left = styles.left;
+                    if ((0,_helpers__WEBPACK_IMPORTED_MODULE_5__.hasOwnProp)(styles, 'bottom')) _this2.subMenu.style.bottom = styles.bottom;
+                    if ((0,_helpers__WEBPACK_IMPORTED_MODULE_5__.hasOwnProp)(styles, 'right')) _this2.subMenu.style.right = styles.right;
+                    _this2.subMenu.classList.add(_helpers__WEBPACK_IMPORTED_MODULE_5__.cssClasses.menuVisible);
+
+                    _this2.registerHandlers();
+                    _this2.setState({ selectedItem: null });
+                });
+            } else {
+                var cleanup = function cleanup() {
+                    _this2.subMenu.removeEventListener('transitionend', cleanup);
+                    _this2.subMenu.style.removeProperty('bottom');
+                    _this2.subMenu.style.removeProperty('right');
+                    _this2.subMenu.style.top = 0;
+                    _this2.subMenu.style.left = '100%';
+                    _this2.unregisterHandlers();
+                };
+                this.subMenu.addEventListener('transitionend', cleanup);
+                this.subMenu.classList.remove(_helpers__WEBPACK_IMPORTED_MODULE_5__.cssClasses.menuVisible);
+            }
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            if (this.listenId) {
+                _globalEventListener__WEBPACK_IMPORTED_MODULE_6__["default"].unregister(this.listenId);
+            }
+
+            if (this.opentimer) clearTimeout(this.opentimer);
+
+            if (this.closetimer) clearTimeout(this.closetimer);
+
+            this.unregisterHandlers(true);
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _cx;
+
+            var _props = this.props,
+                children = _props.children,
+                attributes = _props.attributes,
+                disabled = _props.disabled,
+                title = _props.title,
+                selected = _props.selected;
+            var visible = this.state.visible;
+
+            var menuProps = {
+                ref: this.menuRef,
+                onMouseEnter: this.handleMouseEnter,
+                onMouseLeave: this.handleMouseLeave,
+                className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_helpers__WEBPACK_IMPORTED_MODULE_5__.cssClasses.menuItem, _helpers__WEBPACK_IMPORTED_MODULE_5__.cssClasses.subMenu, attributes.listClassName),
+                style: {
+                    position: 'relative'
+                }
+            };
+            var menuItemProps = {
+                className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_helpers__WEBPACK_IMPORTED_MODULE_5__.cssClasses.menuItem, attributes.className, (_cx = {}, _defineProperty(_cx, classnames__WEBPACK_IMPORTED_MODULE_1___default()(_helpers__WEBPACK_IMPORTED_MODULE_5__.cssClasses.menuItemDisabled, attributes.disabledClassName), disabled), _defineProperty(_cx, classnames__WEBPACK_IMPORTED_MODULE_1___default()(_helpers__WEBPACK_IMPORTED_MODULE_5__.cssClasses.menuItemActive, attributes.visibleClassName), visible), _defineProperty(_cx, classnames__WEBPACK_IMPORTED_MODULE_1___default()(_helpers__WEBPACK_IMPORTED_MODULE_5__.cssClasses.menuItemSelected, attributes.selectedClassName), selected), _cx)),
+                onMouseMove: this.props.onMouseMove,
+                onMouseOut: this.props.onMouseOut,
+                onClick: this.handleClick
+            };
+            var subMenuProps = {
+                ref: this.subMenuRef,
+                style: {
+                    position: 'absolute',
+                    transition: 'opacity 1ms', // trigger transitionend event
+                    top: 0,
+                    left: '100%'
+                },
+                className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(_helpers__WEBPACK_IMPORTED_MODULE_5__.cssClasses.menu, this.props.className)
+            };
+
+            return react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
+                'nav',
+                _extends({}, menuProps, { role: 'menuitem', tabIndex: '-1', 'aria-haspopup': 'true' }),
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
+                    'div',
+                    _extends({}, attributes, menuItemProps),
+                    title
+                ),
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(
+                    'nav',
+                    _extends({}, subMenuProps, { role: 'menu', tabIndex: '-1' }),
+                    this.renderChildren(children)
+                )
+            );
+        }
+    }]);
+
+    return SubMenu;
+}(_AbstractMenu__WEBPACK_IMPORTED_MODULE_4__["default"]);
+
+SubMenu.propTypes = {
+    children: (prop_types__WEBPACK_IMPORTED_MODULE_7___default().node.isRequired),
+    attributes: (prop_types__WEBPACK_IMPORTED_MODULE_7___default().object),
+    title: (prop_types__WEBPACK_IMPORTED_MODULE_7___default().node.isRequired),
+    className: (prop_types__WEBPACK_IMPORTED_MODULE_7___default().string),
+    disabled: (prop_types__WEBPACK_IMPORTED_MODULE_7___default().bool),
+    hoverDelay: (prop_types__WEBPACK_IMPORTED_MODULE_7___default().number),
+    rtl: (prop_types__WEBPACK_IMPORTED_MODULE_7___default().bool),
+    selected: (prop_types__WEBPACK_IMPORTED_MODULE_7___default().bool),
+    onMouseMove: (prop_types__WEBPACK_IMPORTED_MODULE_7___default().func),
+    onMouseOut: (prop_types__WEBPACK_IMPORTED_MODULE_7___default().func),
+    forceOpen: (prop_types__WEBPACK_IMPORTED_MODULE_7___default().bool),
+    forceClose: (prop_types__WEBPACK_IMPORTED_MODULE_7___default().func),
+    parentKeyNavigationHandler: (prop_types__WEBPACK_IMPORTED_MODULE_7___default().func)
+};
+SubMenu.defaultProps = {
+    disabled: false,
+    hoverDelay: 500,
+    attributes: {},
+    className: '',
+    rtl: false,
+    selected: false,
+    onMouseMove: function onMouseMove() {
+        return null;
+    },
+    onMouseOut: function onMouseOut() {
+        return null;
+    },
+    forceOpen: false,
+    forceClose: function forceClose() {
+        return null;
+    },
+    parentKeyNavigationHandler: function parentKeyNavigationHandler() {
+        return null;
+    }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SubMenu);
+
+/***/ }),
+
+/***/ "./node_modules/react-contextmenu/es6/actions.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/react-contextmenu/es6/actions.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "MENU_HIDE": () => (/* binding */ MENU_HIDE),
+/* harmony export */   "MENU_SHOW": () => (/* binding */ MENU_SHOW),
+/* harmony export */   "dispatchGlobalEvent": () => (/* binding */ dispatchGlobalEvent),
+/* harmony export */   "hideMenu": () => (/* binding */ hideMenu),
+/* harmony export */   "showMenu": () => (/* binding */ showMenu)
+/* harmony export */ });
+/* harmony import */ var object_assign__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! object-assign */ "./node_modules/object-assign/index.js");
+/* harmony import */ var object_assign__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(object_assign__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers */ "./node_modules/react-contextmenu/es6/helpers.js");
+
+
+
+
+var MENU_SHOW = 'REACT_CONTEXTMENU_SHOW';
+var MENU_HIDE = 'REACT_CONTEXTMENU_HIDE';
+
+function dispatchGlobalEvent(eventName, opts) {
+    var target = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : window;
+
+    // Compatibale with IE
+    // @see http://stackoverflow.com/questions/26596123/internet-explorer-9-10-11-event-constructor-doesnt-work
+    var event = void 0;
+
+    if (typeof window.CustomEvent === 'function') {
+        event = new window.CustomEvent(eventName, { detail: opts });
+    } else {
+        event = document.createEvent('CustomEvent');
+        event.initCustomEvent(eventName, false, true, opts);
+    }
+
+    if (target) {
+        target.dispatchEvent(event);
+        object_assign__WEBPACK_IMPORTED_MODULE_0___default()(_helpers__WEBPACK_IMPORTED_MODULE_1__.store, opts);
+    }
+}
+
+function showMenu() {
+    var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var target = arguments[1];
+
+    dispatchGlobalEvent(MENU_SHOW, object_assign__WEBPACK_IMPORTED_MODULE_0___default()({}, opts, { type: MENU_SHOW }), target);
+}
+
+function hideMenu() {
+    var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var target = arguments[1];
+
+    dispatchGlobalEvent(MENU_HIDE, object_assign__WEBPACK_IMPORTED_MODULE_0___default()({}, opts, { type: MENU_HIDE }), target);
+}
+
+/***/ }),
+
+/***/ "./node_modules/react-contextmenu/es6/connectMenu.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/react-contextmenu/es6/connectMenu.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* export default binding */ __WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _ContextMenuTrigger__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ContextMenuTrigger */ "./node_modules/react-contextmenu/es6/ContextMenuTrigger.js");
+/* harmony import */ var _globalEventListener__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./globalEventListener */ "./node_modules/react-contextmenu/es6/globalEventListener.js");
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+
+
+
+
+
+// collect ContextMenuTrigger's expected props to NOT pass them on as part of the context
+var ignoredTriggerProps = [].concat(_toConsumableArray(Object.keys(_ContextMenuTrigger__WEBPACK_IMPORTED_MODULE_1__["default"].propTypes)), ['children']);
+
+// expect the id of the menu to be responsible for as outer parameter
+/* harmony default export */ function __WEBPACK_DEFAULT_EXPORT__(menuId) {
+    // expect menu component to connect as inner parameter
+    // <Child/> is presumably a wrapper of <ContextMenu/>
+    return function connect(Child) {
+        // return wrapper for <Child/> that forwards the ContextMenuTrigger's additional props
+        return function (_Component) {
+            _inherits(ConnectMenu, _Component);
+
+            function ConnectMenu(props) {
+                _classCallCheck(this, ConnectMenu);
+
+                var _this = _possibleConstructorReturn(this, (ConnectMenu.__proto__ || Object.getPrototypeOf(ConnectMenu)).call(this, props));
+
+                _this.handleShow = function (e) {
+                    if (e.detail.id !== menuId) return;
+
+                    // the onShow event's detail.data object holds all ContextMenuTrigger props
+                    var data = e.detail.data;
+
+                    var filteredData = {};
+
+                    for (var key in data) {
+                        // exclude props the ContextMenuTrigger is expecting itself
+                        if (!ignoredTriggerProps.includes(key)) {
+                            filteredData[key] = data[key];
+                        }
+                    }
+                    _this.setState({ trigger: filteredData });
+                };
+
+                _this.handleHide = function () {
+                    _this.setState({ trigger: null });
+                };
+
+                _this.state = { trigger: null };
+                return _this;
+            }
+
+            _createClass(ConnectMenu, [{
+                key: 'componentDidMount',
+                value: function componentDidMount() {
+                    this.listenId = _globalEventListener__WEBPACK_IMPORTED_MODULE_2__["default"].register(this.handleShow, this.handleHide);
+                }
+            }, {
+                key: 'componentWillUnmount',
+                value: function componentWillUnmount() {
+                    if (this.listenId) {
+                        _globalEventListener__WEBPACK_IMPORTED_MODULE_2__["default"].unregister(this.listenId);
+                    }
+                }
+            }, {
+                key: 'render',
+                value: function render() {
+                    return react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Child, _extends({}, this.props, { id: menuId, trigger: this.state.trigger }));
+                }
+            }]);
+
+            return ConnectMenu;
+        }(react__WEBPACK_IMPORTED_MODULE_0__.Component);
+    };
+}
+
+/***/ }),
+
+/***/ "./node_modules/react-contextmenu/es6/globalEventListener.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/react-contextmenu/es6/globalEventListener.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./actions */ "./node_modules/react-contextmenu/es6/actions.js");
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers */ "./node_modules/react-contextmenu/es6/helpers.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+
+
+
+var GlobalEventListener = function GlobalEventListener() {
+    var _this = this;
+
+    _classCallCheck(this, GlobalEventListener);
+
+    this.handleShowEvent = function (event) {
+        for (var id in _this.callbacks) {
+            if ((0,_helpers__WEBPACK_IMPORTED_MODULE_1__.hasOwnProp)(_this.callbacks, id)) _this.callbacks[id].show(event);
+        }
+    };
+
+    this.handleHideEvent = function (event) {
+        for (var id in _this.callbacks) {
+            if ((0,_helpers__WEBPACK_IMPORTED_MODULE_1__.hasOwnProp)(_this.callbacks, id)) _this.callbacks[id].hide(event);
+        }
+    };
+
+    this.register = function (showCallback, hideCallback) {
+        var id = (0,_helpers__WEBPACK_IMPORTED_MODULE_1__.uniqueId)();
+
+        _this.callbacks[id] = {
+            show: showCallback,
+            hide: hideCallback
+        };
+
+        return id;
+    };
+
+    this.unregister = function (id) {
+        if (id && _this.callbacks[id]) {
+            delete _this.callbacks[id];
+        }
+    };
+
+    this.callbacks = {};
+
+    if (_helpers__WEBPACK_IMPORTED_MODULE_1__.canUseDOM) {
+        window.addEventListener(_actions__WEBPACK_IMPORTED_MODULE_0__.MENU_SHOW, this.handleShowEvent);
+        window.addEventListener(_actions__WEBPACK_IMPORTED_MODULE_0__.MENU_HIDE, this.handleHideEvent);
+    }
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new GlobalEventListener());
+
+/***/ }),
+
+/***/ "./node_modules/react-contextmenu/es6/helpers.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/react-contextmenu/es6/helpers.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "callIfExists": () => (/* binding */ callIfExists),
+/* harmony export */   "canUseDOM": () => (/* binding */ canUseDOM),
+/* harmony export */   "cssClasses": () => (/* binding */ cssClasses),
+/* harmony export */   "hasOwnProp": () => (/* binding */ hasOwnProp),
+/* harmony export */   "store": () => (/* binding */ store),
+/* harmony export */   "uniqueId": () => (/* binding */ uniqueId)
+/* harmony export */ });
+function callIfExists(func) {
+    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+    }
+
+    return typeof func === 'function' && func.apply(undefined, args);
+}
+
+function hasOwnProp(obj, prop) {
+    return Object.prototype.hasOwnProperty.call(obj, prop);
+}
+
+function uniqueId() {
+    return Math.random().toString(36).substring(7);
+}
+
+var cssClasses = {
+    menu: 'react-contextmenu',
+    menuVisible: 'react-contextmenu--visible',
+    menuWrapper: 'react-contextmenu-wrapper',
+    menuItem: 'react-contextmenu-item',
+    menuItemActive: 'react-contextmenu-item--active',
+    menuItemDisabled: 'react-contextmenu-item--disabled',
+    menuItemDivider: 'react-contextmenu-item--divider',
+    menuItemSelected: 'react-contextmenu-item--selected',
+    subMenu: 'react-contextmenu-submenu'
+};
+
+var store = {};
+
+var canUseDOM = Boolean(typeof window !== 'undefined' && window.document && window.document.createElement);
+
+/***/ }),
+
+/***/ "./node_modules/react-contextmenu/es6/index.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/react-contextmenu/es6/index.js ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ContextMenu": () => (/* reexport safe */ _ContextMenu__WEBPACK_IMPORTED_MODULE_0__["default"]),
+/* harmony export */   "ContextMenuTrigger": () => (/* reexport safe */ _ContextMenuTrigger__WEBPACK_IMPORTED_MODULE_1__["default"]),
+/* harmony export */   "MenuItem": () => (/* reexport safe */ _MenuItem__WEBPACK_IMPORTED_MODULE_2__["default"]),
+/* harmony export */   "SubMenu": () => (/* reexport safe */ _SubMenu__WEBPACK_IMPORTED_MODULE_3__["default"]),
+/* harmony export */   "connectMenu": () => (/* reexport safe */ _connectMenu__WEBPACK_IMPORTED_MODULE_4__["default"]),
+/* harmony export */   "hideMenu": () => (/* reexport safe */ _actions__WEBPACK_IMPORTED_MODULE_5__.hideMenu),
+/* harmony export */   "showMenu": () => (/* reexport safe */ _actions__WEBPACK_IMPORTED_MODULE_5__.showMenu)
+/* harmony export */ });
+/* harmony import */ var _ContextMenu__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ContextMenu */ "./node_modules/react-contextmenu/es6/ContextMenu.js");
+/* harmony import */ var _ContextMenuTrigger__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ContextMenuTrigger */ "./node_modules/react-contextmenu/es6/ContextMenuTrigger.js");
+/* harmony import */ var _MenuItem__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./MenuItem */ "./node_modules/react-contextmenu/es6/MenuItem.js");
+/* harmony import */ var _SubMenu__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./SubMenu */ "./node_modules/react-contextmenu/es6/SubMenu.js");
+/* harmony import */ var _connectMenu__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./connectMenu */ "./node_modules/react-contextmenu/es6/connectMenu.js");
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./actions */ "./node_modules/react-contextmenu/es6/actions.js");
+
+
+
+
+
+
 
 /***/ }),
 
