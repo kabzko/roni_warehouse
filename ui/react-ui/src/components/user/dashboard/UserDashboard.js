@@ -107,14 +107,18 @@ class UserDashboard extends React.Component {
   }
 
   updateCart = (e, data) => {
-    const newCarts = this.state.carts.find(element => element.id === parseInt(data.item));
+    const newCarts = this.state.carts.find(
+      (element) => element.id === parseInt(data.item)
+    );
     this.showUserQuantityModal(newCarts.barcode, "update");
-  }
+  };
 
   removeCart = (e, data) => {
-    const newCarts = this.state.carts.filter(element => element.id !== parseInt(data.item));
+    const newCarts = this.state.carts.filter(
+      (element) => element.id !== parseInt(data.item)
+    );
     this.setState({ carts: newCarts });
-  }
+  };
 
   logout() {
     axios
@@ -125,6 +129,21 @@ class UserDashboard extends React.Component {
       .catch((error) => {
         console.log(error);
       });
+  }
+
+  printReceipt() {
+    var mywindow = window.open("", "PRINT", "fullscreen=yes,width=550");
+    mywindow.document.write('<html><head><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"></head>');
+    mywindow.document.write('<body>');
+    mywindow.document.write(document.getElementById("receipt").innerHTML);
+    mywindow.document.write("</body></html>");
+    mywindow.document.close();
+    mywindow.focus();
+    mywindow.print();
+    setTimeout(() => {
+      mywindow.close();
+    }, 500);
+    return;
   }
 
   getUsers() {
@@ -179,7 +198,13 @@ class UserDashboard extends React.Component {
       if (isExistInCart) {
         let newState = this.state.carts.map((element) =>
           element.id === productData.id
-            ? { ...element, quantity: type === "add" ? (element.quantity += quantity) : (element.quantity = quantity) }
+            ? {
+                ...element,
+                quantity:
+                  type === "add"
+                    ? (element.quantity += quantity)
+                    : (element.quantity = quantity),
+              }
             : element
         );
         this.setState({
@@ -233,7 +258,7 @@ class UserDashboard extends React.Component {
     quantity["callBackSave"] = this.callBackFinalizeQuantity;
     quantity["callBackCancel"] = this.callBackCancelQuantity;
     quantity["scanCode"] = scanCode;
-    quantity["type"] = type
+    quantity["type"] = type;
 
     UserQuantityDialog.show({ ...quantity });
   }
@@ -351,35 +376,39 @@ class UserDashboard extends React.Component {
     return this.state.carts.map((element) => {
       return (
         <>
-            <ContextMenu key={element.id} id={element.id}>
-                <MenuItem onClick={this.updateCart} data={{ item: element.id }}>Change Quantity</MenuItem>
-                <MenuItem onClick={this.removeCart} data={{ item: element.id }}>Remove</MenuItem>
-            </ContextMenu>
-            <tr className="cursor-point">
-                <td>
-                    <ContextMenuTrigger id={element.id} holdToDisplay={1000}>
-                    {element.barcode}
-                    </ContextMenuTrigger>
-                </td>
+          <ContextMenu key={element.id} id={element.id}>
+            <MenuItem onClick={this.updateCart} data={{ item: element.id }}>
+              Change Quantity
+            </MenuItem>
+            <MenuItem onClick={this.removeCart} data={{ item: element.id }}>
+              Remove
+            </MenuItem>
+          </ContextMenu>
+          <tr className="cursor-point">
+            <td>
+              <ContextMenuTrigger id={element.id} holdToDisplay={1000}>
+                {element.barcode}
+              </ContextMenuTrigger>
+            </td>
 
-                <td>
-                    <ContextMenuTrigger id={element.id} holdToDisplay={1000}>
-                    {element.name}
-                    </ContextMenuTrigger>
-                </td>
+            <td>
+              <ContextMenuTrigger id={element.id} holdToDisplay={1000}>
+                {element.name}
+              </ContextMenuTrigger>
+            </td>
 
-                <td>
-                    <ContextMenuTrigger id={element.id} holdToDisplay={1000}>
-                    {element.quantity}
-                    </ContextMenuTrigger>
-                </td>
+            <td>
+              <ContextMenuTrigger id={element.id} holdToDisplay={1000}>
+                {element.quantity}
+              </ContextMenuTrigger>
+            </td>
 
-                <td>
-                    <ContextMenuTrigger id={element.id} holdToDisplay={1000}>
-                    {this.priceFormat(element.price)}
-                    </ContextMenuTrigger>
-                </td>
-            </tr>
+            <td>
+              <ContextMenuTrigger id={element.id} holdToDisplay={1000}>
+                {this.priceFormat(element.price)}
+              </ContextMenuTrigger>
+            </td>
+          </tr>
         </>
       );
     });
@@ -390,163 +419,179 @@ class UserDashboard extends React.Component {
       return null;
     }
     return (
-      <div className="receipt d-inline-block">
-        <div className="text-center">RONI WAREHOUSE CORP.</div>
-        <div className="text-center">POB. 1, VILLANUEVA, MIS. OR.</div>
-        <div className="text-center">TIN: 493-862-572-000</div>
-        <div className="text-center">SN: Z9AXGWFX</div>
-        <div className="text-center">MIN: 19082817512052915</div>
-        <div className="text-center">PTU: FP082019098022692300000</div>
-        <div className="text-center">ACC: 0500003029820000261381</div>
-        <table className="table table-bordered">
-          <thead>
-            <tr>
-              <th>DESC</th>
-              <th>QTY</th>
-              <th>PRICE</th>
-              <th>AMOUNT</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.lastTransaction.carts.map((element) => {
-              return (
-                <tr key={element.id}>
-                  <td>{this.getProductName(element.product)}</td>
-                  <td>{element.quantity}</td>
-                  <td>{this.priceFormat(element.price)}</td>
-                  <td>{this.priceFormat(element.price * element.quantity)}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-        <div className="d-flex justify-content-between">
-          <div>
-            <b>SUBTOTAL:</b>
+      <div id="receipt">
+        <div
+          className="d-inline-block"
+          style={{
+            width: "500px",
+            margin: "25px 0",
+            border: "1px dashed",
+            padding: "20px",
+          }}
+        >
+          <div className="text-center">RONI WAREHOUSE CORP.</div>
+          <div className="text-center">POB. 1, VILLANUEVA, MIS. OR.</div>
+          <div className="text-center">TIN: 493-862-572-000</div>
+          <div className="text-center">SN: Z9AXGWFX</div>
+          <div className="text-center">MIN: 19082817512052915</div>
+          <div className="text-center">PTU: FP082019098022692300000</div>
+          <div className="text-center">ACC: 0500003029820000261381</div>
+          <table className="table table-borderless mt-2">
+            <thead>
+              <tr
+                style={{ borderTop: "1px dashed", borderBottom: "1px dashed" }}
+              >
+                <th className="text-start">DESC</th>
+                <th className="text-end">QTY</th>
+                <th>PRICE</th>
+                <th className="text-end">AMOUNT</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.lastTransaction.carts.map((element) => {
+                return (
+                  <tr key={element.id}>
+                    <td className="text-start">
+                      {this.getProductName(element.product)}
+                    </td>
+                    <td className="text-end">{element.quantity}</td>
+                    <td>{this.priceFormat(element.price)}</td>
+                    <td className="text-end">
+                      {this.priceFormat(element.price * element.quantity)}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+          <div className="d-flex justify-content-between">
+            <div>
+              <b>SUBTOTAL:</b>
+            </div>
+            <div>
+              {this.priceFormat(
+                this.state.lastTransaction.sales.total_amount -
+                  this.state.lastTransaction.sales.total_amount * 0.12
+              )}
+            </div>
           </div>
-          <div>
-            {this.priceFormat(
-              this.state.lastTransaction.sales.total_amount -
+          <div className="d-flex justify-content-between">
+            <div>
+              <b>Vat Amount(12%):</b>
+            </div>
+            <div>
+              {this.priceFormat(
                 this.state.lastTransaction.sales.total_amount * 0.12
-            )}
+              )}
+            </div>
           </div>
-        </div>
-        <div className="d-flex justify-content-between">
-          <div>
-            <b>Vat Amount(12%):</b>
+          <div className="d-flex justify-content-between">
+            <div>
+              <b>TOTAL:</b>
+            </div>
+            <div>
+              {this.priceFormat(this.state.lastTransaction.sales.total_amount)}
+            </div>
           </div>
-          <div>
-            {this.priceFormat(
-              this.state.lastTransaction.sales.total_amount * 0.12
-            )}
+          <div className="d-flex justify-content-between">
+            <div>
+              <b>Cash:</b>
+            </div>
+            <div>
+              {this.priceFormat(this.state.lastTransaction.sales.amount_pay)}
+            </div>
           </div>
-        </div>
-        <div className="d-flex justify-content-between">
-          <div>
-            <b>TOTAL:</b>
+          <div className="d-flex justify-content-between">
+            <div>
+              <b>Change:</b>
+            </div>
+            <div>
+              {this.priceFormat(
+                this.state.lastTransaction.sales.amount_pay -
+                  this.state.lastTransaction.sales.total_amount
+              )}
+            </div>
           </div>
-          <div>
-            {this.priceFormat(this.state.lastTransaction.sales.total_amount)}
+          <hr />
+          <div className="d-flex justify-content-between">
+            <div>
+              <b>Customer:</b>
+            </div>
+            <div></div>
           </div>
-        </div>
-        <div className="d-flex justify-content-between">
-          <div>
-            <b>Cash:</b>
+          <div className="d-flex justify-content-between">
+            <div>
+              <b>Address:</b>
+            </div>
+            <div></div>
           </div>
-          <div>
-            {this.priceFormat(this.state.lastTransaction.sales.amount_pay)}
+          <div className="d-flex justify-content-between">
+            <div>
+              <b>TIN:</b>
+            </div>
+            <div></div>
           </div>
-        </div>
-        <div className="d-flex justify-content-between">
-          <div>
-            <b>Change:</b>
+          <div className="d-flex justify-content-between">
+            <div>
+              <b>B. Style:</b>
+            </div>
+            <div></div>
           </div>
-          <div>
-            {this.priceFormat(
-              this.state.lastTransaction.sales.amount_pay -
-                this.state.lastTransaction.sales.total_amount
-            )}
+          <hr />
+          <div className="d-flex justify-content-between">
+            <div>
+              <b>Vat Sales:</b>
+            </div>
+            <div></div>
           </div>
-        </div>
-        <hr />
-        <div className="d-flex justify-content-between">
-          <div>
-            <b>Customer:</b>
+          <div className="d-flex justify-content-between">
+            <div>
+              <b>12% Vat:</b>
+            </div>
+            <div></div>
           </div>
-          <div></div>
-        </div>
-        <div className="d-flex justify-content-between">
-          <div>
-            <b>Address:</b>
+          <div className="d-flex justify-content-between">
+            <div>
+              <b>VAT-Exempt Sale:</b>
+            </div>
+            <div></div>
           </div>
-          <div></div>
-        </div>
-        <div className="d-flex justify-content-between">
-          <div>
-            <b>TIN:</b>
+          <div className="d-flex justify-content-between">
+            <div>
+              <b>Zero Rated:</b>
+            </div>
+            <div></div>
           </div>
-          <div></div>
-        </div>
-        <div className="d-flex justify-content-between">
-          <div>
-            <b>B. Style:</b>
+          <hr />
+          <div className="d-flex">
+            <div>
+              <b>No. Of Item(s): {this.state.lastTransaction.carts.length}</b>
+            </div>
+            <div></div>
           </div>
-          <div></div>
-        </div>
-        <hr />
-        <div className="d-flex justify-content-between">
-          <div>
-            <b>Vat Sales:</b>
+          <div className="d-flex">
+            <div>
+              <b>Receipt No.:&nbsp;</b>
+            </div>
+            <div>{this.state.lastTransaction.sales.reference_no}</div>
           </div>
-          <div></div>
-        </div>
-        <div className="d-flex justify-content-between">
-          <div>
-            <b>12% Vat:</b>
+          <div className="d-flex">
+            <div>
+              <b>Cashier:&nbsp;</b>
+            </div>
+            <div>
+              {this.getUserName(this.state.lastTransaction.sales.cashier_by)}
+            </div>
           </div>
-          <div></div>
-        </div>
-        <div className="d-flex justify-content-between">
-          <div>
-            <b>VAT-Exempt Sale:</b>
-          </div>
-          <div></div>
-        </div>
-        <div className="d-flex justify-content-between">
-          <div>
-            <b>Zero Rated:</b>
-          </div>
-          <div></div>
-        </div>
-        <hr />
-        <div className="d-flex">
-          <div>
-            <b>No. Of Item(s): {this.state.lastTransaction.carts.length}</b>
-          </div>
-          <div></div>
-        </div>
-        <div className="d-flex">
-          <div>
-            <b>Receipt No.:&nbsp;</b>
-          </div>
-          <div>{this.state.lastTransaction.sales.reference_no}</div>
-        </div>
-        <div className="d-flex">
-          <div>
-            <b>Cashier:&nbsp;</b>
-          </div>
-          <div>
-            {this.getUserName(this.state.lastTransaction.sales.cashier_by)}
-          </div>
-        </div>
-        <div className="d-flex">
-          <div>
-            <b>Date:&nbsp;</b>
-          </div>
-          <div>
-            {new Date(
-              this.state.lastTransaction.sales.created_at
-            ).toLocaleString("en-US")}
+          <div className="d-flex">
+            <div>
+              <b>Date:&nbsp;</b>
+            </div>
+            <div>
+              {new Date(
+                this.state.lastTransaction.sales.created_at
+              ).toLocaleString("en-US")}
+            </div>
           </div>
         </div>
       </div>
@@ -615,7 +660,7 @@ class UserDashboard extends React.Component {
                 >
                   New transaction
                 </button>
-                <button className="btn btn-primary btn-dashboard">Print</button>
+                <button className="btn btn-primary btn-dashboard" onClick={this.printReceipt}>Print</button>
               </div>
             </div>
           </div>
