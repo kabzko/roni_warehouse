@@ -28,7 +28,7 @@ class InvoiceAPIView(API):
             transactions = []
             query = request.GET.dict()
             filters = Q(created_at__date=f"{query.get('year')}-{query.get('month')}-{query.get('day')}")
-
+            print(f"{query.get('year')}-{query.get('month')}-{query.get('day')}")
             if query.get("search"):
                 filters &= Q(reference_no__icontains=query.get("search"))
             

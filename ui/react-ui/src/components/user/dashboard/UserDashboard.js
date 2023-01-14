@@ -21,12 +21,14 @@ class UserDashboard extends React.Component {
     this.state = {
       products: [],
       listing: [],
+      copyListing: [],
       carts: [],
       lastProduct: {},
       lastTransaction: {},
-      windowHeight: window.innerHeight - 295,
+      windowHeight: window.innerHeight - 350,
       isShowQuantity: false,
       isShowCheckout: false,
+      search: "",
     };
 
     this.callBackSaveListing = this.callBackSaveListing.bind(this);
@@ -78,6 +80,18 @@ class UserDashboard extends React.Component {
     return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
+  searchChange({ target }) {
+    if (!target.value) {
+      this.setState({listing: this.state.copyListing});
+      this.setState({ search: target.value });
+      return;
+    }
+    this.setState({ search: target.value }, () => {
+      let searchListing = this.state.listing.filter(element => element.product.includes(this.state.search) || element.barcode.includes(this.state.search));
+      this.setState({listing: searchListing});
+    });
+  }
+
   getUserName(userId) {
     let user;
 
@@ -99,6 +113,32 @@ class UserDashboard extends React.Component {
     for (let i in this.state.products) {
       if (this.state.products[i].id === productId) {
         product = this.state.products[i].name;
+        break;
+      }
+    }
+
+    return product;
+  }
+
+  getProductBarcode(productId) {
+    let product;
+
+    for (let i in this.state.products) {
+      if (this.state.products[i].id === productId) {
+        product = this.state.products[i].barcode;
+        break;
+      }
+    }
+
+    return product;
+  }
+
+  getProductNetWeight(productId) {
+    let product;
+
+    for (let i in this.state.products) {
+      if (this.state.products[i].id === productId) {
+        product = this.state.products[i].net_weight;
         break;
       }
     }
@@ -133,13 +173,17 @@ class UserDashboard extends React.Component {
 
   printReceipt() {
     var mywindow = window.open("", "PRINT", "fullscreen=yes,width=550");
-    mywindow.document.write('<html><head><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"></head>');
-    mywindow.document.write('<body>');
+    mywindow.document.write(
+      '<html><head><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"></head>'
+    );
+    mywindow.document.write("<body>");
     mywindow.document.write(document.getElementById("receipt").innerHTML);
     mywindow.document.write("</body></html>");
     mywindow.document.close();
-    mywindow.focus();
-    mywindow.print();
+    setTimeout(() => {
+      mywindow.focus();
+      mywindow.print();
+    }, 500);
     setTimeout(() => {
       mywindow.close();
     }, 500);
@@ -164,7 +208,14 @@ class UserDashboard extends React.Component {
     axios
       .get("/api/cashier/listing/")
       .then((res) => {
+        res.data.map(data => {
+          data.net_weight = this.getProductNetWeight(data.product);
+          data.name = this.getProductName(data.product);
+          data.barcode = this.getProductBarcode(data.product);
+          return data;
+        })
         this.setState({ listing: res.data });
+        this.setState({ copyListing: res.data });
       })
       .catch((error) => {
         console.log(error);
@@ -217,7 +268,7 @@ class UserDashboard extends React.Component {
             {
               id: productData.id,
               barcode: productData.barcode,
-              name: productData.name,
+              name: `${productData.name} ${productData.net_weight}`,
               quantity: quantity,
               price: listingProduct.price,
               unit_of_measure: listingProduct.unit_of_measure,
@@ -229,7 +280,7 @@ class UserDashboard extends React.Component {
         lastProduct: {
           id: productData.id,
           barcode: productData.barcode,
-          name: productData.name,
+          name: `${productData.name} ${productData.net_weight}`,
           quantity: quantity,
           price: listingProduct.price,
           unit_of_measure: listingProduct.unit_of_measure,
@@ -276,22 +327,30 @@ class UserDashboard extends React.Component {
   }
 
   renderLookUpProducts() {
+    if (!this.state.listing.length && this.state.search) {
+      return (
+        <div className="text-center mt-3">
+          <h3>We can't find your looking for...</h3>
+        </div>
+      );
+    }
     if (!this.state.listing.length) {
-      return null;
+      return (
+        <div className="text-center mt-3">
+          <h3>List the stock products to display...</h3>
+        </div>
+      );
     }
     return this.state.listing.map((elementList) => {
-      let listingProduct = this.state.products.find(
-        (elementProd) => elementProd.id === parseInt(elementList.product)
-      );
       return (
         <div key={elementList.id} className="col-4">
           <div className="card mb-3">
             <div className="card-body">
               <div>
-                <h5 className="card-title">{listingProduct.name}</h5>
+                <h5 className="card-title">{elementList.name} {elementList.net_weight}</h5>
                 <span className="carts-text">
                   <b>
-                    <small>{listingProduct.barcode}</small>
+                    <small>{elementList.barcode}</small>
                   </b>
                 </span>
                 <br />
@@ -303,7 +362,7 @@ class UserDashboard extends React.Component {
                 <button
                   className="btn btn-primary w-100"
                   onClick={() =>
-                    this.showUserQuantityModal(listingProduct.barcode, "add")
+                    this.showUserQuantityModal(elementList.barcode, "add")
                   }
                   disabled={this.state.isShowQuantity}
                 >
@@ -315,6 +374,35 @@ class UserDashboard extends React.Component {
         </div>
       );
     });
+    // return (new Array(50).fill('')).map((element) => {
+    //   return (
+    //  <div className="col-4">
+    //       <div className="card mb-3">
+    //         <div className="card-body">
+    //           <div>
+    //             <h5 className="card-title">1</h5>
+    //             <span className="carts-text">
+    //               <b>
+    //                 <small>1</small>
+    //               </b>
+    //             </span>
+    //             <br />
+    //             <span className="carts-text">
+    //               1
+    //             </span>
+    //           </div>
+    //           <div className="mt-2">
+    //             <button
+    //               className="btn btn-primary w-100"
+    //             >
+    //               Add to carts
+    //             </button>
+    //           </div>
+    //         </div>
+    //       </div>
+    //     </div>
+    //   )
+    // });
   }
 
   renderProductScannedModal() {
@@ -322,7 +410,12 @@ class UserDashboard extends React.Component {
       return (
         <div className="border border-bottom-0">
           <div className="d-flex justify-content-between">
-            <div></div>
+            <div className="product-scanned-item">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
             <div className="product-scanned text-end">
               <label>{this.priceFormat(0)}</label>
             </div>
@@ -335,6 +428,7 @@ class UserDashboard extends React.Component {
         <div className="d-flex justify-content-between">
           <div className="product-scanned-item">
             <div>{this.state.lastProduct.name}</div>
+            <div>{this.state.lastProduct.barcode}</div>
             <div>{this.priceFormat(this.state.lastProduct.price)}</div>
             <div>×{this.priceFormat(this.state.lastProduct.quantity)}</div>
           </div>
@@ -368,7 +462,7 @@ class UserDashboard extends React.Component {
       return (
         <tr>
           <td colSpan="100%">
-            <div style={{ height: "20px" }}></div>
+            <div style={{ height: "25px" }}></div>
           </td>
         </tr>
       );
@@ -412,6 +506,16 @@ class UserDashboard extends React.Component {
         </>
       );
     });
+    // return (new Array(50).fill('')).map((element) => {
+    //   return (
+    //     <tr>
+    //       <td>1</td>
+    //       <td>1</td>
+    //       <td>1</td>
+    //       <td>1</td>
+    //     </tr>
+    //   )
+    // });
   }
 
   renderLastTransaction() {
@@ -606,15 +710,25 @@ class UserDashboard extends React.Component {
             <div className="row">
               <div className="col-6">
                 <div
-                  className="mb-3"
+                  className="mb-3 search-list custom-scrollbar"
                   style={{ height: this.state.windowHeight }}
                 >
+                  <div className="input-group mb-3">
+                    <input
+                      type="text"
+                      name="search"
+                      className="form-control"
+                      placeholder="Search here..."
+                      value={this.state.search}
+                      onChange={this.searchChange.bind(this)}
+                    />
+                  </div>
                   <div className="row">{this.renderLookUpProducts()}</div>
                 </div>
               </div>
               <div className="col-6">
                 {this.renderProductScannedModal()}
-                <table className="table table-bordered">
+                <table className="table table-borderedless border">
                   <thead>
                     <tr>
                       <th>Barcode</th>
@@ -623,7 +737,12 @@ class UserDashboard extends React.Component {
                       <th>Price</th>
                     </tr>
                   </thead>
-                  <tbody>{this.renderCartData()}</tbody>
+                  <tbody
+                    className="cart-table custom-scrollbar"
+                    style={{ height: this.state.windowHeight - 220 }}
+                  >
+                    {this.renderCartData()}
+                  </tbody>
                 </table>
               </div>
             </div>
@@ -660,7 +779,12 @@ class UserDashboard extends React.Component {
                 >
                   New transaction
                 </button>
-                <button className="btn btn-primary btn-dashboard" onClick={this.printReceipt}>Print</button>
+                <button
+                  className="btn btn-primary btn-dashboard"
+                  onClick={this.printReceipt}
+                >
+                  Print
+                </button>
               </div>
             </div>
           </div>

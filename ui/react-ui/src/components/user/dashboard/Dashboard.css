@@ -1,8 +1,11 @@
 .total-amount {
-    font-size: 14vh;
+    font-size: 15vh;
+    font-weight: 800;
+    color: red;
 }
 .product-scanned {
-    font-size: 12vh;
+    font-weight: 800;
+    font-size: 13.7vh;
 }
 .receipt {
     width: 500px;
@@ -24,7 +27,7 @@
     margin: 18px;
 }
 .product-scanned-item div:nth-child(1) {
-    font-size: 4.2vh;
+    font-size: 2.5vh;
 }
 .product-scanned-item div:nth-child(2) {
     font-size: 2.5vh;
@@ -52,4 +55,38 @@
 }
 .react-contextmenu-item:hover {
     opacity: 0.8 !important;
+}
+.search-list {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.cart-table {
+    display: block;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+thead, tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+thead {
+    width: calc( 100% - 0.9em )
+}
+
+/* CUSTOM SCROLLBAR */
+.custom-scrollbar::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+.custom-scrollbar::-webkit-scrollbar
+{
+	width: 8px;
+	background-color: #F5F5F5;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb
+{
+	background-color: #000000;
+	border: 2px solid #555555;
 }

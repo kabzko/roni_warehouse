@@ -83,8 +83,10 @@ class UpdateViewInvoiceDialog extends React.Component {
     mywindow.document.write(document.getElementById("receipt").innerHTML);
     mywindow.document.write("</body></html>");
     mywindow.document.close();
-    mywindow.focus();
-    mywindow.print();
+    setTimeout(() => {
+      mywindow.focus();
+      mywindow.print();
+    }, 500);
     setTimeout(() => {
       mywindow.close();
     }, 500);

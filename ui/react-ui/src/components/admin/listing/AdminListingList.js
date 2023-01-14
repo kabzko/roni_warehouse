@@ -304,8 +304,9 @@ class AdminListingList extends React.Component {
                       <th scope="col">Product</th>
                       <th scope="col">Price</th>
                       <th scope="col">Unit of Measure</th>
-                      <th scope="col">Stock</th>
+                      <th scope="col">Listed stock</th>
                       <th scope="col">Bought-out</th>
+                      <th scope="col">Listed By</th>
                       <th scope="col">Date created</th>
                       <th scope="col">Last changes</th>
                       <th scope="col">Action</th>
@@ -364,6 +365,11 @@ class AdminListingList extends React.Component {
                     )}
                   </tbody>
                 </table>
+              </div>
+              <div>
+              <label>Legend:&nbsp;&nbsp;</label>
+                <span class="badge bg-success">Correct Quantity</span>
+                <span class="badge bg-danger">Over Quantity</span>
               </div>
             </main>
           </div>

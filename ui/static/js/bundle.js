@@ -6158,6 +6158,24 @@ var UpdateViewInvoiceDialog = /*#__PURE__*/function (_React$Component) {
       this.setState(_objectSpread({}, updated_field));
     }
   }, {
+    key: "printReceipt",
+    value: function printReceipt() {
+      var mywindow = window.open("", "PRINT", "fullscreen=yes,width=550");
+      mywindow.document.write('<html><head><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"></head>');
+      mywindow.document.write('<body>');
+      mywindow.document.write(document.getElementById("receipt").innerHTML);
+      mywindow.document.write("</body></html>");
+      mywindow.document.close();
+      setTimeout(function () {
+        mywindow.focus();
+        mywindow.print();
+      }, 500);
+      setTimeout(function () {
+        mywindow.close();
+      }, 500);
+      return;
+    }
+  }, {
     key: "handleSaveListing",
     value: function handleSaveListing(event) {
       var _this2 = this;
@@ -6230,8 +6248,16 @@ var UpdateViewInvoiceDialog = /*#__PURE__*/function (_React$Component) {
         return null;
       }
 
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
-        className: "receipt d-inline-block"
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("page", {
+        id: "receipt"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "d-inline-block",
+        style: {
+          width: "500px",
+          margin: "25px 0",
+          border: "1px dashed",
+          padding: "20px"
+        }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
         className: "text-center"
       }, "RONI WAREHOUSE CORP."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
@@ -6247,11 +6273,32 @@ var UpdateViewInvoiceDialog = /*#__PURE__*/function (_React$Component) {
       }, "PTU: FP082019098022692300000"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
         className: "text-center"
       }, "ACC: 0500003029820000261381"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("table", {
-        className: "table table-bordered"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", null, "DESC"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", null, "QTY"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", null, "PRICE"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", null, "AMOUNT"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("tbody", null, this.state.carts.map(function (element) {
+        className: "table table-borderless mt-2"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("tr", {
+        style: {
+          borderTop: "1px dashed",
+          borderBottom: "1px dashed"
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
+        className: "text-start"
+      }, "DESC"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
+        className: "text-end"
+      }, "QTY"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", null, "PRICE"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
+        className: "text-end"
+      }, "AMOUNT"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("tbody", {
+        style: {
+          borderBottom: "1px dashed"
+        }
+      }, this.state.carts.map(function (element) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("tr", {
           key: element.id
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, _this3.getProductName(element.product)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, element.quantity), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, _this3.priceFormat(element.price)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, _this3.priceFormat(element.price * element.quantity)));
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", {
+          className: "text-start"
+        }, _this3.getProductName(element.product)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", {
+          className: "text-end"
+        }, element.quantity), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, _this3.priceFormat(element.price)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", {
+          className: "text-end"
+        }, _this3.priceFormat(element.price * element.quantity)));
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
         className: "d-flex justify-content-between"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("b", null, "SUBTOTAL:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, this.priceFormat(this.state.sales.total_amount - this.state.sales.total_amount * 0.12))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
@@ -6286,7 +6333,7 @@ var UpdateViewInvoiceDialog = /*#__PURE__*/function (_React$Component) {
         className: "d-flex"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("b", null, "Cashier:\xA0")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, this.getUserName(this.state.sales.cashier_by))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
         className: "d-flex"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("b", null, "Date:\xA0")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, new Date(this.state.sales.created_at).toLocaleString("en-US"))));
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("b", null, "Date:\xA0")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, new Date(this.state.sales.created_at).toLocaleString("en-US")))));
     }
   }, {
     key: "render",
@@ -6325,7 +6372,8 @@ var UpdateViewInvoiceDialog = /*#__PURE__*/function (_React$Component) {
         onClick: this.handleClose
       }, "Close"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
         type: "button",
-        className: "btn btn-primary"
+        className: "btn btn-primary",
+        onClick: this.printReceipt
       }, "Print")))));
     }
   }], [{
@@ -6970,9 +7018,11 @@ var AdminListingList = /*#__PURE__*/function (_React$Component) {
         scope: "col"
       }, "Unit of Measure"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
         scope: "col"
-      }, "Stock"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
+      }, "Listed stock"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
         scope: "col"
       }, "Bought-out"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
+        scope: "col"
+      }, "Listed By"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
         scope: "col"
       }, "Date created"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
         scope: "col"
@@ -6997,7 +7047,11 @@ var AdminListingList = /*#__PURE__*/function (_React$Component) {
       }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", {
         colSpan: "1000",
         className: "text-center"
-      }, "No listing yet!")))))))));
+      }, "No listing yet!"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("label", null, "Legend:\xA0\xA0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
+        class: "badge bg-success"
+      }, "Correct Quantity"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
+        class: "badge bg-danger"
+      }, "Over Quantity"))))));
     }
   }]);
 
@@ -10963,12 +11017,14 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
     _this.state = {
       products: [],
       listing: [],
+      copyListing: [],
       carts: [],
       lastProduct: {},
       lastTransaction: {},
-      windowHeight: window.innerHeight - 295,
+      windowHeight: window.innerHeight - 350,
       isShowQuantity: false,
-      isShowCheckout: false
+      isShowCheckout: false,
+      search: ""
     };
     _this.callBackSaveListing = _this.callBackSaveListing.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__["default"])(_this));
     _this.callBackCancelCheckout = _this.callBackCancelCheckout.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__["default"])(_this));
@@ -11037,6 +11093,35 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
   }, {
+    key: "searchChange",
+    value: function searchChange(_ref) {
+      var _this3 = this;
+
+      var target = _ref.target;
+
+      if (!target.value) {
+        this.setState({
+          listing: this.state.copyListing
+        });
+        this.setState({
+          search: target.value
+        });
+        return;
+      }
+
+      this.setState({
+        search: target.value
+      }, function () {
+        var searchListing = _this3.state.listing.filter(function (element) {
+          return element.product.includes(_this3.state.search) || element.barcode.includes(_this3.state.search);
+        });
+
+        _this3.setState({
+          listing: searchListing
+        });
+      });
+    }
+  }, {
     key: "getUserName",
     value: function getUserName(userId) {
       var user;
@@ -11067,6 +11152,34 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
       return product;
     }
   }, {
+    key: "getProductBarcode",
+    value: function getProductBarcode(productId) {
+      var product;
+
+      for (var i in this.state.products) {
+        if (this.state.products[i].id === productId) {
+          product = this.state.products[i].barcode;
+          break;
+        }
+      }
+
+      return product;
+    }
+  }, {
+    key: "getProductNetWeight",
+    value: function getProductNetWeight(productId) {
+      var product;
+
+      for (var i in this.state.products) {
+        if (this.state.products[i].id === productId) {
+          product = this.state.products[i].net_weight;
+          break;
+        }
+      }
+
+      return product;
+    }
+  }, {
     key: "logout",
     value: function logout() {
       _utils_axios__WEBPACK_IMPORTED_MODULE_13__["default"].post("/api/logout/", {}).then(function (res) {
@@ -11076,13 +11189,31 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "printReceipt",
+    value: function printReceipt() {
+      var mywindow = window.open("", "PRINT", "fullscreen=yes,width=550");
+      mywindow.document.write('<html><head><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"></head>');
+      mywindow.document.write("<body>");
+      mywindow.document.write(document.getElementById("receipt").innerHTML);
+      mywindow.document.write("</body></html>");
+      mywindow.document.close();
+      setTimeout(function () {
+        mywindow.focus();
+        mywindow.print();
+      }, 500);
+      setTimeout(function () {
+        mywindow.close();
+      }, 500);
+      return;
+    }
+  }, {
     key: "getUsers",
     value: function getUsers() {
-      var _this3 = this;
+      var _this4 = this;
 
       var api_url = "/api/users/";
       _utils_axios__WEBPACK_IMPORTED_MODULE_13__["default"].get(api_url).then(function (res) {
-        _this3.setState({
+        _this4.setState({
           users: res.data
         });
       }).catch(function (error) {
@@ -11093,11 +11224,22 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "getListing",
     value: function getListing() {
-      var _this4 = this;
+      var _this5 = this;
 
       _utils_axios__WEBPACK_IMPORTED_MODULE_13__["default"].get("/api/cashier/listing/").then(function (res) {
-        _this4.setState({
+        res.data.map(function (data) {
+          data.net_weight = _this5.getProductNetWeight(data.product);
+          data.name = _this5.getProductName(data.product);
+          data.barcode = _this5.getProductBarcode(data.product);
+          return data;
+        });
+
+        _this5.setState({
           listing: res.data
+        });
+
+        _this5.setState({
+          copyListing: res.data
         });
       }).catch(function (error) {
         console.log(error);
@@ -11107,10 +11249,10 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "getProducts",
     value: function getProducts() {
-      var _this5 = this;
+      var _this6 = this;
 
       _utils_axios__WEBPACK_IMPORTED_MODULE_13__["default"].get("/api/products/").then(function (res) {
-        _this5.setState({
+        _this6.setState({
           products: res.data
         });
       }).catch(function (error) {
@@ -11147,7 +11289,7 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
             carts: [].concat((0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(this.state.carts.reverse()), [{
               id: productData.id,
               barcode: productData.barcode,
-              name: productData.name,
+              name: "".concat(productData.name, " ").concat(productData.net_weight),
               quantity: quantity,
               price: listingProduct.price,
               unit_of_measure: listingProduct.unit_of_measure
@@ -11159,7 +11301,7 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
           lastProduct: {
             id: productData.id,
             barcode: productData.barcode,
-            name: productData.name,
+            name: "".concat(productData.name, " ").concat(productData.net_weight),
             quantity: quantity,
             price: listingProduct.price,
             unit_of_measure: listingProduct.unit_of_measure
@@ -11195,10 +11337,10 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "getLastTransaction",
     value: function getLastTransaction(referenceNo) {
-      var _this6 = this;
+      var _this7 = this;
 
       _utils_axios__WEBPACK_IMPORTED_MODULE_13__["default"].get("/api/cashier/last-transaction/".concat(referenceNo)).then(function (res) {
-        _this6.setState({
+        _this7.setState({
           lastTransaction: res.data
         });
       }).catch(function (error) {
@@ -11209,17 +11351,21 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderLookUpProducts",
     value: function renderLookUpProducts() {
-      var _this7 = this;
+      var _this8 = this;
+
+      if (!this.state.listing.length && this.state.search) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
+          className: "text-center mt-3"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("h3", null, "We can't find your looking for..."));
+      }
 
       if (!this.state.listing.length) {
-        return null;
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
+          className: "text-center mt-3"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("h3", null, "List the stock products to display..."));
       }
 
       return this.state.listing.map(function (elementList) {
-        var listingProduct = _this7.state.products.find(function (elementProd) {
-          return elementProd.id === parseInt(elementList.product);
-        });
-
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
           key: elementList.id,
           className: "col-4"
@@ -11229,20 +11375,48 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
           className: "card-body"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("h5", {
           className: "card-title"
-        }, listingProduct.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("span", {
+        }, elementList.name, " ", elementList.net_weight), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("span", {
           className: "carts-text"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("b", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("small", null, listingProduct.barcode))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("span", {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("b", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("small", null, elementList.barcode))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("span", {
           className: "carts-text"
         }, elementList.price, " per ", elementList.unit_of_measure)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
           className: "mt-2"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("button", {
           className: "btn btn-primary w-100",
           onClick: function onClick() {
-            return _this7.showUserQuantityModal(listingProduct.barcode, "add");
+            return _this8.showUserQuantityModal(elementList.barcode, "add");
           },
-          disabled: _this7.state.isShowQuantity
+          disabled: _this8.state.isShowQuantity
         }, "Add to carts")))));
-      });
+      }); // return (new Array(50).fill('')).map((element) => {
+      //   return (
+      //  <div className="col-4">
+      //       <div className="card mb-3">
+      //         <div className="card-body">
+      //           <div>
+      //             <h5 className="card-title">1</h5>
+      //             <span className="carts-text">
+      //               <b>
+      //                 <small>1</small>
+      //               </b>
+      //             </span>
+      //             <br />
+      //             <span className="carts-text">
+      //               1
+      //             </span>
+      //           </div>
+      //           <div className="mt-2">
+      //             <button
+      //               className="btn btn-primary w-100"
+      //             >
+      //               Add to carts
+      //             </button>
+      //           </div>
+      //         </div>
+      //       </div>
+      //     </div>
+      //   )
+      // });
     }
   }, {
     key: "renderProductScannedModal",
@@ -11252,7 +11426,9 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
           className: "border border-bottom-0"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
           className: "d-flex justify-content-between"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
+          className: "product-scanned-item"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
           className: "product-scanned text-end"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("label", null, this.priceFormat(0)))));
       }
@@ -11263,7 +11439,7 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
         className: "d-flex justify-content-between"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
         className: "product-scanned-item"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null, this.state.lastProduct.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null, this.priceFormat(this.state.lastProduct.price)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null, "\xD7", this.priceFormat(this.state.lastProduct.quantity))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null, this.state.lastProduct.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null, this.state.lastProduct.barcode), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null, this.priceFormat(this.state.lastProduct.price)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null, "\xD7", this.priceFormat(this.state.lastProduct.quantity))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
         className: "product-scanned text-end"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("label", null, this.priceFormat(this.state.lastProduct.price * this.state.lastProduct.quantity)))));
     }
@@ -11287,14 +11463,14 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderCartData",
     value: function renderCartData() {
-      var _this8 = this;
+      var _this9 = this;
 
       if (!this.state.carts.length) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("td", {
           colSpan: "100%"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
           style: {
-            height: "20px"
+            height: "25px"
           }
         })));
       }
@@ -11304,12 +11480,12 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
           key: element.id,
           id: element.id
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement(react_contextmenu__WEBPACK_IMPORTED_MODULE_10__.MenuItem, {
-          onClick: _this8.updateCart,
+          onClick: _this9.updateCart,
           data: {
             item: element.id
           }
         }, "Change Quantity"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement(react_contextmenu__WEBPACK_IMPORTED_MODULE_10__.MenuItem, {
-          onClick: _this8.removeCart,
+          onClick: _this9.removeCart,
           data: {
             item: element.id
           }
@@ -11327,20 +11503,37 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
         }, element.quantity)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement(react_contextmenu__WEBPACK_IMPORTED_MODULE_10__.ContextMenuTrigger, {
           id: element.id,
           holdToDisplay: 1000
-        }, _this8.priceFormat(element.price)))));
-      });
+        }, _this9.priceFormat(element.price)))));
+      }); // return (new Array(50).fill('')).map((element) => {
+      //   return (
+      //     <tr>
+      //       <td>1</td>
+      //       <td>1</td>
+      //       <td>1</td>
+      //       <td>1</td>
+      //     </tr>
+      //   )
+      // });
     }
   }, {
     key: "renderLastTransaction",
     value: function renderLastTransaction() {
-      var _this9 = this;
+      var _this10 = this;
 
       if (!this.state.lastTransaction) {
         return null;
       }
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
-        className: "receipt d-inline-block"
+        id: "receipt"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
+        className: "d-inline-block",
+        style: {
+          width: "500px",
+          margin: "25px 0",
+          border: "1px dashed",
+          padding: "20px"
+        }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
         className: "text-center"
       }, "RONI WAREHOUSE CORP."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
@@ -11356,11 +11549,28 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
       }, "PTU: FP082019098022692300000"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
         className: "text-center"
       }, "ACC: 0500003029820000261381"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("table", {
-        className: "table table-bordered"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("th", null, "DESC"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("th", null, "QTY"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("th", null, "PRICE"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("th", null, "AMOUNT"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("tbody", null, this.state.lastTransaction.carts.map(function (element) {
+        className: "table table-borderless mt-2"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("tr", {
+        style: {
+          borderTop: "1px dashed",
+          borderBottom: "1px dashed"
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("th", {
+        className: "text-start"
+      }, "DESC"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("th", {
+        className: "text-end"
+      }, "QTY"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("th", null, "PRICE"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("th", {
+        className: "text-end"
+      }, "AMOUNT"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("tbody", null, this.state.lastTransaction.carts.map(function (element) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("tr", {
           key: element.id
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("td", null, _this9.getProductName(element.product)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("td", null, element.quantity), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("td", null, _this9.priceFormat(element.price)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("td", null, _this9.priceFormat(element.price * element.quantity)));
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("td", {
+          className: "text-start"
+        }, _this10.getProductName(element.product)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("td", {
+          className: "text-end"
+        }, element.quantity), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("td", null, _this10.priceFormat(element.price)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("td", {
+          className: "text-end"
+        }, _this10.priceFormat(element.price * element.quantity)));
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
         className: "d-flex justify-content-between"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("b", null, "SUBTOTAL:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null, this.priceFormat(this.state.lastTransaction.sales.total_amount - this.state.lastTransaction.sales.total_amount * 0.12))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
@@ -11395,12 +11605,12 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
         className: "d-flex"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("b", null, "Cashier:\xA0")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null, this.getUserName(this.state.lastTransaction.sales.cashier_by))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
         className: "d-flex"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("b", null, "Date:\xA0")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null, new Date(this.state.lastTransaction.sales.created_at).toLocaleString("en-US"))));
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("b", null, "Date:\xA0")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null, new Date(this.state.lastTransaction.sales.created_at).toLocaleString("en-US")))));
     }
   }, {
     key: "render",
     value: function render() {
-      var _this10 = this;
+      var _this11 = this;
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement((react__WEBPACK_IMPORTED_MODULE_8___default().Fragment), null, !Object.keys(this.state.lastTransaction).length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
         className: "container-fluid pt-3"
@@ -11409,17 +11619,31 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
         className: "col-6"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
-        className: "mb-3",
+        className: "mb-3 search-list custom-scrollbar",
         style: {
           height: this.state.windowHeight
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
+        className: "input-group mb-3"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("input", {
+        type: "text",
+        name: "search",
+        className: "form-control",
+        placeholder: "Search here...",
+        value: this.state.search,
+        onChange: this.searchChange.bind(this)
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
         className: "row"
       }, this.renderLookUpProducts()))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
         className: "col-6"
       }, this.renderProductScannedModal(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("table", {
-        className: "table table-bordered"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("th", null, "Barcode"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("th", null, "Description"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("th", null, "Quantity"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("th", null, "Price"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("tbody", null, this.renderCartData())))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
+        className: "table table-borderedless border"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("th", null, "Barcode"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("th", null, "Description"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("th", null, "Quantity"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("th", null, "Price"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("tbody", {
+        className: "cart-table custom-scrollbar",
+        style: {
+          height: this.state.windowHeight - 220
+        }
+      }, this.renderCartData())))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
         className: "text-end border"
       }, this.renderTotalAmount()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
         className: "mt-3"
@@ -11441,12 +11665,13 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
       }, "Logout"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("button", {
         className: "btn btn-success btn-dashboard",
         onClick: function onClick() {
-          return _this10.setState({
+          return _this11.setState({
             lastTransaction: {}
           });
         }
       }, "New transaction"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("button", {
-        className: "btn btn-primary btn-dashboard"
+        className: "btn btn-primary btn-dashboard",
+        onClick: this.printReceipt
       }, "Print")))));
     }
   }]);
@@ -12406,7 +12631,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".total-amount {\n    font-size: 14vh;\n}\n.product-scanned {\n    font-size: 12vh;\n}\n.receipt {\n    width: 500px;\n    margin: 25px 0;\n    border: 1px dashed;\n    padding: 20px;\n}\n.receipt-action {\n    width: 470px;\n}\n.btn-dashboard {\n    width: 150px;\n}\n.receipt-btn {\n    top: 20px;\n    left: 20px;\n}\n.product-scanned-item {\n    margin: 18px;\n}\n.product-scanned-item div:nth-child(1) {\n    font-size: 4.2vh;\n}\n.product-scanned-item div:nth-child(2) {\n    font-size: 2.5vh;\n}\n.product-scanned-item div:nth-child(3) {\n    font-size: 2.5vh;\n}\n.cursor-point {\n    cursor: pointer;\n}\n.cursor-point td {\n    padding: unset !important;\n}\n.react-contextmenu {\n    border-radius: 5px !important;\n    background: #ebebeb !important;\n    padding: 10px 15px !important;\n}\n.react-contextmenu-wrapper {\n    padding: 10px !important;\n}\n.react-contextmenu-item {\n    cursor: pointer;\n    padding: 3px 0 !important;\n}\n.react-contextmenu-item:hover {\n    opacity: 0.8 !important;\n}", "",{"version":3,"sources":["webpack://./src/components/user/dashboard/Dashboard.css"],"names":[],"mappings":"AAAA;IACI,eAAe;AACnB;AACA;IACI,eAAe;AACnB;AACA;IACI,YAAY;IACZ,cAAc;IACd,kBAAkB;IAClB,aAAa;AACjB;AACA;IACI,YAAY;AAChB;AACA;IACI,YAAY;AAChB;AACA;IACI,SAAS;IACT,UAAU;AACd;AACA;IACI,YAAY;AAChB;AACA;IACI,gBAAgB;AACpB;AACA;IACI,gBAAgB;AACpB;AACA;IACI,gBAAgB;AACpB;AACA;IACI,eAAe;AACnB;AACA;IACI,yBAAyB;AAC7B;AACA;IACI,6BAA6B;IAC7B,8BAA8B;IAC9B,6BAA6B;AACjC;AACA;IACI,wBAAwB;AAC5B;AACA;IACI,eAAe;IACf,yBAAyB;AAC7B;AACA;IACI,uBAAuB;AAC3B","sourcesContent":[".total-amount {\n    font-size: 14vh;\n}\n.product-scanned {\n    font-size: 12vh;\n}\n.receipt {\n    width: 500px;\n    margin: 25px 0;\n    border: 1px dashed;\n    padding: 20px;\n}\n.receipt-action {\n    width: 470px;\n}\n.btn-dashboard {\n    width: 150px;\n}\n.receipt-btn {\n    top: 20px;\n    left: 20px;\n}\n.product-scanned-item {\n    margin: 18px;\n}\n.product-scanned-item div:nth-child(1) {\n    font-size: 4.2vh;\n}\n.product-scanned-item div:nth-child(2) {\n    font-size: 2.5vh;\n}\n.product-scanned-item div:nth-child(3) {\n    font-size: 2.5vh;\n}\n.cursor-point {\n    cursor: pointer;\n}\n.cursor-point td {\n    padding: unset !important;\n}\n.react-contextmenu {\n    border-radius: 5px !important;\n    background: #ebebeb !important;\n    padding: 10px 15px !important;\n}\n.react-contextmenu-wrapper {\n    padding: 10px !important;\n}\n.react-contextmenu-item {\n    cursor: pointer;\n    padding: 3px 0 !important;\n}\n.react-contextmenu-item:hover {\n    opacity: 0.8 !important;\n}"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".total-amount {\n    font-size: 15vh;\n    font-weight: 800;\n    color: red;\n}\n.product-scanned {\n    font-weight: 800;\n    font-size: 13.7vh;\n}\n.receipt {\n    width: 500px;\n    margin: 25px 0;\n    border: 1px dashed;\n    padding: 20px;\n}\n.receipt-action {\n    width: 470px;\n}\n.btn-dashboard {\n    width: 150px;\n}\n.receipt-btn {\n    top: 20px;\n    left: 20px;\n}\n.product-scanned-item {\n    margin: 18px;\n}\n.product-scanned-item div:nth-child(1) {\n    font-size: 2.5vh;\n}\n.product-scanned-item div:nth-child(2) {\n    font-size: 2.5vh;\n}\n.product-scanned-item div:nth-child(3) {\n    font-size: 2.5vh;\n}\n.cursor-point {\n    cursor: pointer;\n}\n.cursor-point td {\n    padding: unset !important;\n}\n.react-contextmenu {\n    border-radius: 5px !important;\n    background: #ebebeb !important;\n    padding: 10px 15px !important;\n}\n.react-contextmenu-wrapper {\n    padding: 10px !important;\n}\n.react-contextmenu-item {\n    cursor: pointer;\n    padding: 3px 0 !important;\n}\n.react-contextmenu-item:hover {\n    opacity: 0.8 !important;\n}\n.search-list {\n    overflow-x: hidden;\n    overflow-y: auto;\n}\n.cart-table {\n    display: block;\n    overflow-x: hidden;\n    overflow-y: auto;\n}\nthead, tbody tr {\n    display: table;\n    width: 100%;\n    table-layout: fixed;\n}\nthead {\n    width: calc( 100% - 0.9em )\n}\n\n/* CUSTOM SCROLLBAR */\n.custom-scrollbar::-webkit-scrollbar-track\n{\n\t-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);\n\tbackground-color: #F5F5F5;\n}\n.custom-scrollbar::-webkit-scrollbar\n{\n\twidth: 8px;\n\tbackground-color: #F5F5F5;\n}\n.custom-scrollbar::-webkit-scrollbar-thumb\n{\n\tbackground-color: #000000;\n\tborder: 2px solid #555555;\n}", "",{"version":3,"sources":["webpack://./src/components/user/dashboard/Dashboard.css"],"names":[],"mappings":"AAAA;IACI,eAAe;IACf,gBAAgB;IAChB,UAAU;AACd;AACA;IACI,gBAAgB;IAChB,iBAAiB;AACrB;AACA;IACI,YAAY;IACZ,cAAc;IACd,kBAAkB;IAClB,aAAa;AACjB;AACA;IACI,YAAY;AAChB;AACA;IACI,YAAY;AAChB;AACA;IACI,SAAS;IACT,UAAU;AACd;AACA;IACI,YAAY;AAChB;AACA;IACI,gBAAgB;AACpB;AACA;IACI,gBAAgB;AACpB;AACA;IACI,gBAAgB;AACpB;AACA;IACI,eAAe;AACnB;AACA;IACI,yBAAyB;AAC7B;AACA;IACI,6BAA6B;IAC7B,8BAA8B;IAC9B,6BAA6B;AACjC;AACA;IACI,wBAAwB;AAC5B;AACA;IACI,eAAe;IACf,yBAAyB;AAC7B;AACA;IACI,uBAAuB;AAC3B;AACA;IACI,kBAAkB;IAClB,gBAAgB;AACpB;AACA;IACI,cAAc;IACd,kBAAkB;IAClB,gBAAgB;AACpB;AACA;IACI,cAAc;IACd,WAAW;IACX,mBAAmB;AACvB;AACA;IACI;AACJ;;AAEA,qBAAqB;AACrB;;CAEC,iDAAiD;CACjD,yBAAyB;AAC1B;AACA;;CAEC,UAAU;CACV,yBAAyB;AAC1B;AACA;;CAEC,yBAAyB;CACzB,yBAAyB;AAC1B","sourcesContent":[".total-amount {\n    font-size: 15vh;\n    font-weight: 800;\n    color: red;\n}\n.product-scanned {\n    font-weight: 800;\n    font-size: 13.7vh;\n}\n.receipt {\n    width: 500px;\n    margin: 25px 0;\n    border: 1px dashed;\n    padding: 20px;\n}\n.receipt-action {\n    width: 470px;\n}\n.btn-dashboard {\n    width: 150px;\n}\n.receipt-btn {\n    top: 20px;\n    left: 20px;\n}\n.product-scanned-item {\n    margin: 18px;\n}\n.product-scanned-item div:nth-child(1) {\n    font-size: 2.5vh;\n}\n.product-scanned-item div:nth-child(2) {\n    font-size: 2.5vh;\n}\n.product-scanned-item div:nth-child(3) {\n    font-size: 2.5vh;\n}\n.cursor-point {\n    cursor: pointer;\n}\n.cursor-point td {\n    padding: unset !important;\n}\n.react-contextmenu {\n    border-radius: 5px !important;\n    background: #ebebeb !important;\n    padding: 10px 15px !important;\n}\n.react-contextmenu-wrapper {\n    padding: 10px !important;\n}\n.react-contextmenu-item {\n    cursor: pointer;\n    padding: 3px 0 !important;\n}\n.react-contextmenu-item:hover {\n    opacity: 0.8 !important;\n}\n.search-list {\n    overflow-x: hidden;\n    overflow-y: auto;\n}\n.cart-table {\n    display: block;\n    overflow-x: hidden;\n    overflow-y: auto;\n}\nthead, tbody tr {\n    display: table;\n    width: 100%;\n    table-layout: fixed;\n}\nthead {\n    width: calc( 100% - 0.9em )\n}\n\n/* CUSTOM SCROLLBAR */\n.custom-scrollbar::-webkit-scrollbar-track\n{\n\t-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);\n\tbackground-color: #F5F5F5;\n}\n.custom-scrollbar::-webkit-scrollbar\n{\n\twidth: 8px;\n\tbackground-color: #F5F5F5;\n}\n.custom-scrollbar::-webkit-scrollbar-thumb\n{\n\tbackground-color: #000000;\n\tborder: 2px solid #555555;\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
