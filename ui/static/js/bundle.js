@@ -5802,8 +5802,11 @@ var AdminInvoiceList = /*#__PURE__*/function (_React$Component) {
     _this.state = {
       products: [],
       invoices: [],
+      cashiers: [],
       users: [],
       search: "",
+      type: "all",
+      totalAmount: 0,
       daily: new Date()
     };
     _this.callBackSaveListing = _this.callBackSaveListing.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__["default"])(_this));
@@ -5866,9 +5869,10 @@ var AdminInvoiceList = /*#__PURE__*/function (_React$Component) {
       var api_url = "/api/invoice/";
       var _this$state = this.state,
           search = _this$state.search,
-          daily = _this$state.daily;
+          daily = _this$state.daily,
+          type = _this$state.type;
       var date = new Date(daily);
-      api_url += "?month=".concat(date.getMonth() + 1, "&year=").concat(date.getFullYear(), "&day=").concat(date.getDate());
+      api_url += "?month=".concat(date.getMonth() + 1, "&year=").concat(date.getFullYear(), "&day=").concat(date.getDate(), "&cashier=").concat(type);
 
       if (search !== "") {
         api_url += "&search=".concat(search);
@@ -5889,6 +5893,16 @@ var AdminInvoiceList = /*#__PURE__*/function (_React$Component) {
 
         _this3.setState({
           invoices: res.data
+        }, function () {
+          var totalAmount = 0;
+
+          _this3.state.invoices.map(function (element) {
+            totalAmount += element.sales.total_amount;
+          });
+
+          _this3.setState({
+            totalAmount: totalAmount
+          });
         });
       }).catch(function (error) {
         console.log(error);
@@ -5918,6 +5932,12 @@ var AdminInvoiceList = /*#__PURE__*/function (_React$Component) {
       _utils_axios__WEBPACK_IMPORTED_MODULE_11__["default"].get(api_url).then(function (res) {
         _this5.setState({
           users: res.data
+        });
+
+        _this5.setState({
+          cashiers: res.data.filter(function (element) {
+            return element.user_type === "cashier";
+          })
         });
       }).catch(function (error) {
         console.log(error);
@@ -5978,7 +5998,18 @@ var AdminInvoiceList = /*#__PURE__*/function (_React$Component) {
         className: "h2"
       }, "Invoices")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
         className: "input-group mb-3 w-50 float-lg-end"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("input", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("select", {
+        className: "form-select me-2",
+        onChange: this.inputChange.bind(this, "type"),
+        value: this.state.type
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("option", {
+        value: "all"
+      }, "All"), this.state.cashiers.map(function (element) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("option", {
+          key: element.id,
+          value: element.id
+        }, element.first_name);
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("input", {
         type: "date",
         className: "form-control me-2",
         id: "daily",
@@ -6030,7 +6061,15 @@ var AdminInvoiceList = /*#__PURE__*/function (_React$Component) {
       }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", {
         colSpan: "1000",
         className: "text-center"
-      }, "No transaction yet!")))))))));
+      }, "No transaction yet!")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("tr", {
+        style: {
+          borderTop: "2px solid black"
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", {
+        colSpan: "3"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("strong", null, "TOTAL")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("strong", null, this.priceFormat(this.state.totalAmount))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", {
+        colSpan: "3"
+      })))))))));
     }
   }]);
 
@@ -8269,6 +8308,7 @@ var AdminSalesChart = /*#__PURE__*/function (_React$Component) {
           responsive: true,
           plugins: {
             tooltip: {
+              displayColors: false,
               callbacks: {
                 title: function title(tooltip) {
                   var sale = _this4.state.sales.find(function (element) {
@@ -8315,7 +8355,8 @@ var AdminSalesChart = /*#__PURE__*/function (_React$Component) {
                     month: "long",
                     day: "numeric"
                   });
-                }
+                },
+                fontSize: 16
               }
             }
           }
@@ -8330,7 +8371,11 @@ var AdminSalesChart = /*#__PURE__*/function (_React$Component) {
               return new Date(element.total_amount);
             }),
             borderColor: "rgb(2, 48, 156)",
-            backgroundColor: "rgba(2, 48, 156, 0.5)"
+            backgroundColor: "rgb(2, 48, 156)",
+            pointBorderWidth: 10,
+            pointHoverBorderWidth: 10,
+            hoverBorderWidth: 10,
+            lineTension: 1
           }]
         }
       });
@@ -8362,9 +8407,9 @@ var AdminSalesChart = /*#__PURE__*/function (_React$Component) {
         value: this.state.type
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("option", {
         value: "daily"
-      }, "Daily"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("option", {
+      }, "Per Transaction"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("option", {
         value: "monthly"
-      }, "Monthly"))), this.state.type === "daily" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("input", {
+      }, "Per Day"))), this.state.type === "daily" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("input", {
         type: "date",
         className: "form-control",
         id: "daily",
@@ -11037,8 +11082,9 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
 
     _this.getProducts();
 
-    _this.getListing();
-
+    setTimeout(function () {
+      _this.getListing();
+    }, 100);
     return _this;
   }
 
@@ -11112,8 +11158,8 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
       this.setState({
         search: target.value
       }, function () {
-        var searchListing = _this3.state.listing.filter(function (element) {
-          return element.product.includes(_this3.state.search) || element.barcode.includes(_this3.state.search);
+        var searchListing = _this3.state.copyListing.filter(function (element) {
+          return element.name.toLowerCase().includes(_this3.state.search.toLowerCase()) || element.barcode.toLowerCase().includes(_this3.state.search.toLowerCase());
         });
 
         _this3.setState({
@@ -11630,6 +11676,7 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
         name: "search",
         className: "form-control",
         placeholder: "Search here...",
+        autoComplete: "off",
         value: this.state.search,
         onChange: this.searchChange.bind(this)
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {

@@ -22,8 +22,11 @@ class AdminInvoiceList extends React.Component {
     this.state = {
       products: [],
       invoices: [],
+      cashiers: [],
       users: [],
       search: "",
+      type: "all",
+      totalAmount: 0,
       daily: new Date(),
     };
 
@@ -70,12 +73,12 @@ class AdminInvoiceList extends React.Component {
 
   getInvoices() {
     let api_url = "/api/invoice/";
-    let { search, daily } = this.state;
+    let { search, daily, type } = this.state;
 
     const date = new Date(daily);
     api_url += `?month=${
       date.getMonth() + 1
-    }&year=${date.getFullYear()}&day=${date.getDate()}`;
+    }&year=${date.getFullYear()}&day=${date.getDate()}&cashier=${type}`;
 
     if (search !== "") {
       api_url += `&search=${search}`;
@@ -99,7 +102,13 @@ class AdminInvoiceList extends React.Component {
 
           return data;
         });
-        this.setState({ invoices: res.data });
+        this.setState({ invoices: res.data }, () => {
+          let totalAmount = 0;
+          this.state.invoices.map(element => {
+            totalAmount += element.sales.total_amount;
+          });
+          this.setState({totalAmount: totalAmount});
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -126,6 +135,7 @@ class AdminInvoiceList extends React.Component {
       .get(api_url)
       .then((res) => {
         this.setState({ users: res.data });
+        this.setState({ cashiers: res.data.filter(element => element.user_type === "cashier") });
       })
       .catch((error) => {
         console.log(error);
@@ -172,6 +182,20 @@ class AdminInvoiceList extends React.Component {
                 <h1 className="h2">Invoices</h1>
               </div>
               <div className="input-group mb-3 w-50 float-lg-end">
+                <select
+                  className="form-select me-2"
+                  onChange={this.inputChange.bind(this, "type")}
+                  value={this.state.type}
+                >
+                  <option value="all">All</option>
+                  {
+                    this.state.cashiers.map(element => {
+                      return (
+                        <option key={element.id} value={element.id}>{element.first_name}</option>
+                      )
+                    })
+                  }
+                </select>
                 <input
                   type="date"
                   className="form-control me-2"
@@ -212,7 +236,7 @@ class AdminInvoiceList extends React.Component {
                   </thead>
                   <tbody className="table-group-divider">
                     {this.state.invoices.length > 0 ? (
-                      this.state.invoices.map((element) => {
+                      this.state.invoices.map(element => {
                         return (
                           <tr key={element.sales.id}>
                             <td>{element.sales.reference_no}</td>
@@ -246,6 +270,16 @@ class AdminInvoiceList extends React.Component {
                         </td>
                       </tr>
                     )}
+                    <tr style={{borderTop: "2px solid black"}}>
+                      <td colSpan="3">
+                        <strong>TOTAL</strong>
+                      </td>
+                      <td>
+                        <strong>{this.priceFormat(this.state.totalAmount)}</strong>
+                      </td>
+                      <td colSpan="3">
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>

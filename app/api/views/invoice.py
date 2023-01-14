@@ -28,10 +28,13 @@ class InvoiceAPIView(API):
             transactions = []
             query = request.GET.dict()
             filters = Q(created_at__date=f"{query.get('year')}-{query.get('month')}-{query.get('day')}")
-            print(f"{query.get('year')}-{query.get('month')}-{query.get('day')}")
+
+            if not query.get("cashier") == "all":
+                filters &= Q(cashier_by=query.get("cashier"))
+            
             if query.get("search"):
                 filters &= Q(reference_no__icontains=query.get("search"))
-            
+
             sale_instances = Sales.objects.filter(filters)
             for sale_instance in sale_instances:
                 transaction = {}

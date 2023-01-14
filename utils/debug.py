@@ -122,14 +122,14 @@ def debug_exception(exc, label="Exception Occurred", bg="red"):
         f_code = exc_frame.f_code
         
         code = f_code.co_name
-        location = f_code.co_filename.split(settings.BASE_DIR)[1]
+        location = f_code.co_filename.split(str(settings.BASE_DIR))[1]
         line_no = exc_traceback.tb_lineno
 
         if settings.DEBUG_MULTILINE:
             print_debug_multiline(label, exc_obj, exc_type, code, location, line_no, bg)
         else:
             print_debug_single_line(exc_obj, exc_type, location, code, line_no, bg)
-     
+    
     except Exception as e:
         pprint_data(exc, "An exception occurred", bg="red")
 

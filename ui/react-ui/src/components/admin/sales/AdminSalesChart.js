@@ -121,6 +121,7 @@ class AdminSalesChart extends React.Component {
           responsive: true,
           plugins: {
             tooltip: {
+              displayColors: false,
               callbacks: {
                 title: (tooltip) => {
                   const sale = this.state.sales.find((element) =>
@@ -181,6 +182,7 @@ class AdminSalesChart extends React.Component {
                         day: "numeric",
                       });
                 },
+                fontSize: 16,
               },
             },
           },
@@ -196,7 +198,11 @@ class AdminSalesChart extends React.Component {
                 return new Date(element.total_amount);
               }),
               borderColor: "rgb(2, 48, 156)",
-              backgroundColor: "rgba(2, 48, 156, 0.5)",
+              backgroundColor: "rgb(2, 48, 156)",
+              pointBorderWidth: 10,
+              pointHoverBorderWidth: 10,
+              hoverBorderWidth: 10,
+              lineTension: 1
             },
           ],
         }}
@@ -222,8 +228,8 @@ class AdminSalesChart extends React.Component {
                     onChange={this.inputChange.bind(this, "type")}
                     value={this.state.type}
                   >
-                    <option value="daily">Daily</option>
-                    <option value="monthly">Monthly</option>
+                    <option value="daily">Per Transaction</option>
+                    <option value="monthly">Per Day</option>
                   </select>
                 </div>
                 {this.state.type === "daily" ? (

@@ -40,7 +40,9 @@ class UserDashboard extends React.Component {
 
     this.getUsers();
     this.getProducts();
-    this.getListing();
+    setTimeout(() => {
+      this.getListing();
+    }, 100);
   }
 
   callBackSaveListing(referenceNo) {
@@ -87,7 +89,7 @@ class UserDashboard extends React.Component {
       return;
     }
     this.setState({ search: target.value }, () => {
-      let searchListing = this.state.listing.filter(element => element.product.includes(this.state.search) || element.barcode.includes(this.state.search));
+      let searchListing = this.state.copyListing.filter(element => (element.name).toLowerCase().includes((this.state.search).toLowerCase()) || (element.barcode).toLowerCase().includes((this.state.search).toLowerCase()));
       this.setState({listing: searchListing});
     });
   }
@@ -719,6 +721,7 @@ class UserDashboard extends React.Component {
                       name="search"
                       className="form-control"
                       placeholder="Search here..."
+                      autoComplete="off"
                       value={this.state.search}
                       onChange={this.searchChange.bind(this)}
                     />
