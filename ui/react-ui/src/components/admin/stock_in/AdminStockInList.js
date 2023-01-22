@@ -18,14 +18,17 @@ class AdminStockInList extends React.Component {
         this.state = {
             products: [],
             stockIn: [],
+            truck_drivers: [],
             productFilter: "",
         };
 
         this.callBackSaveStockIn = this.callBackSaveStockIn.bind(this);
         this.filterWithProduct = this.filterWithProduct.bind(this);
         this.handleSearchChange = this.handleSearchChange.bind(this);
+
         this.getStockIn();
         this.getProducts();
+        this.getDrivers();
     }
 
     callBackSaveStockIn() {
@@ -62,6 +65,15 @@ class AdminStockInList extends React.Component {
         }
 
         return product;
+    }
+
+    getDrivers() {
+        axios.get("/api/truck-drivers/").then(res => {
+            this.setState({"truck_drivers": res.data});
+        }).catch(error => {
+            console.log(error);
+            Toast.error(error.response.data.message);
+        })
     }
 
     getProducts() {
@@ -120,6 +132,7 @@ class AdminStockInList extends React.Component {
         stockIn = stockIn ? stockIn : {};
         stockIn["callBackSave"] = this.callBackSaveStockIn;
         stockIn["products"] = this.state.products;
+        stockIn["truck_drivers"] = this.state.truck_drivers;
 
         UpdateCreateStockInDialog.show({...stockIn});
     }

@@ -111,9 +111,11 @@ class UpdateCreateUserDialog extends React.Component {
                                         <select className="form-select" aria-label="Default select example"
                                             value={this.state.user_type} onChange={this.inputChange.bind(this, "user_type")}>
                                             <option defaultValue="">Select user type</option>
-                                            <option value="inventory">Inventory</option>
-                                            <option value="pointOfSale">Point of Sale</option>
+                                            {/* <option value="inventory">Inventory</option> */}
+                                            {/* <option value="pointOfSale">Point of Sale</option> */}
                                             <option value="cashier">Cashier</option>
+                                            <option value="receiver">Receiver</option>
+                                            <option value="checker">Checker</option>
                                         </select>
                                     </div>
                                 </div>

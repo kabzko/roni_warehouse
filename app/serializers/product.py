@@ -10,18 +10,27 @@ class ProductSerializer(serializers.ModelSerializer):
         
         fields = [
             "id",
+            "supplier",
             "name",
             "description",
             "barcode",
             "created_at",
             "updated_at",
             "net_weight",
+            "expiration_date",
         ]
 
         extra_kwargs = {
             "name": {
                 "error_messages": {
                     "blank": "Name is required!"
+                }
+            },
+            "supplier": {
+                "error_messages": {
+                    "blank": "Supplier is required!",
+                    "null": "Supplier is required!",
+                    "required": "Supplier is required!",
                 }
             },
         }

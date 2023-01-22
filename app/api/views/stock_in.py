@@ -71,6 +71,8 @@ class StockInAPIView(API):
             
             for group_instance in group_instances:
                 dict_data = GroupStockInSerializer(group_instance).data
+                dict_data["supplier_name"] = group_instance.supplier.name
+                
                 stockin_instances = StockIn.objects.filter(group=group_instance.pk)
                 dict_data["list"] = [StockInSerializer(stockin_instance).data for stockin_instance in stockin_instances]
                 data.append(dict_data)

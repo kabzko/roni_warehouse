@@ -1,21 +1,43 @@
 import React from "react";
+import Select from 'react-select';
 import { createRoot } from 'react-dom/client';
 
 import axios from '../../../utils/axios';
 import alert from '../../../utils/alert';
+
+const supplierOptions = [];
 
 class UpdateCreateProductDialog extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             "name": props.name ? props.name : "",
+            "supplier": props.supplier ? props.supplier : "",
             "description": props.description ? props.description : "",
             "barcode": props.barcode ? props.barcode : "",
             "net_weight": props.net_weight ? props.net_weight : "",
+            "expiration_date": props.expiration_date ? props.expiration_date : "",
         };
 
         if (props.id) {
             this.state["id"] = props.id;
+        }
+
+        if (props.suppliers) {
+            supplierOptions.splice(0, supplierOptions.length);
+            props.suppliers.map(supplier => {
+                let option = {
+                    value: supplier.id,
+                    label: supplier.name,
+                }
+                supplierOptions.push(option)
+
+                if (props.supplier && supplier.id === props.supplier) {
+                    this.state.supplier = option;
+                }
+
+                return supplier;
+            });
         }
 
         this.modal = null;
@@ -49,6 +71,10 @@ class UpdateCreateProductDialog extends React.Component {
         this.setState({...updated_field});
     }
 
+    selectSupplierChange(selectedOption) {
+        this.setState({supplier: selectedOption});
+    }
+
     handleSaveProduct(event) {
         event.preventDefault();
 
@@ -57,6 +83,10 @@ class UpdateCreateProductDialog extends React.Component {
 
         if (data.id) {
             api_url = `/api/products/${data.id}/`
+        }
+
+        if (data.supplier) {
+            data.supplier = data.supplier.value;
         }
 
         axios.post(api_url, data).then(res => {
@@ -69,6 +99,8 @@ class UpdateCreateProductDialog extends React.Component {
                     "description": "",
                     "barcode": "",
                     "net_weight": "",
+                    "expiration_date": "",
+                    "supplier": "",
                 })
             }
         }).catch(error => {
@@ -101,6 +133,14 @@ class UpdateCreateProductDialog extends React.Component {
 
                                 <div className="row mb-2">
                                     <label htmlFor="product-name" className="col-form-label col-sm-4 text-end">
+                                        <span className="text-danger">*</span>Supplier:
+                                    </label>
+                                    <div className="col-sm-8">
+                                        <Select value={this.state.supplier} onChange={this.selectSupplierChange.bind(this)} options={supplierOptions} />
+                                    </div>
+                                </div>
+                                <div className="row mb-2">
+                                    <label htmlFor="product-name" className="col-form-label col-sm-4 text-end">
                                         <span className="text-danger">*</span>Product Name:
                                     </label>
                                     <div className="col-sm-8">
@@ -127,6 +167,13 @@ class UpdateCreateProductDialog extends React.Component {
                                     <div className="col-sm-8">
                                         <input type="text" className="form-control" id="net_weight" placeholder="Enter here.."
                                             onChange={this.inputChange.bind(this, "net_weight")} value={this.state.net_weight}></input>
+                                    </div>
+                                </div>
+                                <div className="row mb-2">
+                                    <label htmlFor="expiration-date" className="col-form-label col-sm-4 text-end">Expiration Date:</label>
+                                    <div className="col-sm-8">
+                                        <input type="date" className="form-control" id="expiration-date" placeholder="Enter here.."
+                                            onChange={this.inputChange.bind(this, "expiration_date")} value={this.state.expiration_date}></input>
                                     </div>
                                 </div>
                             </form>

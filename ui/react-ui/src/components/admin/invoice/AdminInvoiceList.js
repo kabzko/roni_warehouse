@@ -106,6 +106,7 @@ class AdminInvoiceList extends React.Component {
           let totalAmount = 0;
           this.state.invoices.map(element => {
             totalAmount += element.sales.total_amount;
+            return element;
           });
           this.setState({totalAmount: totalAmount});
         });

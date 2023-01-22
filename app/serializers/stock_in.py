@@ -60,11 +60,11 @@ class GroupStockInSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "created_by",
-            "supplier_name",
+            "supplier",
             "checked_by",
             "received_by",
             "truck_plate_number",
-            "truck_driver",
+            "new_truck_driver",
             "created_at",
             "updated_at",
             "date",
@@ -83,6 +83,13 @@ class GroupStockInSerializer(serializers.ModelSerializer):
                 "error_messages": {
                     "blank": "Date is required!",
                     "null": "Date is required!",
+                }
+            },
+            "supplier": {
+                "error_messages": {
+                    "blank": "Supplier is required!",
+                    "null": "Supplier is required!",
+                    "required": "Supplier is required!",
                 }
             },
         }

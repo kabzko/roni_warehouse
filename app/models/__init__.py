@@ -5,3 +5,5 @@ from app.models.stock_out import *
 from app.models.cart import *
 from app.models.listing import *
 from app.models.sales import *
+from app.models.supplier import *
+from app.models.truck_driver import *

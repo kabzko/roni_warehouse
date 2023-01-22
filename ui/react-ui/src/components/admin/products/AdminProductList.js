@@ -17,6 +17,7 @@ class AdminProductList extends React.Component {
         super(props);
         this.state = {
             products: [],
+            suppliers: [],
             search: "",
         }
 
@@ -24,6 +25,7 @@ class AdminProductList extends React.Component {
         this.searchProducts = this.searchProducts.bind(this);
         this.handleSearchChange = this.handleSearchChange.bind(this);
         this.getProducts();
+        this.getSuppliers();
     }
 
     callBackSaveProduct() {
@@ -47,6 +49,29 @@ class AdminProductList extends React.Component {
                 })
             }
         })
+    }
+
+    getSuppliers() {
+        axios.get("/api/suppliers/").then(res => {
+            this.setState({"suppliers": res.data});
+        }).catch(error => {
+            console.log(error);
+            Toast.error(error.response.data.message);
+        })
+    }
+
+    getSupplierName(supplier_id) {
+        let supplier_name;
+        let state = {...this.state};
+
+        for (let i in state.suppliers) {
+            if (state.suppliers[i].id === supplier_id) {
+                supplier_name = state.suppliers[i].name;
+                break;
+            }
+        }
+
+        return supplier_name;
     }
 
     getProducts() {
@@ -95,6 +120,7 @@ class AdminProductList extends React.Component {
     showCreateUpdateProductModal(product) {
         product = product ? product : {};
         product["callBackSave"] = this.callBackSaveProduct;
+        product["suppliers"] = this.state.suppliers;
         UpdateCreateProductDialog.show({...product});
     }
 
@@ -120,11 +146,13 @@ class AdminProductList extends React.Component {
                                 <table className="table table-hover">
                                     <thead>
                                         <tr>
+                                            <th scope="col">Supplier</th>
                                             <th scope="col">Name</th>
                                             <th scope="col">Description</th>
                                             <th scope="col">Barcode</th>
                                             <th scope="col">Net Weight</th>
                                             <th scope="col">Date created</th>
+                                            <th scope="col">Expiration Date</th>
                                             <th scope="col">Action</th>
                                         </tr>
                                     </thead>
@@ -133,11 +161,13 @@ class AdminProductList extends React.Component {
                                         ?  this.state.products.map(product => {
                                                 return(
                                                     <tr key={product.id}>
+                                                        <td>{this.getSupplierName(product.supplier)}</td>
                                                         <td>{product.name}</td>
                                                         <td>{product.description}</td>
                                                         <td>{product.barcode}</td>
                                                         <td>{product.net_weight}</td>
                                                         <td>{product.created_at}</td>
+                                                        <td>{product.expiration_date}</td>
                                                         <td>
                                                             <button className="btn btn-sm btn-primary me-1" onClick={this.showCreateUpdateProductModal.bind(this, product)}>Edit</button>
                                                             <button className="btn btn-sm btn-danger" onClick={this.deleteProduct.bind(this, product)}>Delete</button>

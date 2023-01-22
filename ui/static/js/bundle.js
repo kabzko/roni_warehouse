@@ -5166,7 +5166,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.mjs");
 /* harmony import */ var _components_landing_page_LandingPage__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/landing_page/LandingPage */ "./src/components/landing_page/LandingPage.js");
 /* harmony import */ var _components_page_not_found_PageNotFound__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/page_not_found/PageNotFound */ "./src/components/page_not_found/PageNotFound.js");
@@ -5180,9 +5180,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_admin_invoice_AdminInvoiceList__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/admin/invoice/AdminInvoiceList */ "./src/components/admin/invoice/AdminInvoiceList.js");
 /* harmony import */ var _components_admin_sales_AdminSalesChart__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/admin/sales/AdminSalesChart */ "./src/components/admin/sales/AdminSalesChart.js");
 /* harmony import */ var _components_admin_leaderboards_AdminLeaderboardsList__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/admin/leaderboards/AdminLeaderboardsList */ "./src/components/admin/leaderboards/AdminLeaderboardsList.js");
-/* harmony import */ var _components_user_login_LoginUser__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/user/login/LoginUser */ "./src/components/user/login/LoginUser.js");
-/* harmony import */ var _components_user_dashboard_UserDashboard__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/user/dashboard/UserDashboard */ "./src/components/user/dashboard/UserDashboard.js");
-/* harmony import */ var react_toastify_dist_ReactToastify_css__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! react-toastify/dist/ReactToastify.css */ "./node_modules/react-toastify/dist/ReactToastify.css");
+/* harmony import */ var _components_admin_supplier_AdminSupplierList__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/admin/supplier/AdminSupplierList */ "./src/components/admin/supplier/AdminSupplierList.js");
+/* harmony import */ var _components_admin_others_AdminOthers__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/admin/others/AdminOthers */ "./src/components/admin/others/AdminOthers.js");
+/* harmony import */ var _components_user_login_LoginUser__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/user/login/LoginUser */ "./src/components/user/login/LoginUser.js");
+/* harmony import */ var _components_user_dashboard_UserDashboard__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/user/dashboard/UserDashboard */ "./src/components/user/dashboard/UserDashboard.js");
+/* harmony import */ var react_toastify_dist_ReactToastify_css__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! react-toastify/dist/ReactToastify.css */ "./node_modules/react-toastify/dist/ReactToastify.css");
 
 
 
@@ -5192,6 +5194,8 @@ __webpack_require__.r(__webpack_exports__);
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__["default"])(this, result); }; }
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+
 
 
 
@@ -5237,51 +5241,57 @@ var App = /*#__PURE__*/function (_React$Component) {
         autoClose: 3000,
         pauseOnHover: false,
         theme: "colored"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_22__.Routes, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_22__.Route, {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_24__.Routes, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_24__.Route, {
         path: "*",
         element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(_components_page_not_found_PageNotFound__WEBPACK_IMPORTED_MODULE_8__["default"], null)
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_22__.Route, {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_24__.Route, {
         path: "",
         element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(_components_landing_page_LandingPage__WEBPACK_IMPORTED_MODULE_7__["default"], null)
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_22__.Route, {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_24__.Route, {
         path: "web",
         element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(_components_landing_page_LandingPage__WEBPACK_IMPORTED_MODULE_7__["default"], null)
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_22__.Route, {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_24__.Route, {
         path: "/web/login/admin",
         element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(_components_admin_login_LoginAdmin__WEBPACK_IMPORTED_MODULE_9__["default"], null)
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_22__.Route, {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_24__.Route, {
         path: "/web/admin/dashboard",
         element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(_components_admin_dashboard_AdminDasboard__WEBPACK_IMPORTED_MODULE_10__["default"], null)
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_22__.Route, {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_24__.Route, {
         path: "/web/admin/users",
         element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(_components_admin_users_AdminUsersList__WEBPACK_IMPORTED_MODULE_11__["default"], null)
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_22__.Route, {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_24__.Route, {
         path: "/web/admin/products",
         element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(_components_admin_products_AdminProductList__WEBPACK_IMPORTED_MODULE_12__["default"], null)
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_22__.Route, {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_24__.Route, {
         path: "/web/admin/stock-in",
         element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(_components_admin_stock_in_AdminStockInList__WEBPACK_IMPORTED_MODULE_13__["default"], null)
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_22__.Route, {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_24__.Route, {
         path: "/web/admin/stock-out",
         element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(_components_admin_stock_out_AdminStockOutList__WEBPACK_IMPORTED_MODULE_14__["default"], null)
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_22__.Route, {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_24__.Route, {
         path: "/web/admin/listing",
         element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(_components_admin_listing_AdminListingList__WEBPACK_IMPORTED_MODULE_15__["default"], null)
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_22__.Route, {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_24__.Route, {
         path: "/web/admin/invoice",
         element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(_components_admin_invoice_AdminInvoiceList__WEBPACK_IMPORTED_MODULE_16__["default"], null)
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_22__.Route, {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_24__.Route, {
         path: "/web/admin/sales",
         element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(_components_admin_sales_AdminSalesChart__WEBPACK_IMPORTED_MODULE_17__["default"], null)
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_22__.Route, {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_24__.Route, {
         path: "/web/admin/leaderboards",
         element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(_components_admin_leaderboards_AdminLeaderboardsList__WEBPACK_IMPORTED_MODULE_18__["default"], null)
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_22__.Route, {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_24__.Route, {
+        path: "/web/admin/others",
+        element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(_components_admin_others_AdminOthers__WEBPACK_IMPORTED_MODULE_20__["default"], null)
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_24__.Route, {
+        path: "/web/admin/suppliers",
+        element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(_components_admin_supplier_AdminSupplierList__WEBPACK_IMPORTED_MODULE_19__["default"], null)
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_24__.Route, {
         path: "/web/login/cashier",
-        element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(_components_user_login_LoginUser__WEBPACK_IMPORTED_MODULE_19__["default"], null)
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_22__.Route, {
+        element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(_components_user_login_LoginUser__WEBPACK_IMPORTED_MODULE_21__["default"], null)
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_24__.Route, {
         path: "/web/user/dashboard",
-        element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(_components_user_dashboard_UserDashboard__WEBPACK_IMPORTED_MODULE_20__["default"], null)
+        element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(_components_user_dashboard_UserDashboard__WEBPACK_IMPORTED_MODULE_22__["default"], null)
       })));
     }
   }]);
@@ -5465,7 +5475,16 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
         className: "align-text-bottom"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("i", {
         className: "bi bi-people-fill"
-      }), "Users"))) : null, localStorage.getItem("user_type") === "admin" || localStorage.getItem("user_type") === "inventory" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("li", {
+      }), "Users"))) : null, localStorage.getItem("user_type") === "admin" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("li", {
+        className: "nav-item"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Link, {
+        className: this.state.active === "suppliers" ? "nav-link active" : "nav-link",
+        to: "/web/admin/suppliers"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
+        className: "align-text-bottom"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("i", {
+        className: "bi bi-truck"
+      }), "Supplier"))) : null, localStorage.getItem("user_type") === "admin" || localStorage.getItem("user_type") === "inventory" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("li", {
         className: "nav-item"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Link, {
         className: this.state.active === "products" ? "nav-link active" : "nav-link",
@@ -5528,7 +5547,16 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
         className: "align-text-bottom"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("i", {
         className: "bi bi-trophy"
-      }), "Leaderboards"))) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("li", {
+      }), "Leaderboards"))) : null, localStorage.getItem("user_type") === "admin" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("li", {
+        className: "nav-item"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Link, {
+        className: this.state.active === "others" ? "nav-link active" : "nav-link",
+        to: "/web/admin/others"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
+        className: "align-text-bottom"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("i", {
+        className: "bi bi-collection"
+      }), "Others"))) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("li", {
         className: "nav-item",
         onClick: this.logout
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
@@ -5898,6 +5926,7 @@ var AdminInvoiceList = /*#__PURE__*/function (_React$Component) {
 
           _this3.state.invoices.map(function (element) {
             totalAmount += element.sales.total_amount;
+            return element;
           });
 
           _this3.setState({
@@ -7643,6 +7672,469 @@ var AdminLogin = /*#__PURE__*/function (_React$Component) {
 
 /***/ }),
 
+/***/ "./src/components/admin/others/AdminOthers.js":
+/*!****************************************************!*\
+  !*** ./src/components/admin/others/AdminOthers.js ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js");
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _common_SideNav__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../common/SideNav */ "./src/components/admin/common/SideNav.js");
+/* harmony import */ var _common_Header__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../common/Header */ "./src/components/admin/common/Header.js");
+/* harmony import */ var _UpdateCreateTruckDriverDialog__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./UpdateCreateTruckDriverDialog */ "./src/components/admin/others/UpdateCreateTruckDriverDialog.js");
+/* harmony import */ var _utils_axios__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../../utils/axios */ "./src/utils/axios.js");
+/* harmony import */ var _utils_toast__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../../utils/toast */ "./src/utils/toast.js");
+/* harmony import */ var _utils_dialog__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../../utils/dialog */ "./src/utils/dialog.js");
+
+
+
+
+
+
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__["default"])(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_6__["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_6__["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_5__["default"])(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+
+
+
+
+
+
+
+
+var AdminOthers = /*#__PURE__*/function (_React$Component) {
+  (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4__["default"])(AdminOthers, _React$Component);
+
+  var _super = _createSuper(AdminOthers);
+
+  function AdminOthers(props) {
+    var _this;
+
+    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__["default"])(this, AdminOthers);
+
+    if (!localStorage.getItem("user_type")) {
+      window.location.href = "/";
+    }
+
+    _this = _super.call(this, props);
+    _this.state = {
+      truck_drivers: [],
+      search: ""
+    };
+    _this.callBackSaveDriver = _this.callBackSaveDriver.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__["default"])(_this));
+    _this.handleSearchChange = _this.handleSearchChange.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__["default"])(_this));
+    _this.searchDrivers = _this.searchDrivers.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__["default"])(_this));
+
+    _this.getDrivers();
+
+    return _this;
+  }
+
+  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__["default"])(AdminOthers, [{
+    key: "callBackSaveDriver",
+    value: function callBackSaveDriver() {
+      this.getDrivers();
+    }
+  }, {
+    key: "getDrivers",
+    value: function getDrivers() {
+      var _this2 = this;
+
+      var api_url = "/api/truck-drivers/";
+      var search = this.state.search;
+
+      if (search !== "") {
+        api_url += "?search=".concat(search);
+      }
+
+      _utils_axios__WEBPACK_IMPORTED_MODULE_11__["default"].get(api_url).then(function (res) {
+        _this2.setState({
+          "truck_drivers": res.data
+        });
+      }).catch(function (error) {
+        console.log(error);
+        _utils_toast__WEBPACK_IMPORTED_MODULE_12__["default"].error(error.response.data.message);
+      });
+    }
+  }, {
+    key: "deleteDriver",
+    value: function deleteDriver(driver, event) {
+      var _this3 = this;
+
+      event.preventDefault();
+      _utils_dialog__WEBPACK_IMPORTED_MODULE_13__["default"].create({
+        header: "Please confirm deletion of driver",
+        text: "Are you sure you want to delete ".concat(driver.name, "?"),
+        confirmButtonText: "Yes",
+        cancelButtonText: "Cancel",
+        confirmSuccess: function confirmSuccess() {
+          _utils_axios__WEBPACK_IMPORTED_MODULE_11__["default"]["delete"]("/api/truck-drivers/".concat(driver.id, "/"), {}).then(function (res) {
+            _utils_toast__WEBPACK_IMPORTED_MODULE_12__["default"].success(res.data);
+
+            _this3.getDrivers();
+          }).catch(function (error) {
+            _utils_toast__WEBPACK_IMPORTED_MODULE_12__["default"].error(error.response.data.message);
+          });
+        }
+      });
+    }
+  }, {
+    key: "searchDrivers",
+    value: function searchDrivers(event) {
+      event.preventDefault();
+      this.getDrivers();
+    }
+  }, {
+    key: "handleSearchChange",
+    value: function handleSearchChange(event) {
+      if (event.keyCode) {
+        if (event.keyCode === 13) {
+          this.searchDrivers(event);
+        }
+      } else {
+        this.setState({
+          "search": event.target.value
+        });
+      }
+    }
+  }, {
+    key: "showCreateUpdateDriverModal",
+    value: function showCreateUpdateDriverModal(driver) {
+      driver = driver ? driver : {};
+      driver["callBackSave"] = this.callBackSaveDriver;
+      _UpdateCreateTruckDriverDialog__WEBPACK_IMPORTED_MODULE_10__["default"].show(_objectSpread({}, driver));
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this4 = this;
+
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "side-nav-custom"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(_common_Header__WEBPACK_IMPORTED_MODULE_9__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "container-fluid"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "row"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(_common_SideNav__WEBPACK_IMPORTED_MODULE_8__["default"], {
+        active: "others"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("main", {
+        className: "col-md-9 ms-sm-auto col-lg-10 px-md-4"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("h1", {
+        className: "h2"
+      }, "Others")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "col-md-8 border shadow-sm p-3",
+        style: {
+          maxHeight: "500px",
+          overflow: "auto"
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "row"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "col-sm-6"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("h5", null, "Truck Drivers")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "col-sm-6"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "input-group mb-3 float-lg-end"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("input", {
+        type: "text",
+        className: "form-control",
+        placeholder: "Search name...",
+        onKeyUp: this.handleSearchChange,
+        onChange: this.handleSearchChange
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
+        className: "input-group-text",
+        style: {
+          cursor: "pointer"
+        },
+        onClick: this.searchDrivers,
+        value: this.state.search
+      }, "Search"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
+        className: "input-group-text btn btn-dark",
+        style: {
+          cursor: "pointer"
+        },
+        onClick: this.showCreateUpdateDriverModal.bind(this)
+      }, "Add new"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "clearfix"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "table-responsive"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("table", {
+        className: "table table-hover"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
+        scope: "col"
+      }, "Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
+        scope: "col"
+      }, "Contact Number"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
+        scope: "col"
+      }, "Action"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("tbody", {
+        className: "table-group-divider"
+      }, this.state.truck_drivers.length > 0 ? this.state.truck_drivers.map(function (driver) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("tr", {
+          key: driver.id
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, driver.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, driver.contact_number), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
+          className: "btn btn-sm btn-primary me-1",
+          onClick: _this4.showCreateUpdateDriverModal.bind(_this4, driver)
+        }, "Edit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
+          className: "btn btn-sm btn-danger",
+          onClick: _this4.deleteDriver.bind(_this4, driver)
+        }, "Delete")));
+      }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", {
+        colSpan: "1000",
+        className: "text-center"
+      }, "No truck drivers yet!")))))))))));
+    }
+  }]);
+
+  return AdminOthers;
+}((react__WEBPACK_IMPORTED_MODULE_7___default().Component));
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AdminOthers);
+
+/***/ }),
+
+/***/ "./src/components/admin/others/UpdateCreateTruckDriverDialog.js":
+/*!**********************************************************************!*\
+  !*** ./src/components/admin/others/UpdateCreateTruckDriverDialog.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js");
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js");
+/* harmony import */ var _utils_axios__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../utils/axios */ "./src/utils/axios.js");
+/* harmony import */ var _utils_alert__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../utils/alert */ "./src/utils/alert.js");
+
+
+
+
+
+
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__["default"])(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_6__["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_6__["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_5__["default"])(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+
+
+
+
+
+var UpdateCreateTruckDriverDialog = /*#__PURE__*/function (_React$Component) {
+  (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4__["default"])(UpdateCreateTruckDriverDialog, _React$Component);
+
+  var _super = _createSuper(UpdateCreateTruckDriverDialog);
+
+  function UpdateCreateTruckDriverDialog(props) {
+    var _this;
+
+    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__["default"])(this, UpdateCreateTruckDriverDialog);
+
+    _this = _super.call(this, props);
+    _this.state = {
+      "name": props.name ? props.name : "",
+      "contact_number": props.contact_number ? props.contact_number : ""
+    };
+
+    if (props.id) {
+      _this.state["id"] = props.id;
+    }
+
+    _this.modal = null;
+    _this.handleSaveDriver = _this.handleSaveDriver.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__["default"])(_this));
+    _this.handleClose = _this.handleClose.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__["default"])(_this));
+    return _this;
+  }
+
+  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__["default"])(UpdateCreateTruckDriverDialog, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.modal = new window.bootstrap.Modal('#custom-dialog-modal', {
+        keyboard: false
+      });
+      this.modal.show();
+    }
+  }, {
+    key: "inputChange",
+    value: function inputChange(input_name, event) {
+      var updated_field = {};
+      updated_field[input_name] = event.target.value;
+      this.setState(_objectSpread({}, updated_field));
+    }
+  }, {
+    key: "handleSaveDriver",
+    value: function handleSaveDriver(event) {
+      var _this2 = this;
+
+      event.preventDefault();
+
+      var data = _objectSpread({}, this.state);
+
+      var api_url = "/api/truck-drivers/";
+
+      if (data.id) {
+        api_url = "/api/truck-drivers/".concat(data.id, "/");
+      }
+
+      _utils_axios__WEBPACK_IMPORTED_MODULE_9__["default"].post(api_url, data).then(function (res) {
+        (0,_utils_alert__WEBPACK_IMPORTED_MODULE_10__["default"])(res.data, "success", "success-notification");
+
+        _this2.props.callBackSave();
+
+        if (!data.id) {
+          _this2.setState({
+            "name": "",
+            "contact_number": ""
+          });
+        }
+      }).catch(function (error) {
+        console.log(error);
+        (0,_utils_alert__WEBPACK_IMPORTED_MODULE_10__["default"])(error.response.data.message, "danger", "error-notification");
+      });
+    }
+  }, {
+    key: "handleClose",
+    value: function handleClose(event) {
+      event.preventDefault();
+      this.modal.hide();
+      document.getElementById("truck-driver-dialog-container").remove();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "modal fade",
+        id: "custom-dialog-modal",
+        tabIndex: "-1",
+        "aria-labelledby": "exampleModalLabel",
+        "aria-hidden": "true",
+        "data-bs-backdrop": "static"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "modal-dialog modal-dialog-centered modal-dialog-scrollable"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "modal-content"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "modal-header"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("h1", {
+        className: "modal-title fs-5",
+        id: "exampleModalLabel"
+      }, this.props.id ? "Update truck driver" : "Create truck driver"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
+        type: "button",
+        className: "btn-close",
+        onClick: this.handleClose,
+        "aria-label": "Close"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "modal-body"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("form", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        id: "error-notification"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        id: "success-notification"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "row mb-2"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("label", {
+        htmlFor: "driver-name",
+        className: "col-form-label col-sm-4 text-end"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
+        className: "text-danger"
+      }, "*"), "Name:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "col-sm-8"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("input", {
+        type: "text",
+        className: "form-control",
+        id: "driver-name",
+        placeholder: "Enter here..",
+        onChange: this.inputChange.bind(this, "name"),
+        value: this.state.name
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "row mb-2"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("label", {
+        htmlFor: "contact-number",
+        className: "col-form-label col-sm-4 text-end"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
+        className: "text-danger"
+      }, "*"), "Contact Number:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "col-sm-8"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("input", {
+        type: "text",
+        className: "form-control",
+        id: "contact-number",
+        placeholder: "Enter here..",
+        onChange: this.inputChange.bind(this, "contact_number"),
+        value: this.state.contact_number
+      }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "modal-footer"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
+        type: "button",
+        className: "btn btn-light",
+        id: "close-user-modal",
+        onClick: this.handleClose
+      }, "Close"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
+        type: "button",
+        className: "btn btn-primary",
+        onClick: this.handleSaveDriver
+      }, "Save")))));
+    }
+  }], [{
+    key: "show",
+    value: function show(props) {
+      var containerElement = document.getElementById("truck-driver-dialog-container");
+
+      if (!containerElement) {
+        containerElement = document.createElement('div');
+        containerElement.id = "truck-driver-dialog-container";
+      }
+
+      document.body.appendChild(containerElement);
+      var root = (0,react_dom_client__WEBPACK_IMPORTED_MODULE_8__.createRoot)(containerElement);
+      return root.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(UpdateCreateTruckDriverDialog, props));
+    }
+  }]);
+
+  return UpdateCreateTruckDriverDialog;
+}((react__WEBPACK_IMPORTED_MODULE_7___default().Component));
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (UpdateCreateTruckDriverDialog);
+
+/***/ }),
+
 /***/ "./src/components/admin/products/AdminProductList.js":
 /*!***********************************************************!*\
   !*** ./src/components/admin/products/AdminProductList.js ***!
@@ -7710,6 +8202,7 @@ var AdminProductList = /*#__PURE__*/function (_React$Component) {
     _this = _super.call(this, props);
     _this.state = {
       products: [],
+      suppliers: [],
       search: ""
     };
     _this.callBackSaveProduct = _this.callBackSaveProduct.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__["default"])(_this));
@@ -7717,6 +8210,8 @@ var AdminProductList = /*#__PURE__*/function (_React$Component) {
     _this.handleSearchChange = _this.handleSearchChange.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__["default"])(_this));
 
     _this.getProducts();
+
+    _this.getSuppliers();
 
     return _this;
   }
@@ -7749,9 +8244,39 @@ var AdminProductList = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "getSuppliers",
+    value: function getSuppliers() {
+      var _this3 = this;
+
+      _utils_axios__WEBPACK_IMPORTED_MODULE_11__["default"].get("/api/suppliers/").then(function (res) {
+        _this3.setState({
+          "suppliers": res.data
+        });
+      }).catch(function (error) {
+        console.log(error);
+        _utils_toast__WEBPACK_IMPORTED_MODULE_13__["default"].error(error.response.data.message);
+      });
+    }
+  }, {
+    key: "getSupplierName",
+    value: function getSupplierName(supplier_id) {
+      var supplier_name;
+
+      var state = _objectSpread({}, this.state);
+
+      for (var i in state.suppliers) {
+        if (state.suppliers[i].id === supplier_id) {
+          supplier_name = state.suppliers[i].name;
+          break;
+        }
+      }
+
+      return supplier_name;
+    }
+  }, {
     key: "getProducts",
     value: function getProducts() {
-      var _this3 = this;
+      var _this4 = this;
 
       var api_url = "/api/products/";
       var search = this.state.search;
@@ -7773,7 +8298,7 @@ var AdminProductList = /*#__PURE__*/function (_React$Component) {
           return data;
         });
 
-        _this3.setState({
+        _this4.setState({
           "products": res.data
         });
       }).catch(function (error) {
@@ -7805,12 +8330,13 @@ var AdminProductList = /*#__PURE__*/function (_React$Component) {
     value: function showCreateUpdateProductModal(product) {
       product = product ? product : {};
       product["callBackSave"] = this.callBackSaveProduct;
+      product["suppliers"] = this.state.suppliers;
       _UpdateCreateProductDialog__WEBPACK_IMPORTED_MODULE_10__["default"].show(_objectSpread({}, product));
     }
   }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
+      var _this5 = this;
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
         className: "side-nav-custom"
@@ -7853,6 +8379,8 @@ var AdminProductList = /*#__PURE__*/function (_React$Component) {
         className: "table table-hover"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
         scope: "col"
+      }, "Supplier"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
+        scope: "col"
       }, "Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
         scope: "col"
       }, "Description"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
@@ -7863,17 +8391,19 @@ var AdminProductList = /*#__PURE__*/function (_React$Component) {
         scope: "col"
       }, "Date created"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
         scope: "col"
+      }, "Expiration Date"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
+        scope: "col"
       }, "Action"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("tbody", {
         className: "table-group-divider"
       }, this.state.products.length > 0 ? this.state.products.map(function (product) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("tr", {
           key: product.id
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, product.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, product.description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, product.barcode), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, product.net_weight), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, product.created_at), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, _this5.getSupplierName(product.supplier)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, product.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, product.description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, product.barcode), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, product.net_weight), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, product.created_at), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, product.expiration_date), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
           className: "btn btn-sm btn-primary me-1",
-          onClick: _this4.showCreateUpdateProductModal.bind(_this4, product)
+          onClick: _this5.showCreateUpdateProductModal.bind(_this5, product)
         }, "Edit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
           className: "btn btn-sm btn-danger",
-          onClick: _this4.deleteProduct.bind(_this4, product)
+          onClick: _this5.deleteProduct.bind(_this5, product)
         }, "Delete")));
       }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", {
         colSpan: "1000",
@@ -7909,6 +8439,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var react_select__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react-select */ "./node_modules/react-select/dist/react-select.esm.js");
 /* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js");
 /* harmony import */ var _utils_axios__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../utils/axios */ "./src/utils/axios.js");
 /* harmony import */ var _utils_alert__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../utils/alert */ "./src/utils/alert.js");
@@ -7933,6 +8464,8 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 
 
+var supplierOptions = [];
+
 var UpdateCreateProductDialog = /*#__PURE__*/function (_React$Component) {
   (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4__["default"])(UpdateCreateProductDialog, _React$Component);
 
@@ -7946,13 +8479,32 @@ var UpdateCreateProductDialog = /*#__PURE__*/function (_React$Component) {
     _this = _super.call(this, props);
     _this.state = {
       "name": props.name ? props.name : "",
+      "supplier": props.supplier ? props.supplier : "",
       "description": props.description ? props.description : "",
       "barcode": props.barcode ? props.barcode : "",
-      "net_weight": props.net_weight ? props.net_weight : ""
+      "net_weight": props.net_weight ? props.net_weight : "",
+      "expiration_date": props.expiration_date ? props.expiration_date : ""
     };
 
     if (props.id) {
       _this.state["id"] = props.id;
+    }
+
+    if (props.suppliers) {
+      supplierOptions.splice(0, supplierOptions.length);
+      props.suppliers.map(function (supplier) {
+        var option = {
+          value: supplier.id,
+          label: supplier.name
+        };
+        supplierOptions.push(option);
+
+        if (props.supplier && supplier.id === props.supplier) {
+          _this.state.supplier = option;
+        }
+
+        return supplier;
+      });
     }
 
     _this.modal = null;
@@ -7977,6 +8529,13 @@ var UpdateCreateProductDialog = /*#__PURE__*/function (_React$Component) {
       this.setState(_objectSpread({}, updated_field));
     }
   }, {
+    key: "selectSupplierChange",
+    value: function selectSupplierChange(selectedOption) {
+      this.setState({
+        supplier: selectedOption
+      });
+    }
+  }, {
     key: "handleSaveProduct",
     value: function handleSaveProduct(event) {
       var _this2 = this;
@@ -7991,6 +8550,10 @@ var UpdateCreateProductDialog = /*#__PURE__*/function (_React$Component) {
         api_url = "/api/products/".concat(data.id, "/");
       }
 
+      if (data.supplier) {
+        data.supplier = data.supplier.value;
+      }
+
       _utils_axios__WEBPACK_IMPORTED_MODULE_9__["default"].post(api_url, data).then(function (res) {
         (0,_utils_alert__WEBPACK_IMPORTED_MODULE_10__["default"])(res.data, "success", "success-notification");
 
@@ -8001,7 +8564,9 @@ var UpdateCreateProductDialog = /*#__PURE__*/function (_React$Component) {
             "name": "",
             "description": "",
             "barcode": "",
-            "net_weight": ""
+            "net_weight": "",
+            "expiration_date": "",
+            "supplier": ""
           });
         }
       }).catch(function (error) {
@@ -8047,6 +8612,19 @@ var UpdateCreateProductDialog = /*#__PURE__*/function (_React$Component) {
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
         id: "success-notification"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "row mb-2"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("label", {
+        htmlFor: "product-name",
+        className: "col-form-label col-sm-4 text-end"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
+        className: "text-danger"
+      }, "*"), "Supplier:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "col-sm-8"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(react_select__WEBPACK_IMPORTED_MODULE_11__["default"], {
+        value: this.state.supplier,
+        onChange: this.selectSupplierChange.bind(this),
+        options: supplierOptions
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
         className: "row mb-2"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("label", {
         htmlFor: "product-name",
@@ -8104,6 +8682,20 @@ var UpdateCreateProductDialog = /*#__PURE__*/function (_React$Component) {
         placeholder: "Enter here..",
         onChange: this.inputChange.bind(this, "net_weight"),
         value: this.state.net_weight
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "row mb-2"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("label", {
+        htmlFor: "expiration-date",
+        className: "col-form-label col-sm-4 text-end"
+      }, "Expiration Date:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "col-sm-8"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("input", {
+        type: "date",
+        className: "form-control",
+        id: "expiration-date",
+        placeholder: "Enter here..",
+        onChange: this.inputChange.bind(this, "expiration_date"),
+        value: this.state.expiration_date
       }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
         className: "modal-footer"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
@@ -8506,6 +9098,7 @@ var AdminStockInList = /*#__PURE__*/function (_React$Component) {
     _this.state = {
       products: [],
       stockIn: [],
+      truck_drivers: [],
       productFilter: ""
     };
     _this.callBackSaveStockIn = _this.callBackSaveStockIn.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__["default"])(_this));
@@ -8515,6 +9108,8 @@ var AdminStockInList = /*#__PURE__*/function (_React$Component) {
     _this.getStockIn();
 
     _this.getProducts();
+
+    _this.getDrivers();
 
     return _this;
   }
@@ -8561,12 +9156,26 @@ var AdminStockInList = /*#__PURE__*/function (_React$Component) {
       return product;
     }
   }, {
-    key: "getProducts",
-    value: function getProducts() {
+    key: "getDrivers",
+    value: function getDrivers() {
       var _this3 = this;
 
-      _utils_axios__WEBPACK_IMPORTED_MODULE_11__["default"].get("/api/products/").then(function (res) {
+      _utils_axios__WEBPACK_IMPORTED_MODULE_11__["default"].get("/api/truck-drivers/").then(function (res) {
         _this3.setState({
+          "truck_drivers": res.data
+        });
+      }).catch(function (error) {
+        console.log(error);
+        _utils_toast__WEBPACK_IMPORTED_MODULE_13__["default"].error(error.response.data.message);
+      });
+    }
+  }, {
+    key: "getProducts",
+    value: function getProducts() {
+      var _this4 = this;
+
+      _utils_axios__WEBPACK_IMPORTED_MODULE_11__["default"].get("/api/products/").then(function (res) {
+        _this4.setState({
           "products": res.data
         });
       }).catch(function (error) {
@@ -8577,7 +9186,7 @@ var AdminStockInList = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "getStockIn",
     value: function getStockIn() {
-      var _this4 = this;
+      var _this5 = this;
 
       var api_url = "/api/stock-in/";
       var productFilter = this.state.productFilter;
@@ -8599,7 +9208,7 @@ var AdminStockInList = /*#__PURE__*/function (_React$Component) {
           return data;
         });
 
-        _this4.setState({
+        _this5.setState({
           "stockIn": res.data
         });
       }).catch(function (error) {
@@ -8632,12 +9241,13 @@ var AdminStockInList = /*#__PURE__*/function (_React$Component) {
       stockIn = stockIn ? stockIn : {};
       stockIn["callBackSave"] = this.callBackSaveStockIn;
       stockIn["products"] = this.state.products;
+      stockIn["truck_drivers"] = this.state.truck_drivers;
       _UpdateCreateStockInDialog__WEBPACK_IMPORTED_MODULE_10__["default"].show(_objectSpread({}, stockIn));
     }
   }, {
     key: "render",
     value: function render() {
-      var _this5 = this;
+      var _this6 = this;
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
         className: "side-nav-custom"
@@ -8699,10 +9309,10 @@ var AdminStockInList = /*#__PURE__*/function (_React$Component) {
           key: stockin.id
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockin.date), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockin.supplier_name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockin.sales_invoice_no), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockin.received_by), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockin.created_at), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockin.updated_at), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
           className: "btn btn-sm btn-primary me-1",
-          onClick: _this5.showCreateUpdateStockInModal.bind(_this5, stockin)
+          onClick: _this6.showCreateUpdateStockInModal.bind(_this6, stockin)
         }, "Edit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
           className: "btn btn-sm btn-danger",
-          onClick: _this5.deleteStockIn.bind(_this5, stockin)
+          onClick: _this6.deleteStockIn.bind(_this6, stockin)
         }, "Delete")));
       }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", {
         colSpan: "1000",
@@ -8770,6 +9380,8 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 
 var productOptions = [];
+var supplierOptions = [];
+var truckDriverOptions = [];
 var unitOfMeasureOptions = [{
   value: "pieces",
   label: "Pieces"
@@ -8794,12 +9406,12 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
     _this = _super.call(this, props);
     _this.state = {
       "list": props.list ? (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2__["default"])(props.list) : [],
-      "supplier_name": props.supplier_name ? props.supplier_name : "",
+      "supplier": props.supplier ? props.supplier : "",
       "checked_by": props.checked_by ? props.checked_by : "",
       "received_by": props.received_by ? props.received_by : "",
       "sales_invoice_no": props.sales_invoice_no ? props.sales_invoice_no : "",
       "truck_plate_number": props.truck_plate_number ? props.truck_plate_number : "",
-      "truck_driver": props.truck_driver ? props.truck_driver : "",
+      "new_truck_driver": props.new_truck_driver ? props.new_truck_driver : "",
       "date": props.date ? props.date : "",
       "products": props.products ? props.products : []
     };
@@ -8808,25 +9420,27 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
       _this.state["id"] = props.id;
     }
 
-    if (_this.state.products) {
-      productOptions.splice(0, productOptions.length);
+    if (props.truck_drivers) {
+      truckDriverOptions.splice(0, truckDriverOptions.length);
+      props.truck_drivers.map(function (driver) {
+        var option = {
+          value: driver.id,
+          label: driver.name
+        };
+        truckDriverOptions.push(option);
 
-      _this.state.products.map(function (prod) {
-        productOptions.push({
-          value: prod.id,
-          label: prod.name
-        });
-        return prod;
+        if (props.new_truck_driver && props.new_truck_driver === driver.id) {
+          _this.state.new_truck_driver = option;
+        }
+
+        return driver;
       });
     }
 
-    for (var i in _this.state.list) {
-      var product = _this.state.list[i]["product"];
-      var unit_of_measure = _this.state.list[i]["unit_of_measure"];
+    _this.getSuppliers();
 
-      if (product && (0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_1__["default"])(product) !== "object") {
-        _this.state.list[i]["product"] = _this.getProduct(product);
-      }
+    for (var i in _this.state.list) {
+      var unit_of_measure = _this.state.list[i]["unit_of_measure"];
 
       if (unit_of_measure && (0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_1__["default"])(unit_of_measure) !== "object") {
         _this.state.list[i]["unit_of_measure"] = _this.getUnitOfMeasure(unit_of_measure);
@@ -8852,19 +9466,62 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
       this.modal.show();
     }
   }, {
+    key: "getSupplierOption",
+    value: function getSupplierOption(supplier_id) {
+      var supplier;
+
+      for (var i in supplierOptions) {
+        if (supplierOptions[i].value === supplier_id) {
+          supplier = supplierOptions[i];
+          break;
+        }
+      }
+
+      return supplier;
+    }
+  }, {
+    key: "getSuppliers",
+    value: function getSuppliers() {
+      var _this2 = this;
+
+      _utils_axios__WEBPACK_IMPORTED_MODULE_11__["default"].get("/api/suppliers/").then(function (res) {
+        supplierOptions.splice(0, supplierOptions.length);
+        res.data.map(function (supplier) {
+          supplierOptions.push({
+            value: supplier.id,
+            label: supplier.name
+          });
+          return supplier;
+        });
+
+        if (_this2.state.supplier) {
+          var supplier = _this2.getSupplierOption(_this2.state.supplier);
+
+          _this2.setState({
+            supplier: supplier
+          });
+
+          _this2.selectSupplierChange(supplier);
+        }
+      }).catch(function (error) {
+        console.log(error);
+        _utils_toast__WEBPACK_IMPORTED_MODULE_13__["default"].error(error.response.data.message);
+      });
+    }
+  }, {
     key: "getProducts",
     value: function getProducts(event) {
-      var _this2 = this;
+      var _this3 = this;
 
       event.preventDefault();
       _utils_axios__WEBPACK_IMPORTED_MODULE_11__["default"].get("/api/products/").then(function (res) {
-        _this2.setState({
+        _this3.setState({
           "products": res.data
         }, function () {
-          if (_this2.state.products) {
+          if (_this3.state.products) {
             productOptions.splice(0, productOptions.length);
 
-            _this2.state.products.map(function (prod) {
+            _this3.state.products.map(function (prod) {
               productOptions.push({
                 value: prod.id,
                 label: prod.name
@@ -8941,6 +9598,51 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "selectTruckDriverChange",
+    value: function selectTruckDriverChange(selectedOption) {
+      this.setState({
+        new_truck_driver: selectedOption
+      });
+    }
+  }, {
+    key: "selectSupplierChange",
+    value: function selectSupplierChange(selectedOption) {
+      this.setState({
+        supplier: selectedOption
+      });
+      productOptions.splice(0, productOptions.length);
+      this.state.products.map(function (prod) {
+        if (selectedOption.value === prod.supplier) {
+          productOptions.push({
+            value: prod.id,
+            label: prod.name
+          });
+        }
+
+        return prod;
+      });
+
+      var data = _objectSpread({}, this.state);
+
+      data["list"].map(function (list) {
+        if (list.product) {
+          if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_1__["default"])(list.product) !== "object") {
+            list.product = productOptions.find(function (el) {
+              return el.value === list.product;
+            });
+          } else {
+            if (!productOptions.find(function (el) {
+              return el.value === list.product.value;
+            })) {
+              list.product = "";
+            }
+          }
+        }
+
+        return list;
+      });
+    }
+  }, {
     key: "selectProductChange",
     value: function selectProductChange(index, selectedOption) {
       var data = _objectSpread({}, this.state);
@@ -8968,7 +9670,7 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleSaveStockIn",
     value: function handleSaveStockIn(event) {
-      var _this3 = this;
+      var _this4 = this;
 
       event.preventDefault();
 
@@ -8990,21 +9692,29 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
         }
       }
 
+      if (data.supplier) {
+        data.supplier = data.supplier.value;
+      }
+
+      if (data.new_truck_driver) {
+        data.new_truck_driver = data.new_truck_driver.value;
+      }
+
       _utils_axios__WEBPACK_IMPORTED_MODULE_11__["default"].post(api_url, data).then(function (res) {
         (0,_utils_alert__WEBPACK_IMPORTED_MODULE_12__["default"])(res.data, "success", "success-notification");
 
-        _this3.props.callBackSave();
+        _this4.props.callBackSave();
 
         if (!data.id) {
-          _this3.setState({
-            "supplier_name": "",
+          _this4.setState({
+            "supplier": "",
             "checked_by": "",
             "received_by": "",
             "truck_plate_number": "",
-            "truck_driver": "",
+            "new_truck_driver": "",
             "date": "",
             "sales_invoice_no": "",
-            "list": [_this3.getEmptyList()]
+            "list": [_this4.getEmptyList()]
           });
         }
       }).catch(function (error) {
@@ -9051,7 +9761,7 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
+      var _this5 = this;
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("div", {
         className: "modal modal-xl fade",
@@ -9097,13 +9807,12 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("label", {
         htmlFor: "supplier-name",
         className: "col-form-label text-end"
-      }, "Supplier Name:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("input", {
-        type: "text",
-        className: "form-control",
-        id: "supplier-name",
-        placeholder: "Enter here..",
-        onChange: this.inputChange.bind(this, "supplier_name"),
-        value: this.state.supplier_name
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("span", {
+        className: "text-danger"
+      }, "*"), " Supplier:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement(react_select__WEBPACK_IMPORTED_MODULE_14__["default"], {
+        value: this.state.supplier,
+        onChange: this.selectSupplierChange.bind(this),
+        options: supplierOptions
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("div", {
         className: "col-sm-4"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("label", {
@@ -9133,13 +9842,10 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("label", {
         htmlFor: "truck-driver",
         className: "col-form-label text-end"
-      }, "Truck driver:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("input", {
-        type: "text",
-        className: "form-control",
-        id: "truck-driver",
-        placeholder: "Enter here..",
-        onChange: this.inputChange.bind(this, "truck_driver"),
-        value: this.state.truck_driver
+      }, "Truck driver:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement(react_select__WEBPACK_IMPORTED_MODULE_14__["default"], {
+        value: this.state.new_truck_driver,
+        onChange: this.selectTruckDriverChange.bind(this),
+        options: truckDriverOptions
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("div", {
         className: "col-sm-4"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("label", {
@@ -9186,32 +9892,32 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
           key: idx
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement(react_select__WEBPACK_IMPORTED_MODULE_14__["default"], {
           value: el.product,
-          onChange: _this4.selectProductChange.bind(_this4, idx),
+          onChange: _this5.selectProductChange.bind(_this5, idx),
           options: productOptions
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("input", {
           type: "number",
           className: "form-control",
           id: "price",
           placeholder: "Enter here..",
-          onChange: _this4.listInputChange.bind(_this4, "price", idx),
+          onChange: _this5.listInputChange.bind(_this5, "price", idx),
           value: el.price
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("input", {
           type: "number",
           className: "form-control",
           id: "quantity",
           placeholder: "Enter here..",
-          onChange: _this4.listInputChange.bind(_this4, "quantity", idx),
+          onChange: _this5.listInputChange.bind(_this5, "quantity", idx),
           value: el.quantity
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement(react_select__WEBPACK_IMPORTED_MODULE_14__["default"], {
           value: el.unit_of_measure,
-          onChange: _this4.selectUnitOfMeasureChange.bind(_this4, idx),
+          onChange: _this5.selectUnitOfMeasureChange.bind(_this5, idx),
           options: unitOfMeasureOptions
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("td", null, el.unit_of_measure.value !== "pieces" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("input", {
           type: "number",
           className: "form-control",
           id: "number-of-pieces",
           placeholder: "Enter here..",
-          onChange: _this4.listInputChange.bind(_this4, "number_of_pieces", idx),
+          onChange: _this5.listInputChange.bind(_this5, "number_of_pieces", idx),
           value: el.number_of_pieces
         }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("input", {
           type: "number",
@@ -9222,7 +9928,7 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
           disabled: true
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("button", {
           className: "btn btn-sm btn-danger",
-          onClick: _this4.removeList.bind(_this4, idx)
+          onClick: _this5.removeList.bind(_this5, idx)
         }, "Delete")));
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("button", {
         className: "btn btn-sm btn-primary",
@@ -10010,6 +10716,471 @@ var UpdateCreateStockOutDialog = /*#__PURE__*/function (_React$Component) {
 
 /***/ }),
 
+/***/ "./src/components/admin/supplier/AdminSupplierList.js":
+/*!************************************************************!*\
+  !*** ./src/components/admin/supplier/AdminSupplierList.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js");
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _common_SideNav__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../common/SideNav */ "./src/components/admin/common/SideNav.js");
+/* harmony import */ var _common_Header__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../common/Header */ "./src/components/admin/common/Header.js");
+/* harmony import */ var _UpdateCreateSupplierDialog__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./UpdateCreateSupplierDialog */ "./src/components/admin/supplier/UpdateCreateSupplierDialog.js");
+/* harmony import */ var _utils_axios__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../../utils/axios */ "./src/utils/axios.js");
+/* harmony import */ var _utils_dialog__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../../utils/dialog */ "./src/utils/dialog.js");
+/* harmony import */ var _utils_toast__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../../utils/toast */ "./src/utils/toast.js");
+
+
+
+
+
+
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__["default"])(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_6__["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_6__["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_5__["default"])(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+
+
+
+
+
+
+
+
+var AdminSupplierList = /*#__PURE__*/function (_React$Component) {
+  (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4__["default"])(AdminSupplierList, _React$Component);
+
+  var _super = _createSuper(AdminSupplierList);
+
+  function AdminSupplierList(props) {
+    var _this;
+
+    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__["default"])(this, AdminSupplierList);
+
+    if (!localStorage.getItem("user_type") === "admin") {
+      window.location.href = "/";
+    }
+
+    _this = _super.call(this, props);
+    _this.state = {
+      suppliers: [],
+      search: ""
+    };
+    _this.callBackSaveSupplier = _this.callBackSaveSupplier.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__["default"])(_this));
+    _this.searchSupplier = _this.searchSupplier.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__["default"])(_this));
+    _this.handleSearchChange = _this.handleSearchChange.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__["default"])(_this));
+
+    _this.getSuppliers();
+
+    return _this;
+  }
+
+  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__["default"])(AdminSupplierList, [{
+    key: "callBackSaveSupplier",
+    value: function callBackSaveSupplier() {
+      this.getSuppliers();
+    }
+  }, {
+    key: "deleteSupplier",
+    value: function deleteSupplier(supplier, event) {
+      var _this2 = this;
+
+      event.preventDefault();
+      _utils_dialog__WEBPACK_IMPORTED_MODULE_12__["default"].create({
+        header: "Please confirm deletion of supplier",
+        text: "Are you sure you want to delete ".concat(supplier.name, "?"),
+        confirmButtonText: "Yes",
+        cancelButtonText: "Cancel",
+        confirmSuccess: function confirmSuccess() {
+          _utils_axios__WEBPACK_IMPORTED_MODULE_11__["default"]["delete"]("/api/suppliers/".concat(supplier.id, "/"), {}).then(function (res) {
+            _utils_toast__WEBPACK_IMPORTED_MODULE_13__["default"].success(res.data);
+
+            _this2.getSuppliers();
+          }).catch(function (error) {
+            _utils_toast__WEBPACK_IMPORTED_MODULE_13__["default"].error(error.response.data.message);
+          });
+        }
+      });
+    }
+  }, {
+    key: "getSuppliers",
+    value: function getSuppliers() {
+      var _this3 = this;
+
+      var api_url = "/api/suppliers/";
+      var search = this.state.search;
+
+      if (search !== "") {
+        api_url += "?search=".concat(search);
+      }
+
+      _utils_axios__WEBPACK_IMPORTED_MODULE_11__["default"].get(api_url).then(function (res) {
+        res.data.map(function (data) {
+          if (data.created_at) {
+            data.created_at = new Date(data.created_at).toLocaleString();
+          }
+
+          if (data.updated_at) {
+            data.updated_at = new Date(data.updated_at).toLocaleString();
+          }
+
+          return data;
+        });
+
+        _this3.setState({
+          "suppliers": res.data
+        });
+      }).catch(function (error) {
+        console.log(error);
+        _utils_toast__WEBPACK_IMPORTED_MODULE_13__["default"].error(error.response.data.message);
+      });
+    }
+  }, {
+    key: "searchSupplier",
+    value: function searchSupplier(event) {
+      event.preventDefault();
+      this.getSuppliers();
+    }
+  }, {
+    key: "handleSearchChange",
+    value: function handleSearchChange(event) {
+      if (event.keyCode) {
+        if (event.keyCode === 13) {
+          this.searchSupplier(event);
+        }
+      } else {
+        this.setState({
+          "search": event.target.value
+        });
+      }
+    }
+  }, {
+    key: "showCreateUpdateSupplierModal",
+    value: function showCreateUpdateSupplierModal(supplier) {
+      supplier = supplier ? supplier : {};
+      supplier["callBackSave"] = this.callBackSaveSupplier;
+      _UpdateCreateSupplierDialog__WEBPACK_IMPORTED_MODULE_10__["default"].show(_objectSpread({}, supplier));
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this4 = this;
+
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "side-nav-custom"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(_common_Header__WEBPACK_IMPORTED_MODULE_9__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "container-fluid"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "row"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(_common_SideNav__WEBPACK_IMPORTED_MODULE_8__["default"], {
+        active: "suppliers"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("main", {
+        className: "col-md-9 ms-sm-auto col-lg-10 px-md-4"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("h1", {
+        className: "h2"
+      }, "Supplier list"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
+        type: "button",
+        className: "btn btn-dark",
+        onClick: this.showCreateUpdateSupplierModal.bind(this)
+      }, "Add supplier")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "input-group mb-3 w-50 float-lg-end"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("input", {
+        type: "text",
+        className: "form-control",
+        placeholder: "Search supplier...",
+        onKeyUp: this.handleSearchChange,
+        onChange: this.handleSearchChange
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
+        className: "input-group-text",
+        style: {
+          cursor: "pointer"
+        },
+        onClick: this.searchSupplier,
+        value: this.state.search
+      }, "Search")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "clearfix"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "table-responsive"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("table", {
+        className: "table table-hover"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
+        scope: "col"
+      }, "Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
+        scope: "col"
+      }, "Address"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
+        scope: "col"
+      }, "Date created"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
+        scope: "col"
+      }, "Last changes"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
+        scope: "col"
+      }, "Action"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("tbody", {
+        className: "table-group-divider"
+      }, this.state.suppliers.length > 0 ? this.state.suppliers.map(function (supplier) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("tr", {
+          key: supplier.id
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, supplier.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, supplier.address), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, supplier.created_at), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, supplier.updated_at), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
+          className: "btn btn-sm btn-primary me-1",
+          onClick: _this4.showCreateUpdateSupplierModal.bind(_this4, supplier)
+        }, "Edit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
+          className: "btn btn-sm btn-danger",
+          onClick: _this4.deleteSupplier.bind(_this4, supplier)
+        }, "Delete")));
+      }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", {
+        colSpan: "1000",
+        className: "text-center"
+      }, "No suppliers yet!")))))))));
+    }
+  }]);
+
+  return AdminSupplierList;
+}((react__WEBPACK_IMPORTED_MODULE_7___default().Component));
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AdminSupplierList);
+
+/***/ }),
+
+/***/ "./src/components/admin/supplier/UpdateCreateSupplierDialog.js":
+/*!*********************************************************************!*\
+  !*** ./src/components/admin/supplier/UpdateCreateSupplierDialog.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js");
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js");
+/* harmony import */ var _utils_axios__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../utils/axios */ "./src/utils/axios.js");
+/* harmony import */ var _utils_alert__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../utils/alert */ "./src/utils/alert.js");
+
+
+
+
+
+
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__["default"])(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_6__["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_6__["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_5__["default"])(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+
+
+
+
+
+var UpdateCreateSupplierDialog = /*#__PURE__*/function (_React$Component) {
+  (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4__["default"])(UpdateCreateSupplierDialog, _React$Component);
+
+  var _super = _createSuper(UpdateCreateSupplierDialog);
+
+  function UpdateCreateSupplierDialog(props) {
+    var _this;
+
+    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__["default"])(this, UpdateCreateSupplierDialog);
+
+    _this = _super.call(this, props);
+    _this.state = {
+      "name": props.name ? props.name : "",
+      "address": props.address ? props.address : ""
+    };
+
+    if (props.id) {
+      _this.state["id"] = props.id;
+    }
+
+    _this.modal = null;
+    _this.handleSaveSupplier = _this.handleSaveSupplier.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__["default"])(_this));
+    _this.handleClose = _this.handleClose.bind((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__["default"])(_this));
+    return _this;
+  }
+
+  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__["default"])(UpdateCreateSupplierDialog, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.modal = new window.bootstrap.Modal('#custom-dialog-modal', {
+        keyboard: false
+      });
+      this.modal.show();
+    }
+  }, {
+    key: "inputChange",
+    value: function inputChange(input_name, event) {
+      var updated_field = {};
+      updated_field[input_name] = event.target.value;
+      this.setState(_objectSpread({}, updated_field));
+    }
+  }, {
+    key: "handleSaveSupplier",
+    value: function handleSaveSupplier(event) {
+      var _this2 = this;
+
+      event.preventDefault();
+
+      var data = _objectSpread({}, this.state);
+
+      var api_url = "/api/suppliers/";
+
+      if (data.id) {
+        api_url = "/api/suppliers/".concat(data.id, "/");
+      }
+
+      _utils_axios__WEBPACK_IMPORTED_MODULE_9__["default"].post(api_url, data).then(function (res) {
+        (0,_utils_alert__WEBPACK_IMPORTED_MODULE_10__["default"])(res.data, "success", "success-notification");
+
+        _this2.props.callBackSave();
+
+        if (!data.id) {
+          _this2.setState({
+            "name": "",
+            "address": ""
+          });
+        }
+      }).catch(function (error) {
+        console.log(error);
+        (0,_utils_alert__WEBPACK_IMPORTED_MODULE_10__["default"])(error.response.data.message, "danger", "error-notification");
+      });
+    }
+  }, {
+    key: "handleClose",
+    value: function handleClose(event) {
+      event.preventDefault();
+      this.modal.hide();
+      document.getElementById("supplier-dialog-container").remove();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "modal fade",
+        id: "custom-dialog-modal",
+        tabIndex: "-1",
+        "aria-labelledby": "exampleModalLabel",
+        "aria-hidden": "true",
+        "data-bs-backdrop": "static"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "modal-dialog modal-dialog-centered modal-dialog-scrollable"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "modal-content"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "modal-header"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("h1", {
+        className: "modal-title fs-5",
+        id: "exampleModalLabel"
+      }, this.props.id ? "Update supplier" : "Create supplier"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
+        type: "button",
+        className: "btn-close",
+        onClick: this.handleClose,
+        "aria-label": "Close"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "modal-body"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("form", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        id: "error-notification"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        id: "success-notification"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "row mb-2"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("label", {
+        htmlFor: "supplier-name",
+        className: "col-form-label col-sm-4 text-end"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
+        className: "text-danger"
+      }, "*"), "Name:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "col-sm-8"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("input", {
+        type: "text",
+        className: "form-control",
+        id: "supplier-name",
+        placeholder: "Enter here..",
+        onChange: this.inputChange.bind(this, "name"),
+        value: this.state.name
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "row mb-2"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("label", {
+        htmlFor: "address",
+        className: "col-form-label col-sm-4 text-end"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
+        className: "text-danger"
+      }, "*"), "Address:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "col-sm-8"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("input", {
+        type: "text",
+        className: "form-control",
+        id: "address",
+        placeholder: "Enter here..",
+        onChange: this.inputChange.bind(this, "address"),
+        value: this.state.address
+      }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "modal-footer"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
+        type: "button",
+        className: "btn btn-light",
+        id: "close-user-modal",
+        onClick: this.handleClose
+      }, "Close"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
+        type: "button",
+        className: "btn btn-primary",
+        onClick: this.handleSaveSupplier
+      }, "Save")))));
+    }
+  }], [{
+    key: "show",
+    value: function show(props) {
+      var containerElement = document.getElementById("supplier-dialog-container");
+
+      if (!containerElement) {
+        containerElement = document.createElement('div');
+        containerElement.id = "supplier-dialog-container";
+      }
+
+      document.body.appendChild(containerElement);
+      var root = (0,react_dom_client__WEBPACK_IMPORTED_MODULE_8__.createRoot)(containerElement);
+      return root.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(UpdateCreateSupplierDialog, props));
+    }
+  }]);
+
+  return UpdateCreateSupplierDialog;
+}((react__WEBPACK_IMPORTED_MODULE_7___default().Component));
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (UpdateCreateSupplierDialog);
+
+/***/ }),
+
 /***/ "./src/components/admin/users/AdminUsersList.js":
 /*!******************************************************!*\
   !*** ./src/components/admin/users/AdminUsersList.js ***!
@@ -10440,12 +11611,12 @@ var UpdateCreateUserDialog = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("option", {
         defaultValue: ""
       }, "Select user type"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("option", {
-        value: "inventory"
-      }, "Inventory"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("option", {
-        value: "pointOfSale"
-      }, "Point of Sale"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("option", {
         value: "cashier"
-      }, "Cashier")))), this.state.user_type ? this.state.user_type !== "cashier" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+      }, "Cashier"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("option", {
+        value: "receiver"
+      }, "Receiver"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("option", {
+        value: "checker"
+      }, "Checker")))), this.state.user_type ? this.state.user_type !== "cashier" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
         className: "row mb-2"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("label", {
         htmlFor: "email",

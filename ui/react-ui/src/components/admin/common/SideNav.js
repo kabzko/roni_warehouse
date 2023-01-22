@@ -46,6 +46,16 @@ class SideNav extends React.Component {
                             </li> : null
                         }
                         {
+                            localStorage.getItem("user_type") === "admin" ? <li className="nav-item">
+                                <Link className={(this.state.active === "suppliers") ? "nav-link active" : "nav-link"} to="/web/admin/suppliers">
+                                    <span className="align-text-bottom">
+                                        <i className="bi bi-truck"></i>
+                                        Supplier
+                                    </span>
+                                </Link>
+                            </li> : null
+                        }
+                        {
                             localStorage.getItem("user_type") === "admin" || localStorage.getItem("user_type") === "inventory" ? <li className="nav-item">
                                 <Link className={(this.state.active === "products") ? "nav-link active" : "nav-link"} to="/web/admin/products">
                                     <span className="align-text-bottom">
@@ -111,6 +121,16 @@ class SideNav extends React.Component {
                                     <span className="align-text-bottom">
                                         <i className="bi bi-trophy"></i>
                                         Leaderboards
+                                    </span>
+                                </Link>
+                            </li> : null
+                        }
+                        {
+                            localStorage.getItem("user_type") === "admin" ? <li className="nav-item">
+                                <Link className={(this.state.active === "others") ? "nav-link active" : "nav-link"} to="/web/admin/others">
+                                    <span className="align-text-bottom">
+                                        <i className="bi bi-collection"></i>
+                                        Others
                                     </span>
                                 </Link>
                             </li> : null

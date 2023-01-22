@@ -24,6 +24,10 @@ class ProductAPIView(API):
         """Create product request"""
         try:
             data = request.data
+
+            if data.get("expiration_date", None) == "":
+                data.pop("expiration_date")
+
             product_serializer = ProductSerializer(data=data)
 
             if product_serializer.is_valid():
@@ -42,10 +46,15 @@ class ProductAPIView(API):
         """Get products"""
         try:
             search = request.GET.get("search", None)
+            supplier_id = request.GET.get("supplier_id", None)
+
             if search:
                 filters = Q(name__icontains=search) | Q(description__icontains=search) | Q(barcode__icontains=search)
             else:
                 filters = Q(name__icontains="")
+
+            if supplier_id:
+                filters &= Q(supplier__id=supplier_id)
 
             product_instances = Product.objects.filter(filters)
             product_serializers = ProductSerializer(product_instances, many=True)
@@ -79,6 +88,10 @@ class ProductDetailAPIView(API):
         """Update product"""
         try:
             data = request.data
+            
+            if data.get("expiration_date", None) == "":
+                data.pop("expiration_date")
+
             product_instance = Product.objects.get(pk=pk)
             product_serializer = ProductSerializer(product_instance, data=data)
 

@@ -54,6 +54,16 @@ from app.api.views.cart import (
     CartAPIView,
 )
 
+from app.api.views.supplier import (
+    SupplierAPIView,
+    SupplierDetailAPIView,
+)
+
+from app.api.views.truck_driver import (
+    TruckDriverAPIView,
+    TruckDriverDetailAPIView,
+)
+
 urlpatterns = [
     # Authentication URLs
     path("login/", UserLoginAPIView.as_view()),
@@ -99,4 +109,12 @@ urlpatterns = [
     path("leaderboards/", LeaderboardsAPIView.as_view()),
 
     path("carts/", CartAPIView.as_view()),
+
+    # Supplier URLs
+    path("suppliers/", SupplierAPIView.as_view()),
+    path("suppliers/<int:pk>/", SupplierDetailAPIView.as_view()),
+
+    # Truck driver URLs
+    path("truck-drivers/", TruckDriverAPIView.as_view()),
+    path("truck-drivers/<int:pk>/", TruckDriverDetailAPIView.as_view()),
 ]
