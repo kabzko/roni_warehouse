@@ -10,10 +10,8 @@ def index(request):
     """Landing page view."""
     try:
         is_allow_pages = any((
-            "/web/login/admin/" == request.path,
-            "/web/login/admin" == request.path,
-            "/web/login/cashier/" == request.path,
-            "/web/login/cashier" == request.path,
+            "/web/login/" == request.path,
+            "/web/login" == request.path,
             "/web/" == request.path,
             "/web" == request.path,
             "/" == request.path,

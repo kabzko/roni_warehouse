@@ -1,15 +1,16 @@
 import React from 'react';
 
 import "./Login.css"
-import axios from '../../../utils/axios';
-import alert from '../../../utils/alert';
+import axios from '../../utils/axios';
+import alert from '../../utils/alert';
 
 class AdminLogin extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            "cashier_id": "",
+            "email": "",
             "password": "",
+            "login_as": "",
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -23,6 +24,13 @@ class AdminLogin extends React.Component {
         } else {
             let updated_field = {};
             updated_field[input_name] = event.target.value;
+            if (input_name === "email") {
+                if (this.isEmail(event.target.value)) {
+                    updated_field["login_as"] = "admin";
+                } else {
+                    updated_field["login_as"] = "cashier";
+                }
+            }
             this.setState({...updated_field});
         }
     }
@@ -30,15 +38,23 @@ class AdminLogin extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
         let data = {...this.state};
-        data["login_as"] = "cashier";
+        data["login_as"] = this.state.login_as;
         
         axios.post("/api/login/", data).then((res) => {
             localStorage.setItem("user_type", res.data.user_type);
-            window.location.href ="/web/user/dashboard";
+            if (res.data.user_type === "cashier") {
+                window.location.href ="/web/user/dashboard";
+            } else {
+                window.location.href ="/web/admin/dashboard";
+            }
         }).catch(error => {
             let error_msg = error.response.data.message;
             alert(error_msg, "danger", "error-notification");
         })
+    }
+
+    isEmail(email) {
+        return /[\w\d\.-]+@[\w\d\.-]+\.[\w\d\.-]+/.test(email);
     }
 
     render() {
@@ -46,18 +62,16 @@ class AdminLogin extends React.Component {
             <div className='text-center login-container'>
                 <main className="form-signin w-100 m-auto">
                     <div>
-                        <h1 className="h3 mb-3 fw-normal">Cashier | log in</h1>
-
                         <div className="form-floating">
                             <input
-                                type="text" className="form-control"
-                                id="floatingInput" placeholder="Cashier ID"
+                                type="email" className="form-control"
+                                id="floatingInput" placeholder="email"
+                                value={this.state.email}
                                 autoComplete="off"
-                                value={this.state.cashier_id}
-                                onChange={this.inputChange.bind(this, "cashier_id")}
-                                onKeyUp={this.inputChange.bind(this, "cashier_id")}>
+                                onChange={this.inputChange.bind(this, "email")}
+                                onKeyUp={this.inputChange.bind(this, "email")}>
                             </input>
-                            <label htmlFor="floatingInput">Cashier ID</label>
+                            <label htmlFor="floatingInput">Username</label>
                         </div>
 
                         <div className="form-floating">
@@ -73,8 +87,7 @@ class AdminLogin extends React.Component {
 
                         <div id="error-notification" className="mt-2"></div>
 
-                        <button className="w-100 btn btn-lg btn-primary" onClick={this.handleSubmit}>Log in</button>
-                        <p className="mt-5 mb-3 text-muted">&copy; 2022</p>
+                        <button className="w-100 btn btn-lg btn-primary mt-3" onClick={this.handleSubmit}>Log in</button>
                     </div>
                 </main>
             </div>

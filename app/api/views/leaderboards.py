@@ -1,6 +1,7 @@
 import json
 import datetime
 import calendar
+from operator import itemgetter
 
 from django.db.models import Q, Count, Sum, F
 from django.db.models.functions import TruncDay
@@ -36,8 +37,9 @@ class LeaderboardsAPIView(API):
                 filters &= Q(created_at__year=query.get("year"), created_at__month=query.get("month"))
 
             leaderboards = Cart.objects.filter(filters).values("product").annotate(total_quantity=Sum("quantity"))
+            sorted_leaderboards = sorted(leaderboards, key=itemgetter("total_quantity"), reverse=True)
 
-            return self.success_response(leaderboards)
+            return self.success_response(sorted_leaderboards)
         except HumanReadableError as exc:
             return self.error_response(exc, self.error_dict, self.status)
         except Exception as exc:

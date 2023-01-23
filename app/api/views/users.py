@@ -36,10 +36,10 @@ class UserLoginAPIView(API):
                     filters = Q(email=payload.get("email", None))
             
             if payload.get("login_as") == "cashier":
-                if not payload.get("cashier_id"):
+                if not payload.get("email"):
                     self.raise_error(title="Error", message="Please provide cashier id!")
                 else:
-                    filters = Q(cashier_id=payload.get("cashier_id", None))
+                    filters = Q(cashier_id=payload.get("email", None))
 
             if not payload.get("password"):
                 self.raise_error(title="Error", message="Please provide password!")

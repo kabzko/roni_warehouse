@@ -4,8 +4,8 @@ import { ToastContainer } from "react-toastify";
 
 import LandingPage from './components/landing_page/LandingPage';
 import PageNotFound from './components/page_not_found/PageNotFound';
+import Login from './components/login/Login';
 
-import AdminLogin from './components/admin/login/LoginAdmin';
 import AdminDashboard from './components/admin/dashboard/AdminDasboard';
 import AdminUsersList from './components/admin/users/AdminUsersList';
 import AdminProductList from './components/admin/products/AdminProductList';
@@ -18,7 +18,6 @@ import AdminLeaderboardsList from './components/admin/leaderboards/AdminLeaderbo
 import AdminSupplierList from './components/admin/supplier/AdminSupplierList';
 import AdminOthers from './components/admin/others/AdminOthers';
 
-import UserLogin from './components/user/login/LoginUser';
 import UserDashboard from './components/user/dashboard/UserDashboard';
 
 import "react-toastify/dist/ReactToastify.css";
@@ -43,7 +42,8 @@ class App extends React.Component {
                     <Route path="*" element={<PageNotFound />} />
                     <Route path="" element={<LandingPage />} />
                     <Route path="web" element={<LandingPage />} />
-                    <Route path="/web/login/admin" element={<AdminLogin />} />
+                    <Route path="/web/login" element={<Login />} />
+
                     <Route path="/web/admin/dashboard" element={<AdminDashboard />} />
                     <Route path="/web/admin/users" element={<AdminUsersList />} />
                     <Route path="/web/admin/products" element={<AdminProductList />} />
@@ -55,7 +55,6 @@ class App extends React.Component {
                     <Route path="/web/admin/leaderboards" element={<AdminLeaderboardsList />} />
                     <Route path="/web/admin/others" element={<AdminOthers />} />
                     <Route path="/web/admin/suppliers" element={<AdminSupplierList />} />
-                    <Route path="/web/login/cashier" element={<UserLogin />} />
                     <Route path="/web/user/dashboard" element={<UserDashboard />} />
                 </Routes>
             </div>

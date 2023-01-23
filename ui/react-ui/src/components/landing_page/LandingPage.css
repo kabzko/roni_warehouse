@@ -9,6 +9,7 @@
 .landing-page .btn-secondary:focus {
     color: #333;
     text-shadow: none;
+    width: 10rem;
     /* Prevent inheritance from `body` */
 }
 
