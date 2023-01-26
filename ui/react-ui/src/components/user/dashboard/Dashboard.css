@@ -17,7 +17,8 @@
     width: 470px;
 }
 .btn-dashboard {
-    width: 150px;
+    width: 200px;
+    margin: 0 10px;
 }
 .receipt-btn {
     top: 20px;
@@ -69,24 +70,4 @@ thead, tbody tr {
     display: table;
     width: 100%;
     table-layout: fixed;
-}
-thead {
-    width: calc( 100% - 0.9em )
-}
-
-/* CUSTOM SCROLLBAR */
-.custom-scrollbar::-webkit-scrollbar-track
-{
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	background-color: #F5F5F5;
-}
-.custom-scrollbar::-webkit-scrollbar
-{
-	width: 8px;
-	background-color: #F5F5F5;
-}
-.custom-scrollbar::-webkit-scrollbar-thumb
-{
-	background-color: #000000;
-	border: 2px solid #555555;
 }

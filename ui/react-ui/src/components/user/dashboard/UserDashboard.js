@@ -2,14 +2,18 @@ import React from "react";
 import { toast } from "react-toastify";
 import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 
-import UserCheckoutDialog from "./UserCheckoutDialog";
-import UserQuantityDialog from "./UserQuantityDialog";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+import UserFindDialog from "./UserFindDialog";
 
 import axios from "../../../utils/axios";
 
 import * as onScan from "onscan.js";
 
 import "./Dashboard.css";
+
+const MySwal = withReactContent(Swal);
 
 class UserDashboard extends React.Component {
   constructor(props) {
@@ -21,22 +25,20 @@ class UserDashboard extends React.Component {
     this.state = {
       products: [],
       listing: [],
-      copyListing: [],
       carts: [],
       lastProduct: {},
+      setQuantity: 1,
       lastTransaction: {},
       windowHeight: window.innerHeight - 350,
       isShowQuantity: false,
       isShowCheckout: false,
-      search: "",
     };
 
     this.callBackSaveListing = this.callBackSaveListing.bind(this);
-    this.callBackCancelCheckout = this.callBackCancelCheckout.bind(this);
-    this.callBackFinalizeQuantity = this.callBackFinalizeQuantity.bind(this);
-    this.callBackCancelQuantity = this.callBackCancelQuantity.bind(this);
     this.showUserCheckoutModal = this.showUserCheckoutModal.bind(this);
-    this.showUserQuantityModal = this.showUserQuantityModal.bind(this);
+    this.showFindModal = this.showFindModal.bind(this);
+
+    this.keyCommand = this.keyCommand.bind(this);
 
     this.getUsers();
     this.getProducts();
@@ -53,28 +55,18 @@ class UserDashboard extends React.Component {
     this.getLastTransaction(referenceNo);
   }
 
-  callBackCancelCheckout() {
-    this.setState({ isShowCheckout: !this.state.isShowCheckout });
-  }
-
-  callBackFinalizeQuantity(sScancode, type, quantity) {
-    this.checkScannedBarcode(sScancode, type, quantity);
-  }
-
-  callBackCancelQuantity() {
-    this.setState({ isShowQuantity: !this.state.isShowQuantity });
-  }
-
   componentDidMount() {
     onScan.attachTo(document);
     document.addEventListener("scan", (sScancode, iQuantity) => {
-      this.showUserQuantityModal(sScancode.detail.scanCode, "add");
+      this.checkScannedBarcode(sScancode.detail.scanCode, "add", this.state.setQuantity);
     });
+    document.addEventListener("keydown", this.keyCommand);
   }
 
   componentWillUnmount() {
     onScan.detachFrom(document);
     document.removeEventListener("scan");
+    document.removeEventListener("keydown");
   }
 
   priceFormat(value) {
@@ -82,16 +74,41 @@ class UserDashboard extends React.Component {
     return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
-  searchChange({ target }) {
-    if (!target.value) {
-      this.setState({listing: this.state.copyListing});
-      this.setState({ search: target.value });
+  keyCommand(event) {
+    if (event.altKey && event.key === "c") {
+      if (!Object.keys(this.state.lastTransaction).length) {
+        this.showUserCheckoutModal();
+      }
       return;
     }
-    this.setState({ search: target.value }, () => {
-      let searchListing = this.state.copyListing.filter(element => (element.name).toLowerCase().includes((this.state.search).toLowerCase()) || (element.barcode).toLowerCase().includes((this.state.search).toLowerCase()));
-      this.setState({listing: searchListing});
-    });
+    if (event.altKey && event.key === "q") {
+      if (!Object.keys(this.state.lastTransaction).length) {
+        this.setCustomQuantity();
+      }
+      return;
+    }
+    if (event.altKey && event.key === "g") {
+      if (!Object.keys(this.state.lastTransaction).length) {
+        this.showFindModal();
+      }
+      return;
+    }
+    if (event.altKey && event.key === "l") {
+      this.logout();
+      return;
+    }
+    if (event.altKey && event.key === "n") {
+      if (Object.keys(this.state.lastTransaction).length) {
+        this.setState({ lastTransaction: {} });
+      }
+      return;
+    }
+    if (event.altKey && event.key === "p") {
+      if (Object.keys(this.state.lastTransaction).length) {
+        this.printReceipt();
+      }
+      return;
+    }
   }
 
   getUserName(userId) {
@@ -152,7 +169,22 @@ class UserDashboard extends React.Component {
     const newCarts = this.state.carts.find(
       (element) => element.id === parseInt(data.item)
     );
-    this.showUserQuantityModal(newCarts.barcode, "update");
+    let swalOptions = {
+      title: "Change Quantity",
+      input: "text",
+      inputPlaceholder: newCarts.quantity,
+      showCancelButton: true,
+      confirmButtonText: "Submit",
+      cancelButtonText: "Cancel",
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      reverseButtons: true,
+    };
+    MySwal.fire(swalOptions).then((result) => {
+      if (result.isConfirmed) {
+        this.checkScannedBarcode(newCarts.barcode, "change", result.value);
+      }
+    });
   };
 
   removeCart = (e, data) => {
@@ -162,15 +194,52 @@ class UserDashboard extends React.Component {
     this.setState({ carts: newCarts });
   };
 
+  setCustomQuantity = () => {
+    let swalOptions = {
+      title: "Enter Quantity",
+      input: "text",
+      inputPlaceholder: this.state.setQuantity,
+      showCancelButton: true,
+      confirmButtonText: "Submit",
+      cancelButtonText: "Cancel",
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      reverseButtons: true,
+    };
+    MySwal.fire(swalOptions).then((result) => {
+      if (result.isConfirmed) {
+        let value = result.value;
+        if (!value) {
+          value = this.state.setQuantity;
+        }
+        this.setState({ setQuantity: value });
+      }
+    });
+  };
+
   logout() {
-    axios
-      .post("/api/logout/", {})
-      .then((res) => {
-        window.location.reload();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    MySwal.fire({
+      title: "Logging Out?",
+      text: "Are you sure you want to logout?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .post("/api/logout/", {})
+          .then((res) => {
+            window.location.reload();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    });
   }
 
   printReceipt() {
@@ -210,12 +279,12 @@ class UserDashboard extends React.Component {
     axios
       .get("/api/cashier/listing/")
       .then((res) => {
-        res.data.map(data => {
+        res.data.map((data) => {
           data.net_weight = this.getProductNetWeight(data.product);
           data.name = this.getProductName(data.product);
           data.barcode = this.getProductBarcode(data.product);
           return data;
-        })
+        });
         this.setState({ listing: res.data });
         this.setState({ copyListing: res.data });
       })
@@ -255,7 +324,7 @@ class UserDashboard extends React.Component {
                 ...element,
                 quantity:
                   type === "add"
-                    ? (element.quantity += quantity)
+                    ? (element.quantity = parseInt(element.quantity) + parseInt(quantity))
                     : (element.quantity = quantity),
               }
             : element
@@ -278,42 +347,82 @@ class UserDashboard extends React.Component {
           ].reverse(),
         });
       }
-      this.setState({
-        lastProduct: {
-          id: productData.id,
-          barcode: productData.barcode,
-          name: `${productData.name} ${productData.net_weight}`,
-          quantity: quantity,
-          price: listingProduct.price,
-          unit_of_measure: listingProduct.unit_of_measure,
-        },
-      });
+      if (type !== "change") {
+        this.setState({
+          lastProduct: {
+            id: productData.id,
+            barcode: productData.barcode,
+            name: `${productData.name} ${productData.net_weight}`,
+            quantity: quantity,
+            price: listingProduct.price,
+            unit_of_measure: listingProduct.unit_of_measure,
+          },
+        });
+      }
+      this.setState({ setQuantity: 1 });
     } else {
       toast.error("Barcode not found.");
     }
   }
 
   showUserCheckoutModal() {
-    if (!this.state.carts.length) return toast.error("Cart is empty.");
+    if (!this.state.carts.length) return toast.error("Can't proceed with empty table.");
 
-    const checkout = {};
-    checkout["callBackSave"] = this.callBackSaveListing;
-    checkout["callBackCancel"] = this.callBackCancelCheckout;
-    checkout["carts"] = this.state.carts;
-
-    UserCheckoutDialog.show({ ...checkout });
+    let swalOptions = {
+      title: "Enter Cash",
+      input: "text",
+      inputPlaceholder: 0,
+      showCancelButton: true,
+      confirmButtonText: "Submit",
+      cancelButtonText: "Cancel",
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      reverseButtons: true,
+      preConfirm: (value) => {
+        if (!value) {
+          Swal.showValidationMessage(
+            '<i class="fa fa-info-circle"></i> Cash is required'
+          )
+        } else {
+          let totalAmount = 0;
+          this.state.carts.forEach(element => {
+              totalAmount += (element.price * element.quantity);
+          });
+          if (totalAmount > parseInt(value)) {
+            Swal.showValidationMessage(
+              '<i class="fa fa-info-circle"></i> Enter cash is lesser than the total amount!'
+            )
+          }
+        }
+      }
+    };
+    MySwal.fire(swalOptions).then((result) => {
+      if (result.isConfirmed) {
+        this.checkout(result.value);
+      }
+    });
   }
 
-  showUserQuantityModal(scanCode, type) {
-    this.setState({ isShowQuantity: !this.state.isShowQuantity });
+  checkout(amount_pay) {
+    let data = {
+      carts: this.state.carts,
+      amount_pay: amount_pay,
+      payment_type: "cash"
+    };
+    let api_url = "/api/cashier/checkout/";
+    
+    axios.post(api_url, data).then(res => {
+        this.callBackSaveListing(res.data.reference_no);
+    }).catch(error => {
+        console.log(error);
+    })
+}
 
-    const quantity = {};
-    quantity["callBackSave"] = this.callBackFinalizeQuantity;
-    quantity["callBackCancel"] = this.callBackCancelQuantity;
-    quantity["scanCode"] = scanCode;
-    quantity["type"] = type;
+  showFindModal() {
+    const listing = {};
+    listing["listing"] = this.state.listing;
 
-    UserQuantityDialog.show({ ...quantity });
+    UserFindDialog.show({ ...listing });
   }
 
   getLastTransaction(referenceNo) {
@@ -328,95 +437,13 @@ class UserDashboard extends React.Component {
       });
   }
 
-  renderLookUpProducts() {
-    if (!this.state.listing.length && this.state.search) {
-      return (
-        <div className="text-center mt-3">
-          <h3>We can't find your looking for...</h3>
-        </div>
-      );
-    }
-    if (!this.state.listing.length) {
-      return (
-        <div className="text-center mt-3">
-          <h3>List the stock products to display...</h3>
-        </div>
-      );
-    }
-    return this.state.listing.map((elementList) => {
-      return (
-        <div key={elementList.id} className="col-4">
-          <div className="card mb-3">
-            <div className="card-body">
-              <div>
-                <h5 className="card-title">{elementList.name} {elementList.net_weight}</h5>
-                <span className="carts-text">
-                  <b>
-                    <small>{elementList.barcode}</small>
-                  </b>
-                </span>
-                <br />
-                <span className="carts-text">
-                  {elementList.price} per {elementList.unit_of_measure}
-                </span>
-              </div>
-              <div className="mt-2">
-                <button
-                  className="btn btn-primary w-100"
-                  onClick={() =>
-                    this.showUserQuantityModal(elementList.barcode, "add")
-                  }
-                  disabled={this.state.isShowQuantity}
-                >
-                  Add to carts
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    });
-    // return (new Array(50).fill('')).map((element) => {
-    //   return (
-    //  <div className="col-4">
-    //       <div className="card mb-3">
-    //         <div className="card-body">
-    //           <div>
-    //             <h5 className="card-title">1</h5>
-    //             <span className="carts-text">
-    //               <b>
-    //                 <small>1</small>
-    //               </b>
-    //             </span>
-    //             <br />
-    //             <span className="carts-text">
-    //               1
-    //             </span>
-    //           </div>
-    //           <div className="mt-2">
-    //             <button
-    //               className="btn btn-primary w-100"
-    //             >
-    //               Add to carts
-    //             </button>
-    //           </div>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   )
-    // });
-  }
-
   renderProductScannedModal() {
     if (!Object.keys(this.state.lastProduct).length) {
       return (
-        <div className="border border-bottom-0">
+        <div className="border">
           <div className="d-flex justify-content-between">
-            <div className="product-scanned-item">
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
+            <div className="product-scanned text-start">
+              <label>×{this.priceFormat(this.state.setQuantity)}</label>
             </div>
             <div className="product-scanned text-end">
               <label>{this.priceFormat(0)}</label>
@@ -426,13 +453,10 @@ class UserDashboard extends React.Component {
       );
     }
     return (
-      <div className="border border-bottom-0">
+      <div className="border">
         <div className="d-flex justify-content-between">
-          <div className="product-scanned-item">
-            <div>{this.state.lastProduct.name}</div>
-            <div>{this.state.lastProduct.barcode}</div>
-            <div>{this.priceFormat(this.state.lastProduct.price)}</div>
-            <div>×{this.priceFormat(this.state.lastProduct.quantity)}</div>
+          <div className="product-scanned text-start">
+            <label>×{this.priceFormat(this.state.setQuantity)}</label>
           </div>
           <div className="product-scanned text-end">
             <label>
@@ -709,59 +733,62 @@ class UserDashboard extends React.Component {
       <>
         {!Object.keys(this.state.lastTransaction).length ? (
           <div className="container-fluid pt-3">
-            <div className="row">
-              <div className="col-6">
-                <div
-                  className="mb-3 search-list custom-scrollbar"
-                  style={{ height: this.state.windowHeight }}
-                >
-                  <div className="input-group mb-3">
-                    <input
-                      type="text"
-                      name="search"
-                      className="form-control"
-                      placeholder="Search here..."
-                      autoComplete="off"
-                      value={this.state.search}
-                      onChange={this.searchChange.bind(this)}
-                    />
+            <div className="d-flex justify-content-between border border-bottom-0">
+              <div>
+                {!Object.keys(this.state.lastProduct).length ? (
+                  <div className="product-scanned-item">
+                    <div></div>
+                    <div></div>
+                    <div></div>
                   </div>
-                  <div className="row">{this.renderLookUpProducts()}</div>
-                </div>
+                ) : (
+                  <div className="product-scanned-item">
+                    <div>{this.state.lastProduct.name}</div>
+                    <div>{this.state.lastProduct.barcode}</div>
+                    <div>{this.priceFormat(this.state.lastProduct.price)}</div>
+                  </div>
+                )}
               </div>
-              <div className="col-6">
-                {this.renderProductScannedModal()}
-                <table className="table table-borderedless border">
-                  <thead>
-                    <tr>
-                      <th>Barcode</th>
-                      <th>Description</th>
-                      <th>Quantity</th>
-                      <th>Price</th>
-                    </tr>
-                  </thead>
-                  <tbody
-                    className="cart-table custom-scrollbar"
-                    style={{ height: this.state.windowHeight - 220 }}
-                  >
-                    {this.renderCartData()}
-                  </tbody>
-                </table>
-              </div>
+              <div>{this.renderTotalAmount()}</div>
             </div>
-            <div className="text-end border">{this.renderTotalAmount()}</div>
+            <div>
+              <table className="table table-borderedless border">
+                <thead>
+                  <tr>
+                    <th>BARCODE</th>
+                    <th>NAME</th>
+                    <th>QUANTITY</th>
+                    <th>PRICE</th>
+                  </tr>
+                </thead>
+                <tbody className="cart-table">{this.renderCartData()}</tbody>
+              </table>
+            </div>
+            {this.renderProductScannedModal()}
             <div className="mt-3">
               <button
                 className="btn btn-danger btn-dashboard"
                 onClick={this.logout}
               >
-                Logout
+                Logout(ALT+L)
               </button>
               <button
                 className="btn btn-success btn-dashboard float-end"
                 onClick={this.showUserCheckoutModal}
               >
-                Checkout
+                Checkout(ALT+C)
+              </button>
+              <button
+                className="btn btn-danger btn-dashboard float-end"
+                onClick={this.showFindModal}
+              >
+                Find(ALT+G)
+              </button>
+              <button
+                className="btn btn-danger btn-dashboard float-end"
+                onClick={this.setCustomQuantity}
+              >
+                Set Quantity(ALT+Q)
               </button>
             </div>
           </div>
@@ -774,19 +801,19 @@ class UserDashboard extends React.Component {
                   className="btn btn-danger btn-dashboard"
                   onClick={this.logout}
                 >
-                  Logout
+                  Logout(ALT+L)
                 </button>
                 <button
                   className="btn btn-success btn-dashboard"
                   onClick={() => this.setState({ lastTransaction: {} })}
                 >
-                  New transaction
+                  New transaction(ALT+N)
                 </button>
                 <button
                   className="btn btn-primary btn-dashboard"
                   onClick={this.printReceipt}
                 >
-                  Print
+                  Print(ALT+P)
                 </button>
               </div>
             </div>
