@@ -56,17 +56,38 @@ class AdminSalesChart extends React.Component {
     });
   }
 
+  printReport() {
+    var canvasEle = document.getElementById("my-chart-id");
+    var mywindow = window.open("", "PRINT", "fullscreen=yes,width=550");
+    mywindow.document.write(
+      '<html><head><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"></head>'
+    );
+    mywindow.document.write("<body>");
+    mywindow.document.write(document.getElementById("print").innerHTML);
+    mywindow.document.write("<div><img style='border: 1px solid #cfcfcf;' src='" + canvasEle.toDataURL() + "' width='1000' /></div>");
+    mywindow.document.write("</body></html>");
+    mywindow.document.close();
+    setTimeout(() => {
+      mywindow.focus();
+      mywindow.print();
+    }, 500);
+    setTimeout(() => {
+      mywindow.close();
+    }, 500);
+    return;
+  }
+
   convertFormat(type) {
     if (type === "daily") {
       if (this.state.daily) {
-        return new Date(this.state.daily).toLocaleDateString("en-CA");
+        return `${new Date(this.state.monthly).getFullYear()}-${
+          "0" + (new Date(this.state.monthly).getMonth() + 1)
+        }`;
       }
       return "";
     } else {
       if (this.state.monthly) {
-        return `${new Date(this.state.monthly).getFullYear()}-${
-          "0" + (new Date(this.state.monthly).getMonth() + 1)
-        }`;
+        return new Date(this.state.monthly).getFullYear();
       }
       return "";
     }
@@ -80,12 +101,10 @@ class AdminSalesChart extends React.Component {
 
     if (type === "daily") {
       const date = new Date(daily);
-      api_url += `&month=${
-        date.getMonth() + 1
-      }&year=${date.getFullYear()}&day=${date.getDate()}`;
+      api_url += `&month=${date.getMonth() + 1}&year=${date.getFullYear()}`;
     } else {
       const date = new Date(monthly);
-      api_url += `&month=${date.getMonth() + 1}&year=${date.getFullYear()}`;
+      api_url += `&year=${date.getFullYear()}`;
     }
 
     axios
@@ -117,6 +136,7 @@ class AdminSalesChart extends React.Component {
     }
     return (
       <Line
+        id="my-chart-id"
         options={{
           responsive: true,
           plugins: {
@@ -124,21 +144,13 @@ class AdminSalesChart extends React.Component {
               displayColors: false,
               callbacks: {
                 title: (tooltip) => {
-                  const sale = this.state.sales.find((element) =>
-                    element.day.includes(
-                      JSON.stringify(
-                        new Date(Date.parse(tooltip[0].label))
-                      ).slice(1, 14)
-                    )
-                  );
-                  return this.state.type === "daily"
-                    ? `Receipt No. ${sale.reference_no}\n${new Date(
-                        sale.day
-                      ).toLocaleString("en-US")}`
-                    : new Date(Date.parse(tooltip[0].label)).toLocaleDateString(
-                        "en-US",
-                        { year: "numeric", month: "long", day: "numeric" }
-                      );
+                  return new Date(
+                    Date.parse(tooltip[0].label)
+                  ).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  });
                 },
               },
             },
@@ -146,13 +158,7 @@ class AdminSalesChart extends React.Component {
             title: {
               display: true,
               text:
-                this.state.type === "daily"
-                  ? `${new Date(this.state.daily).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })} Sales`
-                  : `Daily Sales`,
+                this.state.type === "daily" ? `Daily Sales` : `Monthly Sales`,
               position: "top",
             },
           },
@@ -170,16 +176,11 @@ class AdminSalesChart extends React.Component {
                         year: "numeric",
                         month: "long",
                         day: "numeric",
-                        hour: "numeric",
-                        minute: "numeric",
-                        second: "numeric",
                       })
                     : new Date(
                         Date.parse(this.getLabelForValue(value))
                       ).toLocaleDateString("en-US", {
-                        year: "numeric",
                         month: "long",
-                        day: "numeric",
                       });
                 },
                 fontSize: 16,
@@ -202,7 +203,7 @@ class AdminSalesChart extends React.Component {
               pointBorderWidth: 10,
               pointHoverBorderWidth: 10,
               hoverBorderWidth: 10,
-              lineTension: 1
+              lineTension: 1,
             },
           ],
         }}
@@ -219,7 +220,7 @@ class AdminSalesChart extends React.Component {
             <SideNav active="sales"></SideNav>
             <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
               <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 className="h2">Invoice Sales Graph</h1>
+                <h1 className="h2">Sales Graph</h1>
               </div>
               <div className="d-flex justify-content-end">
                 <div className="input-group mb-3 me-2 w-25">
@@ -228,14 +229,14 @@ class AdminSalesChart extends React.Component {
                     onChange={this.inputChange.bind(this, "type")}
                     value={this.state.type}
                   >
-                    <option value="daily">Per Transaction</option>
-                    <option value="monthly">Per Day</option>
+                    <option value="daily">Per Day</option>
+                    <option value="monthly">Per Month</option>
                   </select>
                 </div>
                 {this.state.type === "daily" ? (
                   <div>
                     <input
-                      type="date"
+                      type="month"
                       className="form-control"
                       id="daily"
                       placeholder="Enter here.."
@@ -246,18 +247,47 @@ class AdminSalesChart extends React.Component {
                 ) : (
                   <div>
                     <input
-                      type="month"
+                      type="number"
                       className="form-control"
                       id="monthly"
                       placeholder="Enter here.."
+                      min="1999"
+                      max={new Date().getFullYear()}
                       onChange={this.inputChange.bind(this, "monthly")}
                       value={this.convertFormat("monthly")}
                     ></input>
                   </div>
                 )}
+                <button className="btn btn-light report-print-btn" onClick={this.printReport}>
+                  Print
+                </button>
               </div>
               <div className="clearfix"></div>
               <div className="mx-5 mb-5">{this.renderLineChart()}</div>
+              <div id="print" style={{ display: "none" }}>
+                <div className="d-flex justify-content-between">
+                  <div>
+                    <h2>Sales Chart</h2>
+                  </div>
+                  <div>
+                    <h2>
+                      {this.state.type === "daily"
+                        ? new Date(this.state.daily).toLocaleDateString(
+                            "en-US",
+                            {
+                              month: "long",
+                            }
+                          )
+                        : new Date(this.state.daily).toLocaleDateString(
+                            "en-US",
+                            {
+                              year: "numeric",
+                            }
+                          )}
+                    </h2>
+                  </div>
+                </div>
+              </div>
             </main>
           </div>
         </div>

@@ -143,7 +143,7 @@ class SideNav extends React.Component {
             >
               <span className="align-text-bottom">
                 <i className="bi bi-graph-up-arrow"></i>
-                Invoice Sales Graph
+                Sales Graph
               </span>
             </Link>
             <Link

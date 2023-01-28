@@ -5510,7 +5510,7 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
         className: "align-text-bottom"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("i", {
         className: "bi bi-graph-up-arrow"
-      }), "Invoice Sales Graph")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Link, {
+      }), "Sales Graph")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Link, {
         className: this.state.active === "leaderboards" ? "nav-link active" : "nav-link",
         to: "/web/admin/product-sales"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
@@ -6458,6 +6458,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common_Header__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../common/Header */ "./src/components/admin/common/Header.js");
 /* harmony import */ var _utils_axios__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../utils/axios */ "./src/utils/axios.js");
 /* harmony import */ var _utils_toast__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../utils/toast */ "./src/utils/toast.js");
+/* harmony import */ var _AdminLeaderboardsList_css__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./AdminLeaderboardsList.css */ "./src/components/admin/leaderboards/AdminLeaderboardsList.css");
 
 
 
@@ -6472,6 +6473,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4__["default"])(this, result); }; }
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
 
 
 
@@ -6555,6 +6557,24 @@ var AdminLeaderboardsList = /*#__PURE__*/function (_React$Component) {
       this.setState(_objectSpread({}, updated_field), function () {
         _this3.getLeaderboards();
       });
+    }
+  }, {
+    key: "printReport",
+    value: function printReport() {
+      var mywindow = window.open("", "PRINT", "fullscreen=yes,width=550");
+      mywindow.document.write('<html><head><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"></head>');
+      mywindow.document.write("<body>");
+      mywindow.document.write(document.getElementById("print").innerHTML);
+      mywindow.document.write("</body></html>");
+      mywindow.document.close();
+      setTimeout(function () {
+        mywindow.focus();
+        mywindow.print();
+      }, 500);
+      setTimeout(function () {
+        mywindow.close();
+      }, 500);
+      return;
     }
   }, {
     key: "convertFormat",
@@ -6646,7 +6666,10 @@ var AdminLeaderboardsList = /*#__PURE__*/function (_React$Component) {
         placeholder: "Enter here..",
         onChange: this.inputChange.bind(this, "monthly"),
         value: this.convertFormat("monthly")
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("div", {
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("button", {
+        className: "btn btn-light report-print-btn",
+        onClick: this.printReport
+      }, "Print")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("div", {
         className: "clearfix"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("div", {
         className: "table-responsive"
@@ -6658,9 +6681,9 @@ var AdminLeaderboardsList = /*#__PURE__*/function (_React$Component) {
         scope: "col"
       }, "Product"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("th", {
         scope: "col"
-      }, "Quantity"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("th", {
+      }, "Total Quantity"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("th", {
         scope: "col"
-      }, "Price"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("tbody", {
+      }, "Total Price"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("tbody", {
         className: "table-group-divider"
       }, this.state.leaderboards.length > 0 ? this.state.leaderboards.map(function (element, index) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("tr", {
@@ -6669,7 +6692,37 @@ var AdminLeaderboardsList = /*#__PURE__*/function (_React$Component) {
       }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("td", {
         colSpan: "1000",
         className: "text-center"
-      }, "No transaction has been made!")))))))));
+      }, "No transaction has been made!"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("div", {
+        id: "print",
+        className: "table-responsive",
+        style: {
+          display: "none"
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("div", {
+        className: "d-flex justify-content-between"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("h2", null, "Product Sales")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("h2", null, this.state.type === "daily" ? new Date(this.state.daily).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      }) : new Date(this.state.daily).toLocaleDateString("en-US", {
+        month: "long"
+      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("table", {
+        className: "table table-hover"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("th", {
+        scope: "col"
+      }, "Barcode"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("th", {
+        scope: "col"
+      }, "Product"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("th", {
+        scope: "col"
+      }, "Total Quantity"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("th", {
+        scope: "col"
+      }, "Total Price"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("tbody", {
+        className: "table-group-divider"
+      }, this.state.leaderboards.map(function (element, index) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("tr", {
+          key: index
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("td", null, _this5.getProductName(element.product, "barcode")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("td", null, _this5.getProductName(element.product, "name")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("td", null, element.total_quantity), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("td", null, _this5.priceFormat(element.total_price)));
+      }))))))));
     }
   }]);
 
@@ -8654,17 +8707,37 @@ var AdminSalesChart = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "printReport",
+    value: function printReport() {
+      var canvasEle = document.getElementById("my-chart-id");
+      var mywindow = window.open("", "PRINT", "fullscreen=yes,width=550");
+      mywindow.document.write('<html><head><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"></head>');
+      mywindow.document.write("<body>");
+      mywindow.document.write(document.getElementById("print").innerHTML);
+      mywindow.document.write("<div><img style='border: 1px solid #cfcfcf;' src='" + canvasEle.toDataURL() + "' width='1000' /></div>");
+      mywindow.document.write("</body></html>");
+      mywindow.document.close();
+      setTimeout(function () {
+        mywindow.focus();
+        mywindow.print();
+      }, 500);
+      setTimeout(function () {
+        mywindow.close();
+      }, 500);
+      return;
+    }
+  }, {
     key: "convertFormat",
     value: function convertFormat(type) {
       if (type === "daily") {
         if (this.state.daily) {
-          return new Date(this.state.daily).toLocaleDateString("en-CA");
+          return "".concat(new Date(this.state.monthly).getFullYear(), "-").concat("0" + (new Date(this.state.monthly).getMonth() + 1));
         }
 
         return "";
       } else {
         if (this.state.monthly) {
-          return "".concat(new Date(this.state.monthly).getFullYear(), "-").concat("0" + (new Date(this.state.monthly).getMonth() + 1));
+          return new Date(this.state.monthly).getFullYear();
         }
 
         return "";
@@ -8684,11 +8757,11 @@ var AdminSalesChart = /*#__PURE__*/function (_React$Component) {
 
       if (type === "daily") {
         var date = new Date(daily);
-        api_url += "&month=".concat(date.getMonth() + 1, "&year=").concat(date.getFullYear(), "&day=").concat(date.getDate());
+        api_url += "&month=".concat(date.getMonth() + 1, "&year=").concat(date.getFullYear());
       } else {
         var _date = new Date(monthly);
 
-        api_url += "&month=".concat(_date.getMonth() + 1, "&year=").concat(_date.getFullYear());
+        api_url += "&year=".concat(_date.getFullYear());
       }
 
       _utils_axios__WEBPACK_IMPORTED_MODULE_10__["default"].get(api_url).then(function (res) {
@@ -8718,13 +8791,12 @@ var AdminSalesChart = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderLineChart",
     value: function renderLineChart() {
-      var _this4 = this;
-
       if (!this.state.sales) {
         return null;
       }
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement(react_chartjs_2__WEBPACK_IMPORTED_MODULE_13__.Line, {
+        id: "my-chart-id",
         options: {
           responsive: true,
           plugins: {
@@ -8732,11 +8804,7 @@ var AdminSalesChart = /*#__PURE__*/function (_React$Component) {
               displayColors: false,
               callbacks: {
                 title: function title(tooltip) {
-                  var sale = _this4.state.sales.find(function (element) {
-                    return element.day.includes(JSON.stringify(new Date(Date.parse(tooltip[0].label))).slice(1, 14));
-                  });
-
-                  return _this4.state.type === "daily" ? "Receipt No. ".concat(sale.reference_no, "\n").concat(new Date(sale.day).toLocaleString("en-US")) : new Date(Date.parse(tooltip[0].label)).toLocaleDateString("en-US", {
+                  return new Date(Date.parse(tooltip[0].label)).toLocaleDateString("en-US", {
                     year: "numeric",
                     month: "long",
                     day: "numeric"
@@ -8749,11 +8817,7 @@ var AdminSalesChart = /*#__PURE__*/function (_React$Component) {
             },
             title: {
               display: true,
-              text: this.state.type === "daily" ? "".concat(new Date(this.state.daily).toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric"
-              }), " Sales") : "Daily Sales",
+              text: this.state.type === "daily" ? "Daily Sales" : "Monthly Sales",
               position: "top"
             }
           },
@@ -8767,14 +8831,9 @@ var AdminSalesChart = /*#__PURE__*/function (_React$Component) {
                   return globalTypeForChartJS === "daily" ? new Date(Date.parse(this.getLabelForValue(value))).toLocaleDateString("en-US", {
                     year: "numeric",
                     month: "long",
-                    day: "numeric",
-                    hour: "numeric",
-                    minute: "numeric",
-                    second: "numeric"
-                  }) : new Date(Date.parse(this.getLabelForValue(value))).toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "long",
                     day: "numeric"
+                  }) : new Date(Date.parse(this.getLabelForValue(value))).toLocaleDateString("en-US", {
+                    month: "long"
                   });
                 },
                 fontSize: 16
@@ -8818,7 +8877,7 @@ var AdminSalesChart = /*#__PURE__*/function (_React$Component) {
         className: "d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("h1", {
         className: "h2"
-      }, "Invoice Sales Graph")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("div", {
+      }, "Sales Graph")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("div", {
         className: "d-flex justify-content-end"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("div", {
         className: "input-group mb-3 me-2 w-25"
@@ -8828,27 +8887,43 @@ var AdminSalesChart = /*#__PURE__*/function (_React$Component) {
         value: this.state.type
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("option", {
         value: "daily"
-      }, "Per Transaction"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("option", {
+      }, "Per Day"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("option", {
         value: "monthly"
-      }, "Per Day"))), this.state.type === "daily" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("input", {
-        type: "date",
+      }, "Per Month"))), this.state.type === "daily" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("input", {
+        type: "month",
         className: "form-control",
         id: "daily",
         placeholder: "Enter here..",
         onChange: this.inputChange.bind(this, "daily"),
         value: this.convertFormat("daily")
       })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("input", {
-        type: "month",
+        type: "number",
         className: "form-control",
         id: "monthly",
         placeholder: "Enter here..",
+        min: "1999",
+        max: new Date().getFullYear(),
         onChange: this.inputChange.bind(this, "monthly"),
         value: this.convertFormat("monthly")
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("div", {
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("button", {
+        className: "btn btn-light report-print-btn",
+        onClick: this.printReport
+      }, "Print")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("div", {
         className: "clearfix"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("div", {
         className: "mx-5 mb-5"
-      }, this.renderLineChart())))));
+      }, this.renderLineChart()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("div", {
+        id: "print",
+        style: {
+          display: "none"
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("div", {
+        className: "d-flex justify-content-between"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("h2", null, "Sales Chart")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("h2", null, this.state.type === "daily" ? new Date(this.state.daily).toLocaleDateString("en-US", {
+        month: "long"
+      }) : new Date(this.state.daily).toLocaleDateString("en-US", {
+        year: "numeric"
+      })))))))));
     }
   }]);
 
@@ -13404,6 +13479,33 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, ".side-nav-custom .feather {\n    width: 16px;\n    height: 16px;\n}\n\n/*\n   * Sidebar\n   */\n\n.side-nav-custom .sidebar {\n    position: fixed;\n    top: 0;\n    /* rtl:raw:\n    right: 0;\n    */\n    bottom: 0;\n    /* rtl:remove */\n    left: 0;\n    z-index: 100;\n    /* Behind the navbar */\n    padding: 48px 0 0;\n    /* Height of navbar */\n    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);\n}\n\n.side-nav-custom .sidebar-sticky {\n    height: calc(100vh - 48px);\n    overflow-x: hidden;\n    overflow-y: auto;\n    /* Scrollable contents if viewport is shorter than content. */\n}\n\n.side-nav-custom .sidebar .nav-link {\n    font-weight: 500;\n    color: #333;\n}\n\n.side-nav-custom .sidebar .nav-link .feather {\n    margin-right: 4px;\n    color: #727272;\n}\n\n.side-nav-custom .sidebar .nav-link.active {\n    color: #2470dc;\n}\n\n.side-nav-custom .sidebar .nav-link:hover .feather,\n.side-nav-custom .sidebar .nav-link.active .feather {\n    color: inherit;\n}\n\n.nav-link:hover {\n    color: #2470dc !important;\n}\n\n.side-nav-custom .sidebar-heading {\n    font-size: .75rem;\n}\n\n/*\n   * Navbar\n   */\n\n.side-nav-custom .navbar-brand {\n    padding-top: .75rem;\n    padding-bottom: .75rem;\n    background-color: rgba(0, 0, 0, .25);\n    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);\n}\n\n.side-nav-custom .navbar .navbar-toggler {\n    top: .25rem;\n    right: 1rem;\n}\n\n.side-nav-custom .navbar .form-control {\n    padding: .75rem 1rem;\n}\n\n.side-nav-custom .form-control-dark {\n    color: #fff;\n    background-color: rgba(255, 255, 255, .1);\n    border-color: rgba(255, 255, 255, .1);\n}\n\n.side-nav-custom .form-control-dark:focus {\n    border-color: transparent;\n    box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);\n}\n\n.side-nav-custom .bi {\n    vertical-align: 0;\n    margin-right: 10px;\n    fill: currentColor;\n}", "",{"version":3,"sources":["webpack://./src/components/admin/common/SideNav.css"],"names":[],"mappings":"AAAA;IACI,WAAW;IACX,YAAY;AAChB;;AAEA;;IAEI;;AAEJ;IACI,eAAe;IACf,MAAM;IACN;;KAEC;IACD,SAAS;IACT,eAAe;IACf,OAAO;IACP,YAAY;IACZ,sBAAsB;IACtB,iBAAiB;IACjB,qBAAqB;IACrB,4CAA4C;AAChD;;AAEA;IACI,0BAA0B;IAC1B,kBAAkB;IAClB,gBAAgB;IAChB,6DAA6D;AACjE;;AAEA;IACI,gBAAgB;IAChB,WAAW;AACf;;AAEA;IACI,iBAAiB;IACjB,cAAc;AAClB;;AAEA;IACI,cAAc;AAClB;;AAEA;;IAEI,cAAc;AAClB;;AAEA;IACI,yBAAyB;AAC7B;;AAEA;IACI,iBAAiB;AACrB;;AAEA;;IAEI;;AAEJ;IACI,mBAAmB;IACnB,sBAAsB;IACtB,oCAAoC;IACpC,6CAA6C;AACjD;;AAEA;IACI,WAAW;IACX,WAAW;AACf;;AAEA;IACI,oBAAoB;AACxB;;AAEA;IACI,WAAW;IACX,yCAAyC;IACzC,qCAAqC;AACzC;;AAEA;IACI,yBAAyB;IACzB,8CAA8C;AAClD;;AAEA;IACI,iBAAiB;IACjB,kBAAkB;IAClB,kBAAkB;AACtB","sourcesContent":[".side-nav-custom .feather {\n    width: 16px;\n    height: 16px;\n}\n\n/*\n   * Sidebar\n   */\n\n.side-nav-custom .sidebar {\n    position: fixed;\n    top: 0;\n    /* rtl:raw:\n    right: 0;\n    */\n    bottom: 0;\n    /* rtl:remove */\n    left: 0;\n    z-index: 100;\n    /* Behind the navbar */\n    padding: 48px 0 0;\n    /* Height of navbar */\n    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);\n}\n\n.side-nav-custom .sidebar-sticky {\n    height: calc(100vh - 48px);\n    overflow-x: hidden;\n    overflow-y: auto;\n    /* Scrollable contents if viewport is shorter than content. */\n}\n\n.side-nav-custom .sidebar .nav-link {\n    font-weight: 500;\n    color: #333;\n}\n\n.side-nav-custom .sidebar .nav-link .feather {\n    margin-right: 4px;\n    color: #727272;\n}\n\n.side-nav-custom .sidebar .nav-link.active {\n    color: #2470dc;\n}\n\n.side-nav-custom .sidebar .nav-link:hover .feather,\n.side-nav-custom .sidebar .nav-link.active .feather {\n    color: inherit;\n}\n\n.nav-link:hover {\n    color: #2470dc !important;\n}\n\n.side-nav-custom .sidebar-heading {\n    font-size: .75rem;\n}\n\n/*\n   * Navbar\n   */\n\n.side-nav-custom .navbar-brand {\n    padding-top: .75rem;\n    padding-bottom: .75rem;\n    background-color: rgba(0, 0, 0, .25);\n    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);\n}\n\n.side-nav-custom .navbar .navbar-toggler {\n    top: .25rem;\n    right: 1rem;\n}\n\n.side-nav-custom .navbar .form-control {\n    padding: .75rem 1rem;\n}\n\n.side-nav-custom .form-control-dark {\n    color: #fff;\n    background-color: rgba(255, 255, 255, .1);\n    border-color: rgba(255, 255, 255, .1);\n}\n\n.side-nav-custom .form-control-dark:focus {\n    border-color: transparent;\n    box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);\n}\n\n.side-nav-custom .bi {\n    vertical-align: 0;\n    margin-right: 10px;\n    fill: currentColor;\n}"],"sourceRoot":""}]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js!./src/components/admin/leaderboards/AdminLeaderboardsList.css":
+/*!***********************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./src/components/admin/leaderboards/AdminLeaderboardsList.css ***!
+  \***********************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/cssWithMappingToString.js */ "./node_modules/css-loader/dist/runtime/cssWithMappingToString.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ".report-print-btn {\n    border: 1px solid #cfcfcf !important;\n    height: 38px !important;\n    background: white !important;\n    margin-left: 8px !important;\n}", "",{"version":3,"sources":["webpack://./src/components/admin/leaderboards/AdminLeaderboardsList.css"],"names":[],"mappings":"AAAA;IACI,oCAAoC;IACpC,uBAAuB;IACvB,4BAA4B;IAC5B,2BAA2B;AAC/B","sourcesContent":[".report-print-btn {\n    border: 1px solid #cfcfcf !important;\n    height: 38px !important;\n    background: white !important;\n    margin-left: 8px !important;\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -67810,6 +67912,80 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 
        /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_SideNav_css__WEBPACK_IMPORTED_MODULE_4__["default"] && _node_modules_css_loader_dist_cjs_js_SideNav_css__WEBPACK_IMPORTED_MODULE_4__["default"].locals ? _node_modules_css_loader_dist_cjs_js_SideNav_css__WEBPACK_IMPORTED_MODULE_4__["default"].locals : undefined);
+
+
+/***/ }),
+
+/***/ "./src/components/admin/leaderboards/AdminLeaderboardsList.css":
+/*!*********************************************************************!*\
+  !*** ./src/components/admin/leaderboards/AdminLeaderboardsList.css ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_getTarget_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/getTarget.js */ "./node_modules/style-loader/dist/runtime/getTarget.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_getTarget_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_getTarget_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_AdminLeaderboardsList_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js!./AdminLeaderboardsList.css */ "./node_modules/css-loader/dist/cjs.js!./src/components/admin/leaderboards/AdminLeaderboardsList.css");
+
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = function(css, style){
+      if (style.styleSheet) {
+        style.styleSheet.cssText = css;
+      } else {
+      while (style.firstChild) {
+        style.removeChild(style.firstChild);
+      }
+
+      style.appendChild(document.createTextNode(css));
+    }
+  };
+options.setAttributes = function(style) {
+        var nonce =
+           true ? __webpack_require__.nc : 0;
+
+        if (nonce) {
+          style.setAttribute("nonce", nonce);
+        }
+      };
+options.insert = function(style){
+    var target = _node_modules_style_loader_dist_runtime_getTarget_js__WEBPACK_IMPORTED_MODULE_2___default()("head");
+
+    if (!target) {
+      throw new Error(
+        "Couldn't find a style target. This probably means that the value for the 'insert' parameter is invalid."
+      );
+    }
+
+    target.appendChild(style);
+  };
+options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
+options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_3___default());
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_AdminLeaderboardsList_css__WEBPACK_IMPORTED_MODULE_4__["default"], options);
+
+
+
+
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_AdminLeaderboardsList_css__WEBPACK_IMPORTED_MODULE_4__["default"] && _node_modules_css_loader_dist_cjs_js_AdminLeaderboardsList_css__WEBPACK_IMPORTED_MODULE_4__["default"].locals ? _node_modules_css_loader_dist_cjs_js_AdminLeaderboardsList_css__WEBPACK_IMPORTED_MODULE_4__["default"].locals : undefined);
 
 
 /***/ }),

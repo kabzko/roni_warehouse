@@ -32,13 +32,6 @@ class SalesAPIView(API):
             filters = Q()
 
             if query.get("type") == "daily":
-                date = f"{query.get('year')}-{query.get('month')}-{query.get('day')}"
-                filters &= Q(created_at__date=date)
-
-                sale_instances = Cart.objects.filter(filters).values("sales__created_at", "sales__reference_no").annotate(
-                    total_quantity=Sum(F("price") * F("quantity"))
-                )
-            else:
                 year = int(query.get("year"))
                 month = int(query.get("month"))
                 calendar_last_day = calendar.monthrange(year, month)[1]
@@ -49,16 +42,22 @@ class SalesAPIView(API):
                 sale_instances = Cart.objects.filter(filters).values("sales__created_at__date").annotate(
                     total_quantity=Sum(F("price") * F("quantity"))
                 )
+            else:
+                year = int(query.get("year"))
+                filters &= Q(created_at__year=year)
+
+                sale_instances = Cart.objects.filter(filters).values("sales__created_at__month").annotate(
+                    total_quantity=Sum(F("price") * F("quantity"))
+                )
             
             for sale_instance in sale_instances:
                 sale = {}
                 sale["total_amount"] = sale_instance["total_quantity"]
 
                 if query.get("type") == "daily":
-                    sale["reference_no"] = sale_instance["sales__reference_no"]
-                    sale["day"] = sale_instance["sales__created_at"]
-                else:
                     sale["day"] = sale_instance["sales__created_at__date"]
+                else:
+                    sale["day"] = sale_instance["sales__created_at__month"]
                 
                 sales.append(sale)
 

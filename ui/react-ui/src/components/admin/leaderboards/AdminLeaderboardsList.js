@@ -6,6 +6,8 @@ import Header from "../common/Header";
 import axios from "../../../utils/axios";
 import Toast from "../../../utils/toast";
 
+import "./AdminLeaderboardsList.css";
+
 class AdminLeaderboardsList extends React.Component {
   constructor(props) {
     if (
@@ -67,6 +69,25 @@ class AdminLeaderboardsList extends React.Component {
     this.setState({ ...updated_field }, () => {
       this.getLeaderboards();
     });
+  }
+
+  printReport() {
+    var mywindow = window.open("", "PRINT", "fullscreen=yes,width=550");
+    mywindow.document.write(
+      '<html><head><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"></head>'
+    );
+    mywindow.document.write("<body>");
+    mywindow.document.write(document.getElementById("print").innerHTML);
+    mywindow.document.write("</body></html>");
+    mywindow.document.close();
+    setTimeout(() => {
+      mywindow.focus();
+      mywindow.print();
+    }, 500);
+    setTimeout(() => {
+      mywindow.close();
+    }, 500);
+    return;
   }
 
   convertFormat(type) {
@@ -158,6 +179,12 @@ class AdminLeaderboardsList extends React.Component {
                     ></input>
                   </div>
                 )}
+                <button
+                  className="btn btn-light report-print-btn"
+                  onClick={this.printReport}
+                >
+                  Print
+                </button>
               </div>
               <div className="clearfix"></div>
               <div className="table-responsive">
@@ -166,8 +193,8 @@ class AdminLeaderboardsList extends React.Component {
                     <tr>
                       <th scope="col">Barcode</th>
                       <th scope="col">Product</th>
-                      <th scope="col">Quantity</th>
-                      <th scope="col">Price</th>
+                      <th scope="col">Total Quantity</th>
+                      <th scope="col">Total Price</th>
                     </tr>
                   </thead>
                   <tbody className="table-group-divider">
@@ -193,6 +220,62 @@ class AdminLeaderboardsList extends React.Component {
                         </td>
                       </tr>
                     )}
+                  </tbody>
+                </table>
+              </div>
+              <div
+                id="print"
+                className="table-responsive"
+                style={{ display: "none" }}
+              >
+                <div className="d-flex justify-content-between">
+                  <div>
+                    <h2>Product Sales</h2>
+                  </div>
+                  <div>
+                    <h2>
+                      {this.state.type === "daily"
+                        ? new Date(this.state.daily).toLocaleDateString(
+                            "en-US",
+                            {
+                              year: "numeric",
+                              month: "long",
+                              day: "numeric",
+                            }
+                          )
+                        : new Date(this.state.daily).toLocaleDateString(
+                            "en-US",
+                            {
+                              month: "long",
+                            }
+                          )}
+                    </h2>
+                  </div>
+                </div>
+                <table className="table table-hover">
+                  <thead>
+                    <tr>
+                      <th scope="col">Barcode</th>
+                      <th scope="col">Product</th>
+                      <th scope="col">Total Quantity</th>
+                      <th scope="col">Total Price</th>
+                    </tr>
+                  </thead>
+                  <tbody className="table-group-divider">
+                    {this.state.leaderboards.map((element, index) => {
+                      return (
+                        <tr key={index}>
+                          <td>
+                            {this.getProductName(element.product, "barcode")}
+                          </td>
+                          <td>
+                            {this.getProductName(element.product, "name")}
+                          </td>
+                          <td>{element.total_quantity}</td>
+                          <td>{this.priceFormat(element.total_price)}</td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>
