@@ -3,7 +3,7 @@ import datetime
 import calendar
 from operator import itemgetter
 
-from django.db.models import Q, Count, Sum, F
+from django.db.models import Q, Count, Sum, F, FloatField
 from django.db.models.functions import TruncDay
 
 from rest_framework.authentication import SessionAuthentication
@@ -36,7 +36,7 @@ class LeaderboardsAPIView(API):
             else:
                 filters &= Q(created_at__year=query.get("year"), created_at__month=query.get("month"))
 
-            leaderboards = Cart.objects.filter(filters).values("product").annotate(total_quantity=Sum("quantity"))
+            leaderboards = Cart.objects.filter(filters).values("product").annotate(total_quantity=Sum("quantity"), total_price=Sum(F("price") * F("quantity"), output_field=FloatField()))
             sorted_leaderboards = sorted(leaderboards, key=itemgetter("total_quantity"), reverse=True)
 
             return self.success_response(sorted_leaderboards)

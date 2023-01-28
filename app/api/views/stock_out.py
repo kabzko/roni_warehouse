@@ -87,8 +87,11 @@ class StockOutDetailAPIView(API):
             stockout_instance = StockOut.objects.get(pk=pk)
             stockout_serializer = StockOutSerializer(stockout_instance, data=data)
 
+            stock_outs = StockOut.objects.filter(stock_in__product=stockout_instance.stock_in.product)
+
             if stockout_serializer.is_valid():
                 stockout_serializer.save()
+                stock_outs.update(price=stockout_instance.price)
             else:
                 self.raise_error(beautify_serializer_error(stockout_serializer.errors))
 

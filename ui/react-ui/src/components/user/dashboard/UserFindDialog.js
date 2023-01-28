@@ -50,6 +50,11 @@ class UserFindDialog extends React.Component {
     }
   }
 
+  priceFormat(value) {
+    const val = (value / 1).toFixed(2).replace(",", ".");
+    return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
   searchChange({ target }) {
     if (!target.value) {
       this.setState({ listing: this.state.copyListing });
@@ -91,7 +96,7 @@ class UserFindDialog extends React.Component {
           <td>{elementList.barcode}</td>
           <td>{elementList.name}</td>
           <td>{elementList.net_weight}</td>
-          <td>{elementList.price}</td>
+          <td>{this.priceFormat(elementList.price)}</td>
         </tr>
       );
     });

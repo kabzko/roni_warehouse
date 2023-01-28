@@ -1,7 +1,7 @@
 import json
 import datetime
 
-from django.db.models import Q, Count, Sum
+from django.db.models import Q, Count, Sum, F
 
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
@@ -32,19 +32,11 @@ class CashierAPIView(API):
             filters = request.GET.dict()
 
             if filters.get("product"):
-                filters["product__name__icontains"] = filters.pop("product")
+                filters["stock_in__product__name__icontains"] = filters.pop("product")
 
-            listing_instances = Listing.objects.filter(**filters)
+            stockout = StockOut.objects.select_related("stock_in").filter(**filters).values("stock_in__product").annotate(product=F("stock_in__product"), unit_of_measure=F("stock_in__unit_of_measure"),price=F("price"),total_quantity=Sum("quantity"))
 
-            for listing_instance in listing_instances:
-                data = ListingSerializer(listing_instance).data
-                data["stock_out"] = json.loads(data["stock_out"])
-                data["product"] = listing_instance.product.id
-                data["unit_of_measure"] = listing_instance.unit_of_measure
-                data["available_stocks"] = StockOut.objects.select_related("stock_in").filter(id__in=data["stock_out"]).values("stock_in__product").annotate(total_quantity=Sum("quantity"))[0]["total_quantity"]
-                listing.append(data)
-
-            return self.success_response(listing)
+            return self.success_response(stockout)
         except HumanReadableError as exc:
             return self.error_response(exc, self.error_dict, self.status)
         except Exception as exc:

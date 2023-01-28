@@ -264,25 +264,34 @@ class UpdateViewInvoiceDialog extends React.Component {
             <div>
               <b>Vat Sales:</b>
             </div>
-            <div></div>
+            <div>{this.priceFormat(this.state.sales.total_amount * 1.12)}</div>
           </div>
           <div className="d-flex justify-content-between">
             <div>
               <b>12% Vat:</b>
             </div>
-            <div></div>
+            <div>
+              {this.priceFormat(
+                this.state.sales.total_amount * 0.12
+              )}
+            </div>
           </div>
           <div className="d-flex justify-content-between">
             <div>
               <b>VAT-Exempt Sale:</b>
             </div>
-            <div></div>
+            <div>
+              {this.priceFormat(
+                this.state.sales.total_amount -
+                  this.state.sales.total_amount * 0.12
+              )}
+            </div>
           </div>
           <div className="d-flex justify-content-between">
             <div>
               <b>Zero Rated:</b>
             </div>
-            <div></div>
+            <div>{this.priceFormat(0)}</div>
           </div>
           <hr />
           <div className="d-flex">

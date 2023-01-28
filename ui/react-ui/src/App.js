@@ -51,8 +51,8 @@ class App extends React.Component {
                     <Route path="/web/admin/stock-out" element={<AdminStockOutList />} />
                     <Route path="/web/admin/listing" element={<AdminlistingList />} />
                     <Route path="/web/admin/invoice" element={<AdminInvoiceList />} />
-                    <Route path="/web/admin/sales" element={<AdminSalesChart />} />
-                    <Route path="/web/admin/leaderboards" element={<AdminLeaderboardsList />} />
+                    <Route path="/web/admin/invoice-sales-graph" element={<AdminSalesChart />} />
+                    <Route path="/web/admin/product-sales" element={<AdminLeaderboardsList />} />
                     <Route path="/web/admin/others" element={<AdminOthers />} />
                     <Route path="/web/admin/suppliers" element={<AdminSupplierList />} />
                     <Route path="/web/user/dashboard" element={<UserDashboard />} />

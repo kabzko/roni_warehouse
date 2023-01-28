@@ -5273,10 +5273,10 @@ var App = /*#__PURE__*/function (_React$Component) {
         path: "/web/admin/invoice",
         element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(_components_admin_invoice_AdminInvoiceList__WEBPACK_IMPORTED_MODULE_16__["default"], null)
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_23__.Route, {
-        path: "/web/admin/sales",
+        path: "/web/admin/invoice-sales-graph",
         element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(_components_admin_sales_AdminSalesChart__WEBPACK_IMPORTED_MODULE_17__["default"], null)
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_23__.Route, {
-        path: "/web/admin/leaderboards",
+        path: "/web/admin/product-sales",
         element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(_components_admin_leaderboards_AdminLeaderboardsList__WEBPACK_IMPORTED_MODULE_18__["default"], null)
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_23__.Route, {
         path: "/web/admin/others",
@@ -5497,13 +5497,6 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("i", {
         className: "bi bi-box-arrow-up-right"
       }), "Stock Out")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Link, {
-        className: this.state.active === "listing" ? "nav-link active" : "nav-link",
-        to: "/web/admin/listing"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
-        className: "align-text-bottom"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("i", {
-        className: "bi bi-list-ul"
-      }), "Listing")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Link, {
         className: this.state.active === "invoice" ? "nav-link active" : "nav-link",
         to: "/web/admin/invoice"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
@@ -5512,19 +5505,19 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
         className: "bi bi-receipt-cutoff"
       }), "Invoice")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Link, {
         className: this.state.active === "sales" ? "nav-link active" : "nav-link",
-        to: "/web/admin/sales"
+        to: "/web/admin/invoice-sales-graph"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
         className: "align-text-bottom"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("i", {
         className: "bi bi-graph-up-arrow"
-      }), "Sales")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Link, {
+      }), "Invoice Sales Graph")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Link, {
         className: this.state.active === "leaderboards" ? "nav-link active" : "nav-link",
-        to: "/web/admin/leaderboards"
+        to: "/web/admin/product-sales"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
         className: "align-text-bottom"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("i", {
-        className: "bi bi-trophy"
-      }), "Leaderboards")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Link, {
+        className: "bi bi-card-list"
+      }), "Product Sales")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Link, {
         className: this.state.active === "others" ? "nav-link active" : "nav-link",
         to: "/web/admin/others"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
@@ -6362,13 +6355,13 @@ var UpdateViewInvoiceDialog = /*#__PURE__*/function (_React$Component) {
         className: "d-flex justify-content-between"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("b", null, "B. Style:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("hr", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
         className: "d-flex justify-content-between"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("b", null, "Vat Sales:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("b", null, "Vat Sales:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, this.priceFormat(this.state.sales.total_amount * 1.12))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
         className: "d-flex justify-content-between"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("b", null, "12% Vat:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("b", null, "12% Vat:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, this.priceFormat(this.state.sales.total_amount * 0.12))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
         className: "d-flex justify-content-between"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("b", null, "VAT-Exempt Sale:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("b", null, "VAT-Exempt Sale:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, this.priceFormat(this.state.sales.total_amount - this.state.sales.total_amount * 0.12))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
         className: "d-flex justify-content-between"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("b", null, "Zero Rated:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("hr", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("b", null, "Zero Rated:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, this.priceFormat(0))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("hr", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
         className: "d-flex"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("b", null, "No. Of Item(s): ", this.state.carts.length)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
         className: "d-flex"
@@ -6547,6 +6540,12 @@ var AdminLeaderboardsList = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "priceFormat",
+    value: function priceFormat(value) {
+      var val = (value / 1).toFixed(2).replace(",", ".");
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+  }, {
     key: "inputChange",
     value: function inputChange(input_name, event) {
       var _this3 = this;
@@ -6621,7 +6620,7 @@ var AdminLeaderboardsList = /*#__PURE__*/function (_React$Component) {
         className: "d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("h1", {
         className: "h2"
-      }, "Leaderboards")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("div", {
+      }, "Product Sales")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("div", {
         className: "d-flex justify-content-end"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("div", {
         className: "input-group mb-3 me-2 w-25"
@@ -6655,18 +6654,18 @@ var AdminLeaderboardsList = /*#__PURE__*/function (_React$Component) {
         className: "table table-hover"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("th", {
         scope: "col"
-      }, "Ranking"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("th", {
-        scope: "col"
       }, "Barcode"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("th", {
         scope: "col"
       }, "Product"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("th", {
         scope: "col"
-      }, "Quantity"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("tbody", {
+      }, "Quantity"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("th", {
+        scope: "col"
+      }, "Price"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("tbody", {
         className: "table-group-divider"
       }, this.state.leaderboards.length > 0 ? this.state.leaderboards.map(function (element, index) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("tr", {
           key: index
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("td", null, index + 1), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("td", null, _this5.getProductName(element.product, "barcode")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("td", null, _this5.getProductName(element.product, "name")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("td", null, element.total_quantity));
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("td", null, _this5.getProductName(element.product, "barcode")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("td", null, _this5.getProductName(element.product, "name")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("td", null, element.total_quantity), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("td", null, _this5.priceFormat(element.total_price)));
       }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("td", {
         colSpan: "1000",
         className: "text-center"
@@ -8819,7 +8818,7 @@ var AdminSalesChart = /*#__PURE__*/function (_React$Component) {
         className: "d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("h1", {
         className: "h2"
-      }, "Sales")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("div", {
+      }, "Invoice Sales Graph")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("div", {
         className: "d-flex justify-content-end"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_6___default().createElement("div", {
         className: "input-group mb-3 me-2 w-25"
@@ -9235,15 +9234,15 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      "list": props.list ? (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2__["default"])(props.list) : [],
-      "supplier": props.supplier ? props.supplier : "",
-      "checked_by": props.checked_by ? props.checked_by : "",
-      "received_by": props.received_by ? props.received_by : "",
-      "sales_invoice_no": props.sales_invoice_no ? props.sales_invoice_no : "",
-      "truck_plate_number": props.truck_plate_number ? props.truck_plate_number : "",
-      "new_truck_driver": props.new_truck_driver ? props.new_truck_driver : "",
-      "date": props.date ? props.date : "",
-      "products": props.products ? props.products : []
+      list: props.list ? (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2__["default"])(props.list) : [],
+      supplier: props.supplier ? props.supplier : "",
+      checked_by: props.checked_by ? props.checked_by : "",
+      received_by: props.received_by ? props.received_by : "",
+      sales_invoice_no: props.sales_invoice_no ? props.sales_invoice_no : "",
+      truck_plate_number: props.truck_plate_number ? props.truck_plate_number : "",
+      new_truck_driver: props.new_truck_driver ? props.new_truck_driver : "",
+      date: props.date ? props.date : "",
+      products: props.products ? props.products : []
     };
 
     if (props.id) {
@@ -9290,7 +9289,7 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
   (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_4__["default"])(UpdateCreateStockInDialog, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.modal = new window.bootstrap.Modal('#custom-dialog-modal', {
+      this.modal = new window.bootstrap.Modal("#custom-dialog-modal", {
         keyboard: false
       });
       this.modal.show();
@@ -9346,7 +9345,7 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
       event.preventDefault();
       _utils_axios__WEBPACK_IMPORTED_MODULE_11__["default"].get("/api/products/").then(function (res) {
         _this3.setState({
-          "products": res.data
+          products: res.data
         }, function () {
           if (_this3.state.products) {
             productOptions.splice(0, productOptions.length);
@@ -9522,6 +9521,10 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
         }
       }
 
+      if (!data.date) {
+        data["date"] = new Date().toLocaleDateString("en-CA");
+      }
+
       if (data.supplier) {
         data.supplier = data.supplier.value;
       }
@@ -9537,14 +9540,14 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
 
         if (!data.id) {
           _this4.setState({
-            "supplier": "",
-            "checked_by": "",
-            "received_by": "",
-            "truck_plate_number": "",
-            "new_truck_driver": "",
-            "date": "",
-            "sales_invoice_no": "",
-            "list": [_this4.getEmptyList()]
+            supplier: "",
+            checked_by: "",
+            received_by: "",
+            truck_plate_number: "",
+            new_truck_driver: "",
+            date: "",
+            sales_invoice_no: "",
+            list: [_this4.getEmptyList()]
           });
         }
       }).catch(function (error) {
@@ -9631,7 +9634,7 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
         id: "date",
         placeholder: "Enter here..",
         onChange: this.inputChange.bind(this, "date"),
-        value: this.state.date
+        value: this.state.date || new Date().toLocaleDateString("en-CA")
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("div", {
         className: "col-sm-4"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("label", {
@@ -9658,6 +9661,15 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("div", {
         className: "col-sm-4"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("label", {
+        htmlFor: "truck-driver",
+        className: "col-form-label text-end"
+      }, "Truck driver:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement(react_select__WEBPACK_IMPORTED_MODULE_14__["default"], {
+        value: this.state.new_truck_driver,
+        onChange: this.selectTruckDriverChange.bind(this),
+        options: truckDriverOptions
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("div", {
+        className: "col-sm-4"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("label", {
         htmlFor: "truck-plate-number",
         className: "col-form-label text-end"
       }, "Truck plate number:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("input", {
@@ -9667,15 +9679,6 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
         placeholder: "Enter here..",
         onChange: this.inputChange.bind(this, "truck_plate_number"),
         value: this.state.truck_plate_number
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("div", {
-        className: "col-sm-4"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("label", {
-        htmlFor: "truck-driver",
-        className: "col-form-label text-end"
-      }, "Truck driver:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement(react_select__WEBPACK_IMPORTED_MODULE_14__["default"], {
-        value: this.state.new_truck_driver,
-        onChange: this.selectTruckDriverChange.bind(this),
-        options: truckDriverOptions
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("div", {
         className: "col-sm-4"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("label", {
@@ -9706,18 +9709,13 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
         className: "ms-2"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("button", {
         className: "btn btn-sm btn-primary",
+        style: {
+          marginBottom: "10px"
+        },
         onClick: this.getProducts.bind(this)
       }, "Reload products"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("table", {
         className: "table table-bordered"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("th", {
-        style: {
-          width: "300px"
-        }
-      }, "Product"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("th", null, "Price"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("th", null, "Quantity"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("th", {
-        style: {
-          width: "200px"
-        }
-      }, "Unit of Measure"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("th", null, "No. of Pieces per UOM"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("th", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("tbody", null, this.state.list.map(function (el, idx) {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("th", null, "Product"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("th", null, "Price"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("th", null, "Quantity"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("th", null, "Unit of Measure"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("th", null, "No. of Pieces per UOM"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("th", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("tbody", null, this.state.list.map(function (el, idx) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("tr", {
           key: idx
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement(react_select__WEBPACK_IMPORTED_MODULE_14__["default"], {
@@ -9794,7 +9792,7 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
       var containerElement = document.getElementById("stock-in-dialog-container");
 
       if (!containerElement) {
-        containerElement = document.createElement('div');
+        containerElement = document.createElement("div");
         containerElement.id = "stock-in-dialog-container";
       }
 
@@ -9937,6 +9935,20 @@ var AdminStockOutList = /*#__PURE__*/function (_React$Component) {
       return product;
     }
   }, {
+    key: "getQuantityPerPiece",
+    value: function getQuantityPerPiece(stockId, stockOutQuantity) {
+      var stock;
+
+      for (var i in this.state.stockIn) {
+        if (this.state.stockIn[i].id === stockId) {
+          stock = stockOutQuantity * this.state.stockIn[i].number_of_pieces;
+          break;
+        }
+      }
+
+      return stock;
+    }
+  }, {
     key: "getStockIn",
     value: function getStockIn() {
       var _this3 = this;
@@ -10036,6 +10048,7 @@ var AdminStockOutList = /*#__PURE__*/function (_React$Component) {
       stockOut["callBackSave"] = this.callBackSaveStockOut;
       stockOut["products"] = this.state.products;
       stockOut["stockInOptions"] = this.state.stockIn;
+      stockOut["stockOutOptions"] = this.state.stockOut;
       _updateCreateStockOutDialog__WEBPACK_IMPORTED_MODULE_10__["default"].show(_objectSpread({}, stockOut));
     }
   }, {
@@ -10084,17 +10097,13 @@ var AdminStockOutList = /*#__PURE__*/function (_React$Component) {
         className: "table table-hover"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
         scope: "col"
-      }, "Product"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
-        scope: "col"
       }, "Date"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
         scope: "col"
-      }, "Quantity"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
+      }, "Product"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
         scope: "col"
-      }, "Delivered to"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
+      }, "Quantity per piece"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
         scope: "col"
-      }, "Truck driver"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
-        scope: "col"
-      }, "Received by"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
+      }, "Price per piece"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
         scope: "col"
       }, "Date created"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
         scope: "col"
@@ -10103,7 +10112,7 @@ var AdminStockOutList = /*#__PURE__*/function (_React$Component) {
       }, this.state.stockOut.length > 0 ? this.state.stockOut.map(function (stockOut) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("tr", {
           key: stockOut.id
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, _this6.getProductName(stockOut.product)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockOut.date), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockOut.quantity), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockOut.delivered_to), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockOut.truck_driver), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockOut.received_by), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockOut.created_at), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockOut.date), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, _this6.getProductName(stockOut.product)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, _this6.getQuantityPerPiece(stockOut.stock_in, stockOut.quantity)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockOut.price), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockOut.created_at), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
           className: "btn btn-sm btn-primary me-1",
           onClick: _this6.showCreateUpdateStockOutModal.bind(_this6, stockOut)
         }, "Edit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
@@ -10186,15 +10195,15 @@ var UpdateCreateStockOutDialog = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      "stock_in": props.product ? props.product : "",
-      "checked_by": props.checked_by ? props.checked_by : "",
-      "received_by": props.received_by ? props.received_by : "",
-      "truck_plate_number": props.truck_plate_number ? props.truck_plate_number : "",
-      "truck_driver": props.truck_driver ? props.truck_driver : "",
-      "quantity": props.quantity ? props.quantity : "",
-      "date": props.date ? props.date : "",
-      "delivered_to": props.delivered_to ? props.delivered_to : "",
-      "available_stock": 0
+      hasPrice: false,
+      stock_in: props.product ? props.product : "",
+      price: props.price ? props.price : "",
+      quantity: props.quantity ? props.quantity : "",
+      date: props.date ? props.date : "",
+      delivered_to: props.delivered_to ? props.delivered_to : "",
+      available_stock: 0,
+      stockOutOptions: props.stockOutOptions || [],
+      stockInOptions: props.stockInOptions || []
     };
 
     if (props.id) {
@@ -10220,7 +10229,7 @@ var UpdateCreateStockOutDialog = /*#__PURE__*/function (_React$Component) {
 
         var product = _this.getProduct(stock.product);
 
-        stockIn["label"] = "".concat(product.label, " (").concat(stock.quantity, " ").concat(stock.unit_of_measure, ")");
+        stockIn["label"] = "".concat(product.label, " (").concat(stock.quantity, " ").concat(stock.unit_of_measure, " | ").concat(stock.number_of_pieces, " pieces per ").concat(stock.unit_of_measure, ")");
         stockInOptions.push(stockIn);
         return stock;
       });
@@ -10242,7 +10251,7 @@ var UpdateCreateStockOutDialog = /*#__PURE__*/function (_React$Component) {
   (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__["default"])(UpdateCreateStockOutDialog, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.modal = new window.bootstrap.Modal('#custom-dialog-modal', {
+      this.modal = new window.bootstrap.Modal("#custom-dialog-modal", {
         keyboard: false
       });
       this.modal.show();
@@ -10285,9 +10294,22 @@ var UpdateCreateStockOutDialog = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "selectStockInChange",
     value: function selectStockInChange(selectedOption) {
-      this.setState({
-        stock_in: selectedOption
+      var stockIn = this.state.stockInOptions.find(function (element) {
+        return element.id === parseInt(selectedOption.value);
       });
+      var stockOut = this.state.stockOutOptions.filter(function (element) {
+        return element.product === parseInt(stockIn.product);
+      });
+      var updateState = {
+        stock_in: selectedOption
+      };
+
+      if (!this.state["id"] && stockOut) {
+        updateState["hasPrice"] = true;
+        updateState["price"] = stockOut[0].price;
+      }
+
+      this.setState(updateState);
       this.getAvailableStock(selectedOption.value);
     }
   }, {
@@ -10305,6 +10327,10 @@ var UpdateCreateStockOutDialog = /*#__PURE__*/function (_React$Component) {
         api_url = "/api/stock-out/".concat(data.id, "/");
       }
 
+      if (!data.date) {
+        data["date"] = new Date().toLocaleDateString("en-CA");
+      }
+
       if (data.stock_in) {
         data["stock_in"] = data.stock_in.value;
       }
@@ -10315,6 +10341,8 @@ var UpdateCreateStockOutDialog = /*#__PURE__*/function (_React$Component) {
         }
       }
 
+      delete data.stockInOptions;
+      delete data.stockOutOptions;
       _utils_axios__WEBPACK_IMPORTED_MODULE_9__["default"].post(api_url, data).then(function (res) {
         (0,_utils_alert__WEBPACK_IMPORTED_MODULE_10__["default"])(res.data, "success", "success-notification");
 
@@ -10322,15 +10350,12 @@ var UpdateCreateStockOutDialog = /*#__PURE__*/function (_React$Component) {
 
         if (!data.id) {
           _this2.setState({
-            "stock_in": "",
-            "checked_by": "",
-            "received_by": "",
-            "truck_plate_number": "",
-            "truck_driver": "",
-            "quantity": "",
-            "date": "",
-            "delivered_to": "",
-            "available_stock": 0
+            stock_in: "",
+            quantity: "",
+            price: "",
+            date: "",
+            delivered_to: "",
+            available_stock: 0
           });
         }
       }).catch(function (error) {
@@ -10356,7 +10381,7 @@ var UpdateCreateStockOutDialog = /*#__PURE__*/function (_React$Component) {
         }
 
         _this3.setState({
-          "available_stock": res.data.available
+          available_stock: res.data.available
         });
       }).catch(function (error) {
         console.log(error);
@@ -10404,7 +10429,7 @@ var UpdateCreateStockOutDialog = /*#__PURE__*/function (_React$Component) {
         id: "date",
         placeholder: "Enter here..",
         onChange: this.inputChange.bind(this, "date"),
-        value: this.state.date
+        value: this.state.date || new Date().toLocaleDateString("en-CA")
       })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
         className: "row mb-2"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
@@ -10434,70 +10459,34 @@ var UpdateCreateStockOutDialog = /*#__PURE__*/function (_React$Component) {
         placeholder: "Enter here..",
         onChange: this.inputChange.bind(this, "quantity"),
         value: this.state.quantity
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+      }))), this.state.hasPrice ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
         className: "col-sm-6"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("label", {
-        htmlFor: "delivered-to",
+        htmlFor: "price",
         className: "col-form-label text-end"
-      }, "Delivered to:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("input", {
-        type: "text",
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
+        className: "text-danger"
+      }, "*"), "Price per piece:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("input", {
+        type: "number",
         className: "form-control",
-        id: "delivered-to",
+        id: "price",
         placeholder: "Enter here..",
-        onChange: this.inputChange.bind(this, "delivered_to"),
-        value: this.state.delivered_to
-      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
-        className: "row mb-2"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        value: this.state.price,
+        disabled: true
+      }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
         className: "col-sm-6"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("label", {
-        htmlFor: "truck-plate-number",
+        htmlFor: "price",
         className: "col-form-label text-end"
-      }, "Truck plate number:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("input", {
-        type: "text",
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
+        className: "text-danger"
+      }, "*"), "Price per piece:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("input", {
+        type: "number",
         className: "form-control",
-        id: "truck-plate-number",
+        id: "price",
         placeholder: "Enter here..",
-        onChange: this.inputChange.bind(this, "truck_plate_number"),
-        value: this.state.truck_plate_number
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
-        className: "col-sm-6"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("label", {
-        htmlFor: "truck-driver",
-        className: "col-form-label text-end"
-      }, "Truck driver:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("input", {
-        type: "text",
-        className: "form-control",
-        id: "truck-driver",
-        placeholder: "Enter here..",
-        onChange: this.inputChange.bind(this, "truck_driver"),
-        value: this.state.truck_driver
-      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
-        className: "row mb-2"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
-        className: "col-sm-6"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("label", {
-        htmlFor: "received-by",
-        className: "col-form-label text-end"
-      }, "Received by:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("input", {
-        type: "text",
-        className: "form-control",
-        id: "received-by",
-        placeholder: "Enter here..",
-        onChange: this.inputChange.bind(this, "received_by"),
-        value: this.state.received_by
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
-        className: "col-sm-6"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("label", {
-        htmlFor: "checked-by",
-        className: "col-form-label text-end"
-      }, "Checked by:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("input", {
-        type: "text",
-        className: "form-control",
-        id: "checked-by",
-        placeholder: "Enter here..",
-        onChange: this.inputChange.bind(this, "checked_by"),
-        value: this.state.checked_by
+        onChange: this.inputChange.bind(this, "price"),
+        value: this.state.price
       })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
         id: "error-notification",
         style: {
@@ -10529,7 +10518,7 @@ var UpdateCreateStockOutDialog = /*#__PURE__*/function (_React$Component) {
       var containerElement = document.getElementById("stock-in-dialog-container");
 
       if (!containerElement) {
-        containerElement = document.createElement('div');
+        containerElement = document.createElement("div");
         containerElement.id = "stock-in-dialog-container";
       }
 
@@ -11349,6 +11338,17 @@ var UpdateCreateUserDialog = /*#__PURE__*/function (_React$Component) {
     value: function inputChange(input_name, event) {
       var updated_field = {};
       updated_field[input_name] = event.target.value;
+
+      if (input_name === "user_type") {
+        if (event.target.value !== "cashier") {
+          updated_field["email"] = "".concat(this.state.last_name).concat(this.state.first_name[0]).concat(this.state.middle_name[0], "@").concat(event.target.value, ".com").toLowerCase();
+          updated_field["cashier_id"] = "";
+        } else {
+          updated_field["cashier_id"] = Math.floor(Math.random() * 1000000000);
+          updated_field["email"] = "";
+        }
+      }
+
       this.setState(_objectSpread({}, updated_field));
     }
   }, {
@@ -11427,6 +11427,48 @@ var UpdateCreateUserDialog = /*#__PURE__*/function (_React$Component) {
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
         className: "row mb-2"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("label", {
+        htmlFor: "first-name",
+        className: "col-form-label col-sm-4 text-end"
+      }, "First Name:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "col-sm-8"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("input", {
+        type: "text",
+        className: "form-control",
+        id: "first-name",
+        placeholder: "Enter here..",
+        onChange: this.inputChange.bind(this, "first_name"),
+        value: this.state.first_name
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "row mb-2"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("label", {
+        htmlFor: "middle-name",
+        className: "col-form-label col-sm-4 text-end"
+      }, "Middle Name:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "col-sm-8"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("input", {
+        type: "text",
+        className: "form-control",
+        id: "middle-name",
+        placeholder: "Enter here..",
+        onChange: this.inputChange.bind(this, "middle_name"),
+        value: this.state.middle_name
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "row mb-2"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("label", {
+        htmlFor: "last-name",
+        className: "col-form-label col-sm-4 text-end"
+      }, "Last Name:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "col-sm-8"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("input", {
+        type: "text",
+        className: "form-control",
+        id: "last-name",
+        placeholder: "Enter here..",
+        onChange: this.inputChange.bind(this, "last_name"),
+        value: this.state.last_name
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+        className: "row mb-2"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("label", {
         htmlFor: "user-type",
         className: "col-form-label col-sm-4 text-end"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
@@ -11437,7 +11479,8 @@ var UpdateCreateUserDialog = /*#__PURE__*/function (_React$Component) {
         className: "form-select",
         "aria-label": "Default select example",
         value: this.state.user_type,
-        onChange: this.inputChange.bind(this, "user_type")
+        onChange: this.inputChange.bind(this, "user_type"),
+        disabled: !(this.state.first_name && this.state.middle_name && this.state.last_name)
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("option", {
         defaultValue: ""
       }, "Select user type"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("option", {
@@ -11476,51 +11519,9 @@ var UpdateCreateUserDialog = /*#__PURE__*/function (_React$Component) {
         className: "form-control",
         id: "cashier_id",
         placeholder: "Enter here..",
-        onChange: this.inputChange.bind(this, "cashier_id"),
-        value: this.state.cashier_id
+        value: this.state.cashier_id,
+        disabled: true
       }))) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
-        className: "row mb-2"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("label", {
-        htmlFor: "first-name",
-        className: "col-form-label col-sm-4 text-end"
-      }, "First Name:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
-        className: "col-sm-8"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("input", {
-        type: "text",
-        className: "form-control",
-        id: "first-name",
-        placeholder: "Enter here..",
-        onChange: this.inputChange.bind(this, "first_name"),
-        value: this.state.first_name
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
-        className: "row mb-2"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("label", {
-        htmlFor: "last-name",
-        className: "col-form-label col-sm-4 text-end"
-      }, "Last Name:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
-        className: "col-sm-8"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("input", {
-        type: "text",
-        className: "form-control",
-        id: "last-name",
-        placeholder: "Enter here..",
-        onChange: this.inputChange.bind(this, "last_name"),
-        value: this.state.last_name
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
-        className: "row mb-2"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("label", {
-        htmlFor: "middle-name",
-        className: "col-form-label col-sm-4 text-end"
-      }, "Middle Name:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
-        className: "col-sm-8"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("input", {
-        type: "text",
-        className: "form-control",
-        id: "middle-name",
-        placeholder: "Enter here..",
-        onChange: this.inputChange.bind(this, "middle_name"),
-        value: this.state.middle_name
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
         className: "row mb-2"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("label", {
         htmlFor: "password",
@@ -12216,7 +12217,7 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
         cancelButtonText: "No",
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        reverseButtons: true
+        reverseButtons: false
       }).then(function (result) {
         if (result.isConfirmed) {
           _utils_axios__WEBPACK_IMPORTED_MODULE_14__["default"].post("/api/logout/", {}).then(function (res) {
@@ -12414,6 +12415,7 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "showFindModal",
     value: function showFindModal() {
+      this.checkScannedBarcode("123456789", "add", this.state.setQuantity);
       var listing = {};
       listing["listing"] = this.state.listing;
       _UserFindDialog__WEBPACK_IMPORTED_MODULE_13__["default"].show(_objectSpread({}, listing));
@@ -12605,13 +12607,13 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
         className: "d-flex justify-content-between"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("b", null, "B. Style:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("hr", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
         className: "d-flex justify-content-between"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("b", null, "Vat Sales:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("b", null, "Vat Sales:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null, this.priceFormat(this.state.lastTransaction.sales.total_amount * 1.12))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
         className: "d-flex justify-content-between"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("b", null, "12% Vat:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("b", null, "12% Vat:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null, this.priceFormat(this.state.lastTransaction.sales.total_amount * 0.12))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
         className: "d-flex justify-content-between"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("b", null, "VAT-Exempt Sale:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("b", null, "VAT-Exempt Sale:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null, this.priceFormat(this.state.lastTransaction.sales.total_amount - this.state.lastTransaction.sales.total_amount * 0.12))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
         className: "d-flex justify-content-between"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("b", null, "Zero Rated:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("hr", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("b", null, "Zero Rated:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null, this.priceFormat(0))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("hr", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
         className: "d-flex"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("b", null, "No. Of Item(s): ", this.state.lastTransaction.carts.length)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
         className: "d-flex"
@@ -12768,6 +12770,12 @@ var UserFindDialog = /*#__PURE__*/function (_React$Component) {
       document.removeEventListener("keydown");
     }
   }, {
+    key: "priceFormat",
+    value: function priceFormat(value) {
+      var val = (value / 1).toFixed(2).replace(",", ".");
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+  }, {
     key: "searchChange",
     value: function searchChange(_ref) {
       var _this3 = this;
@@ -12799,6 +12807,8 @@ var UserFindDialog = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "renderLookUpProducts",
     value: function renderLookUpProducts() {
+      var _this4 = this;
+
       if (!this.state.listing.length && this.state.search) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, "We can't find your looking for..."));
       }
@@ -12810,7 +12820,7 @@ var UserFindDialog = /*#__PURE__*/function (_React$Component) {
       return this.state.listing.map(function (elementList) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("tr", {
           key: elementList.id
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, elementList.barcode), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, elementList.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, elementList.net_weight), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, elementList.price));
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, elementList.barcode), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, elementList.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, elementList.net_weight), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, _this4.priceFormat(elementList.price)));
       });
     }
   }, {
@@ -12823,7 +12833,7 @@ var UserFindDialog = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
+      var _this5 = this;
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
         className: "modal modal-lg fade",
@@ -12857,7 +12867,7 @@ var UserFindDialog = /*#__PURE__*/function (_React$Component) {
         className: "input-group mb-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("input", {
         ref: function ref(input) {
-          _this4.quantityInput = input;
+          _this5.quantityInput = input;
         },
         type: "text",
         name: "search",

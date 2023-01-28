@@ -113,7 +113,7 @@ class SideNav extends React.Component {
                 Stock Out
               </span>
             </Link>
-            <Link
+            {/* <Link
               className={
                 this.state.active === "listing" ? "nav-link active" : "nav-link"
               }
@@ -123,7 +123,7 @@ class SideNav extends React.Component {
                 <i className="bi bi-list-ul"></i>
                 Listing
               </span>
-            </Link>
+            </Link> */}
             <Link
               className={
                 this.state.active === "invoice" ? "nav-link active" : "nav-link"
@@ -139,11 +139,11 @@ class SideNav extends React.Component {
               className={
                 this.state.active === "sales" ? "nav-link active" : "nav-link"
               }
-              to="/web/admin/sales"
+              to="/web/admin/invoice-sales-graph"
             >
               <span className="align-text-bottom">
                 <i className="bi bi-graph-up-arrow"></i>
-                Sales
+                Invoice Sales Graph
               </span>
             </Link>
             <Link
@@ -152,11 +152,11 @@ class SideNav extends React.Component {
                   ? "nav-link active"
                   : "nav-link"
               }
-              to="/web/admin/leaderboards"
+              to="/web/admin/product-sales"
             >
               <span className="align-text-bottom">
-                <i className="bi bi-trophy"></i>
-                Leaderboards
+                <i className="bi bi-card-list"></i>
+                Product Sales
               </span>
             </Link>
             <Link

@@ -13,11 +13,8 @@ class StockOutSerializer(serializers.ModelSerializer):
             "stock_in",
             "created_by",
             "delivered_to",
-            "checked_by",
-            "received_by",
-            "truck_plate_number",
-            "truck_driver",
             "quantity",
+            "price",
             "created_at",
             "updated_at",
             "date",
@@ -35,6 +32,12 @@ class StockOutSerializer(serializers.ModelSerializer):
                 "error_messages": {
                     "blank": "Quantity is required!",
                     "invalid": "Quantity must be a valid number!",
+                }
+            },
+            "price": {
+                "error_messages": {
+                    "blank": "Price is required!",
+                    "invalid": "Price must be a valid number!",
                 }
             },
             "date": {

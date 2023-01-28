@@ -58,7 +58,11 @@ class UserDashboard extends React.Component {
   componentDidMount() {
     onScan.attachTo(document);
     document.addEventListener("scan", (sScancode, iQuantity) => {
-      this.checkScannedBarcode(sScancode.detail.scanCode, "add", this.state.setQuantity);
+      this.checkScannedBarcode(
+        sScancode.detail.scanCode,
+        "add",
+        this.state.setQuantity
+      );
     });
     document.addEventListener("keydown", this.keyCommand);
   }
@@ -227,7 +231,7 @@ class UserDashboard extends React.Component {
       cancelButtonText: "No",
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      reverseButtons: true,
+      reverseButtons: false,
     }).then((result) => {
       if (result.isConfirmed) {
         axios
@@ -324,7 +328,8 @@ class UserDashboard extends React.Component {
                 ...element,
                 quantity:
                   type === "add"
-                    ? (element.quantity = parseInt(element.quantity) + parseInt(quantity))
+                    ? (element.quantity =
+                        parseInt(element.quantity) + parseInt(quantity))
                     : (element.quantity = quantity),
               }
             : element
@@ -366,7 +371,8 @@ class UserDashboard extends React.Component {
   }
 
   showUserCheckoutModal() {
-    if (!this.state.carts.length) return toast.error("Can't proceed with empty table.");
+    if (!this.state.carts.length)
+      return toast.error("Can't proceed with empty table.");
 
     let swalOptions = {
       title: "Enter Cash",
@@ -382,19 +388,19 @@ class UserDashboard extends React.Component {
         if (!value) {
           Swal.showValidationMessage(
             '<i class="fa fa-info-circle"></i> Cash is required'
-          )
+          );
         } else {
           let totalAmount = 0;
-          this.state.carts.forEach(element => {
-              totalAmount += (element.price * element.quantity);
+          this.state.carts.forEach((element) => {
+            totalAmount += element.price * element.quantity;
           });
           if (totalAmount > parseInt(value)) {
             Swal.showValidationMessage(
               '<i class="fa fa-info-circle"></i> Enter cash is lesser than the total amount!'
-            )
+            );
           }
         }
-      }
+      },
     };
     MySwal.fire(swalOptions).then((result) => {
       if (result.isConfirmed) {
@@ -407,18 +413,22 @@ class UserDashboard extends React.Component {
     let data = {
       carts: this.state.carts,
       amount_pay: amount_pay,
-      payment_type: "cash"
+      payment_type: "cash",
     };
     let api_url = "/api/cashier/checkout/";
-    
-    axios.post(api_url, data).then(res => {
+
+    axios
+      .post(api_url, data)
+      .then((res) => {
         this.callBackSaveListing(res.data.reference_no);
-    }).catch(error => {
+      })
+      .catch((error) => {
         console.log(error);
-    })
-}
+      });
+  }
 
   showFindModal() {
+    this.checkScannedBarcode("123456789", "add", this.state.setQuantity);
     const listing = {};
     listing["listing"] = this.state.listing;
 
@@ -672,25 +682,34 @@ class UserDashboard extends React.Component {
             <div>
               <b>Vat Sales:</b>
             </div>
-            <div></div>
+            <div>{this.priceFormat(this.state.lastTransaction.sales.total_amount * 1.12)}</div>
           </div>
           <div className="d-flex justify-content-between">
             <div>
               <b>12% Vat:</b>
             </div>
-            <div></div>
+            <div>
+              {this.priceFormat(
+                this.state.lastTransaction.sales.total_amount * 0.12
+              )}
+            </div>
           </div>
           <div className="d-flex justify-content-between">
             <div>
               <b>VAT-Exempt Sale:</b>
             </div>
-            <div></div>
+            <div>
+              {this.priceFormat(
+                this.state.lastTransaction.sales.total_amount -
+                  this.state.lastTransaction.sales.total_amount * 0.12
+              )}
+            </div>
           </div>
           <div className="d-flex justify-content-between">
             <div>
               <b>Zero Rated:</b>
             </div>
-            <div></div>
+            <div>{this.priceFormat(0)}</div>
           </div>
           <hr />
           <div className="d-flex">

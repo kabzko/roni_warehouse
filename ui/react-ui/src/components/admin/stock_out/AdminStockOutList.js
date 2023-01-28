@@ -67,6 +67,19 @@ class AdminStockOutList extends React.Component {
         return product;
     }
 
+    getQuantityPerPiece(stockId, stockOutQuantity) {
+        let stock;
+
+        for (let i in this.state.stockIn) {
+            if (this.state.stockIn[i].id === stockId) {
+                stock = stockOutQuantity * this.state.stockIn[i].number_of_pieces;
+                break;
+            }
+        }
+
+        return stock;
+    }
+
     getStockIn() {
         let api_url = "/api/stock-in/list/";
 
@@ -147,6 +160,7 @@ class AdminStockOutList extends React.Component {
         stockOut["callBackSave"] = this.callBackSaveStockOut;
         stockOut["products"] = this.state.products;
         stockOut["stockInOptions"] = this.state.stockIn;
+        stockOut["stockOutOptions"] = this.state.stockOut;
 
         UpdateCreateStockOutDialog.show({...stockOut});
     }
@@ -173,12 +187,11 @@ class AdminStockOutList extends React.Component {
                                 <table className="table table-hover">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Product</th>
                                             <th scope="col">Date</th>
-                                            <th scope="col">Quantity</th>
-                                            <th scope="col">Delivered to</th>
-                                            <th scope="col">Truck driver</th>
-                                            <th scope="col">Received by</th>
+                                            <th scope="col">Product</th>
+                                            <th scope="col">Quantity per piece</th>
+                                            <th scope="col">Price per piece</th>
+                                            {/* <th scope="col">Delivered to</th> */}
                                             <th scope="col">Date created</th>
                                             <th scope="col">Action</th>
                                         </tr>
@@ -188,12 +201,11 @@ class AdminStockOutList extends React.Component {
                                         ?  this.state.stockOut.map(stockOut => {
                                                 return(
                                                     <tr key={stockOut.id}>
-                                                        <td>{this.getProductName(stockOut.product)}</td>
                                                         <td>{stockOut.date}</td>
-                                                        <td>{stockOut.quantity}</td>
-                                                        <td>{stockOut.delivered_to}</td>
-                                                        <td>{stockOut.truck_driver}</td>
-                                                        <td>{stockOut.received_by}</td>
+                                                        <td>{this.getProductName(stockOut.product)}</td>
+                                                        <td>{this.getQuantityPerPiece(stockOut.stock_in, stockOut.quantity)}</td>
+                                                        <td>{stockOut.price}</td>
+                                                        {/* <td>{stockOut.delivered_to}</td> */}
                                                         <td>{stockOut.created_at}</td>
                                                         <td>
                                                             <button className="btn btn-sm btn-primary me-1" onClick={this.showCreateUpdateStockOutModal.bind(this, stockOut)}>Edit</button>

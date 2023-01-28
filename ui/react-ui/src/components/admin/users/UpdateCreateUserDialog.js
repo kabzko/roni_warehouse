@@ -49,6 +49,15 @@ class UpdateCreateUserDialog extends React.Component {
     inputChange(input_name, event) {
         let updated_field = {};
         updated_field[input_name] = event.target.value;
+        if (input_name === "user_type") {
+            if (event.target.value !== "cashier") {
+                updated_field["email"] = `${this.state.last_name}${this.state.first_name[0]}${this.state.middle_name[0]}@${event.target.value}.com`.toLowerCase();
+                updated_field["cashier_id"] = "";
+            } else {
+                updated_field["cashier_id"] = Math.floor(Math.random() * 1000000000);
+                updated_field["email"] = "";
+            }
+        }
         this.setState({...updated_field});
     }
 
@@ -104,12 +113,33 @@ class UpdateCreateUserDialog extends React.Component {
                                 <div id="error-notification"></div>
                                 <div id="success-notification"></div>
                                 <div className="row mb-2">
+                                    <label htmlFor="first-name" className="col-form-label col-sm-4 text-end">First Name:</label>
+                                    <div className="col-sm-8">
+                                        <input type="text" className="form-control" id="first-name" placeholder="Enter here.."
+                                            onChange={this.inputChange.bind(this, "first_name")} value={this.state.first_name}></input>
+                                    </div>
+                                </div>
+                                <div className="row mb-2">
+                                    <label htmlFor="middle-name" className="col-form-label col-sm-4 text-end">Middle Name:</label>
+                                    <div className="col-sm-8">
+                                        <input type="text" className="form-control" id="middle-name" placeholder="Enter here.."
+                                            onChange={this.inputChange.bind(this, "middle_name")} value={this.state.middle_name}></input>
+                                    </div>
+                                </div>
+                                <div className="row mb-2">
+                                    <label htmlFor="last-name" className="col-form-label col-sm-4 text-end">Last Name:</label>
+                                    <div className="col-sm-8">
+                                        <input type="text" className="form-control" id="last-name" placeholder="Enter here.."
+                                            onChange={this.inputChange.bind(this, "last_name")} value={this.state.last_name}></input>
+                                    </div>
+                                </div>
+                                <div className="row mb-2">
                                     <label htmlFor="user-type" className="col-form-label col-sm-4 text-end">
                                         <span className="text-danger">*</span>User type:
                                     </label>
                                     <div className="col-sm-8">
                                         <select className="form-select" aria-label="Default select example"
-                                            value={this.state.user_type} onChange={this.inputChange.bind(this, "user_type")}>
+                                            value={this.state.user_type} onChange={this.inputChange.bind(this, "user_type")} disabled={!(this.state.first_name && this.state.middle_name && this.state.last_name)}>
                                             <option defaultValue="">Select user type</option>
                                             {/* <option value="inventory">Inventory</option> */}
                                             {/* <option value="pointOfSale">Point of Sale</option> */}
@@ -136,33 +166,11 @@ class UpdateCreateUserDialog extends React.Component {
                                                 <span className="text-danger">*</span>Cashier ID:
                                             </label>
                                             <div className="col-sm-8">
-                                                <input type="text" className="form-control" id="cashier_id" placeholder="Enter here.."
-                                                    onChange={this.inputChange.bind(this, "cashier_id")} value={this.state.cashier_id}></input>
+                                                <input type="text" className="form-control" id="cashier_id" placeholder="Enter here.." value={this.state.cashier_id} disabled></input>
                                             </div>
                                         </div>
                                     : null
                                 }
-                                <div className="row mb-2">
-                                    <label htmlFor="first-name" className="col-form-label col-sm-4 text-end">First Name:</label>
-                                    <div className="col-sm-8">
-                                        <input type="text" className="form-control" id="first-name" placeholder="Enter here.."
-                                            onChange={this.inputChange.bind(this, "first_name")} value={this.state.first_name}></input>
-                                    </div>
-                                </div>
-                                <div className="row mb-2">
-                                    <label htmlFor="last-name" className="col-form-label col-sm-4 text-end">Last Name:</label>
-                                    <div className="col-sm-8">
-                                        <input type="text" className="form-control" id="last-name" placeholder="Enter here.."
-                                            onChange={this.inputChange.bind(this, "last_name")} value={this.state.last_name}></input>
-                                    </div>
-                                </div>
-                                <div className="row mb-2">
-                                    <label htmlFor="middle-name" className="col-form-label col-sm-4 text-end">Middle Name:</label>
-                                    <div className="col-sm-8">
-                                        <input type="text" className="form-control" id="middle-name" placeholder="Enter here.."
-                                            onChange={this.inputChange.bind(this, "middle_name")} value={this.state.middle_name}></input>
-                                    </div>
-                                </div>
                                 <div className="row mb-2">
                                     <label htmlFor="password" className="col-form-label col-sm-4 text-end">
                                         <span className="text-danger">*</span>Password:

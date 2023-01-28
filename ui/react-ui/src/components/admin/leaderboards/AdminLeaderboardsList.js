@@ -56,6 +56,11 @@ class AdminLeaderboardsList extends React.Component {
       });
   }
 
+  priceFormat(value) {
+    const val = (value / 1).toFixed(2).replace(",", ".");
+    return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
   inputChange(input_name, event) {
     let updated_field = {};
     updated_field[input_name] = event.target.value;
@@ -117,7 +122,7 @@ class AdminLeaderboardsList extends React.Component {
             <SideNav active="leaderboards"></SideNav>
             <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
               <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 className="h2">Leaderboards</h1>
+                <h1 className="h2">Product Sales</h1>
               </div>
               <div className="d-flex justify-content-end">
                 <div className="input-group mb-3 me-2 w-25">
@@ -159,10 +164,10 @@ class AdminLeaderboardsList extends React.Component {
                 <table className="table table-hover">
                   <thead>
                     <tr>
-                      <th scope="col">Ranking</th>
                       <th scope="col">Barcode</th>
                       <th scope="col">Product</th>
                       <th scope="col">Quantity</th>
+                      <th scope="col">Price</th>
                     </tr>
                   </thead>
                   <tbody className="table-group-divider">
@@ -170,7 +175,6 @@ class AdminLeaderboardsList extends React.Component {
                       this.state.leaderboards.map((element, index) => {
                         return (
                           <tr key={index}>
-                            <td>{index + 1}</td>
                             <td>
                               {this.getProductName(element.product, "barcode")}
                             </td>
@@ -178,6 +182,7 @@ class AdminLeaderboardsList extends React.Component {
                               {this.getProductName(element.product, "name")}
                             </td>
                             <td>{element.total_quantity}</td>
+                            <td>{this.priceFormat(element.total_price)}</td>
                           </tr>
                         );
                       })
