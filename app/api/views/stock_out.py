@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.db.models import Q
 
 from rest_framework.authentication import SessionAuthentication
@@ -50,6 +51,13 @@ class StockOutAPIView(API):
             for stockout_instance in stockout_instances:
                 data = StockOutSerializer(stockout_instance).data
                 data["product"] = stockout_instance.stock_in.product.id
+                data["expiration_date"] = stockout_instance.stock_in.expiration_date
+                data["expired"] = False
+
+                if data["expiration_date"]:
+                    date_now = datetime.now()
+                    data["expired"] = data["expiration_date"] <= datetime.date(date_now)
+                
                 stock_out.append(data)
 
             return self.success_response(stock_out)

@@ -10171,6 +10171,8 @@ var AdminStockOutList = /*#__PURE__*/function (_React$Component) {
         scope: "col"
       }, "Price per piece"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
         scope: "col"
+      }, "Expiration date"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
+        scope: "col"
       }, "Date created"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
         scope: "col"
       }, "Action"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("tbody", {
@@ -10178,7 +10180,11 @@ var AdminStockOutList = /*#__PURE__*/function (_React$Component) {
       }, this.state.stockOut.length > 0 ? this.state.stockOut.map(function (stockOut) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("tr", {
           key: stockOut.id
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockOut.date), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, _this6.getProductName(stockOut.product)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, _this6.getQuantityPerPiece(stockOut.stock_in, stockOut.quantity)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockOut.price), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockOut.created_at), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockOut.date), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, _this6.getProductName(stockOut.product)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, _this6.getQuantityPerPiece(stockOut.stock_in, stockOut.quantity)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockOut.price), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockOut.expired ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
+          style: {
+            color: "red"
+          }
+        }, stockOut.expiration_date, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("small", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("b", null, "(Expired)"))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", null, stockOut.expiration_date)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockOut.created_at), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
           className: "btn btn-sm btn-primary me-1",
           onClick: _this6.showCreateUpdateStockOutModal.bind(_this6, stockOut)
         }, "Edit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
@@ -10370,7 +10376,7 @@ var UpdateCreateStockOutDialog = /*#__PURE__*/function (_React$Component) {
         stock_in: selectedOption
       };
 
-      if (!this.state["id"] && stockOut) {
+      if (!this.state["id"] && stockOut.length > 0) {
         updateState["hasPrice"] = true;
         updateState["price"] = stockOut[0].price;
       }

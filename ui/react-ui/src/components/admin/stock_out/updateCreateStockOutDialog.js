@@ -121,16 +121,20 @@ class UpdateCreateStockOutDialog extends React.Component {
     let stockIn = this.state.stockInOptions.find(
       (element) => element.id === parseInt(selectedOption.value)
     );
+    
     let stockOut = this.state.stockOutOptions.filter(
       (element) => element.product === parseInt(stockIn.product)
     );
+    
     let updateState = {
       stock_in: selectedOption,
     };
-    if ((!this.state["id"]) && stockOut) {
+    
+    if ((!this.state["id"]) && stockOut.length > 0) {
       updateState["hasPrice"] = true;
       updateState["price"] = stockOut[0].price;
     }
+
     this.setState(updateState);
     this.getAvailableStock(selectedOption.value);
   }

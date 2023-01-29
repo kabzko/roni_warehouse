@@ -191,7 +191,7 @@ class AdminStockOutList extends React.Component {
                                             <th scope="col">Product</th>
                                             <th scope="col">Quantity per piece</th>
                                             <th scope="col">Price per piece</th>
-                                            {/* <th scope="col">Delivered to</th> */}
+                                            <th scope="col">Expiration date</th>
                                             <th scope="col">Date created</th>
                                             <th scope="col">Action</th>
                                         </tr>
@@ -205,7 +205,16 @@ class AdminStockOutList extends React.Component {
                                                         <td>{this.getProductName(stockOut.product)}</td>
                                                         <td>{this.getQuantityPerPiece(stockOut.stock_in, stockOut.quantity)}</td>
                                                         <td>{stockOut.price}</td>
-                                                        {/* <td>{stockOut.delivered_to}</td> */}
+                                                        <td>
+                                                            {stockOut.expired ?
+                                                                <span style={{color: "red"}}>
+                                                                    {stockOut.expiration_date} <br></br>
+                                                                    <small><b>(Expired)</b></small>
+                                                                </span>
+                                                            :
+                                                                <span>{stockOut.expiration_date}</span>
+                                                            }
+                                                        </td>
                                                         <td>{stockOut.created_at}</td>
                                                         <td>
                                                             <button className="btn btn-sm btn-primary me-1" onClick={this.showCreateUpdateStockOutModal.bind(this, stockOut)}>Edit</button>
