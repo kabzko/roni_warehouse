@@ -541,6 +541,7 @@ class UpdateCreateStockInDialog extends React.Component {
                       <th>Quantity</th>
                       <th>Unit of Measure</th>
                       <th>No. of Pieces per UOM</th>
+                      <th>Expiration Date</th>
                       <th></th>
                     </tr>
                   </thead>
@@ -620,6 +621,20 @@ class UpdateCreateStockInDialog extends React.Component {
                                 disabled
                               ></input>
                             )}
+                          </td>
+                          <td>
+                            <input
+                              type="date"
+                              className="form-control"
+                              id="expiration_date"
+                              placeholder="Enter here.."
+                              onChange={this.listInputChange.bind(
+                                this,
+                                "expiration_date",
+                                idx
+                              )}
+                              value={el.expiration_date}
+                            ></input>
                           </td>
                           <td>
                             <button

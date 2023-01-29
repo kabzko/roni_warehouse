@@ -16,6 +16,7 @@ class StockInSerializer(serializers.ModelSerializer):
             "price",
             "quantity",
             "number_of_pieces",
+            "expiration_date",
         ]
 
         extra_kwargs = {

@@ -17,7 +17,6 @@ class ProductSerializer(serializers.ModelSerializer):
             "created_at",
             "updated_at",
             "net_weight",
-            "expiration_date",
         ]
 
         extra_kwargs = {

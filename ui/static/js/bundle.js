@@ -8364,8 +8364,7 @@ var UpdateCreateProductDialog = /*#__PURE__*/function (_React$Component) {
       "supplier": props.supplier ? props.supplier : "",
       "description": props.description ? props.description : "",
       "barcode": props.barcode ? props.barcode : "",
-      "net_weight": props.net_weight ? props.net_weight : "",
-      "expiration_date": props.expiration_date ? props.expiration_date : ""
+      "net_weight": props.net_weight ? props.net_weight : ""
     };
 
     if (props.id) {
@@ -8447,7 +8446,6 @@ var UpdateCreateProductDialog = /*#__PURE__*/function (_React$Component) {
             "description": "",
             "barcode": "",
             "net_weight": "",
-            "expiration_date": "",
             "supplier": ""
           });
         }
@@ -8564,20 +8562,6 @@ var UpdateCreateProductDialog = /*#__PURE__*/function (_React$Component) {
         placeholder: "Enter here..",
         onChange: this.inputChange.bind(this, "net_weight"),
         value: this.state.net_weight
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
-        className: "row mb-2"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("label", {
-        htmlFor: "expiration-date",
-        className: "col-form-label col-sm-4 text-end"
-      }, "Expiration Date:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
-        className: "col-sm-8"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("input", {
-        type: "date",
-        className: "form-control",
-        id: "expiration-date",
-        placeholder: "Enter here..",
-        onChange: this.inputChange.bind(this, "expiration_date"),
-        value: this.state.expiration_date
       }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
         className: "modal-footer"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
@@ -9790,7 +9774,7 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
         onClick: this.getProducts.bind(this)
       }, "Reload products"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("table", {
         className: "table table-bordered"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("th", null, "Product"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("th", null, "Price"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("th", null, "Quantity"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("th", null, "Unit of Measure"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("th", null, "No. of Pieces per UOM"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("th", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("tbody", null, this.state.list.map(function (el, idx) {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("th", null, "Product"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("th", null, "Price"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("th", null, "Quantity"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("th", null, "Unit of Measure"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("th", null, "No. of Pieces per UOM"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("th", null, "Expiration Date"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("th", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("tbody", null, this.state.list.map(function (el, idx) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("tr", {
           key: idx
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement(react_select__WEBPACK_IMPORTED_MODULE_14__["default"], {
@@ -9829,6 +9813,13 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
           placeholder: "Enter here..",
           value: el.quantity,
           disabled: true
+        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("input", {
+          type: "date",
+          className: "form-control",
+          id: "expiration_date",
+          placeholder: "Enter here..",
+          onChange: _this5.listInputChange.bind(_this5, "expiration_date", idx),
+          value: el.expiration_date
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("button", {
           className: "btn btn-sm btn-danger",
           onClick: _this5.removeList.bind(_this5, idx)

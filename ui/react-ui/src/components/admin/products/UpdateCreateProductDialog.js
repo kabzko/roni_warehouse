@@ -16,7 +16,6 @@ class UpdateCreateProductDialog extends React.Component {
             "description": props.description ? props.description : "",
             "barcode": props.barcode ? props.barcode : "",
             "net_weight": props.net_weight ? props.net_weight : "",
-            "expiration_date": props.expiration_date ? props.expiration_date : "",
         };
 
         if (props.id) {
@@ -99,7 +98,6 @@ class UpdateCreateProductDialog extends React.Component {
                     "description": "",
                     "barcode": "",
                     "net_weight": "",
-                    "expiration_date": "",
                     "supplier": "",
                 })
             }
@@ -167,13 +165,6 @@ class UpdateCreateProductDialog extends React.Component {
                                     <div className="col-sm-8">
                                         <input type="text" className="form-control" id="net_weight" placeholder="Enter here.."
                                             onChange={this.inputChange.bind(this, "net_weight")} value={this.state.net_weight}></input>
-                                    </div>
-                                </div>
-                                <div className="row mb-2">
-                                    <label htmlFor="expiration-date" className="col-form-label col-sm-4 text-end">Expiration Date:</label>
-                                    <div className="col-sm-8">
-                                        <input type="date" className="form-control" id="expiration-date" placeholder="Enter here.."
-                                            onChange={this.inputChange.bind(this, "expiration_date")} value={this.state.expiration_date}></input>
                                     </div>
                                 </div>
                             </form>

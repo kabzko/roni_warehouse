@@ -12,6 +12,7 @@ class StockIn(models.Model):
     quantity = models.IntegerField()
     number_of_pieces = models.IntegerField()
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    expiration_date = models.DateField(blank=True, null=True)
 
 class GroupStockIn(models.Model):
     """Group stock in"""
