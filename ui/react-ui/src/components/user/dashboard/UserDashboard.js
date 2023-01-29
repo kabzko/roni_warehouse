@@ -20,7 +20,7 @@ class UserDashboard extends React.Component {
     if (localStorage.getItem("user_type") !== "cashier") {
       window.location.href = "/";
     }
-
+    console.log(window.innerHeight);
     super(props);
     this.state = {
       products: [],
@@ -29,7 +29,8 @@ class UserDashboard extends React.Component {
       lastProduct: {},
       setQuantity: 1,
       lastTransaction: {},
-      windowHeight: window.innerHeight - 350,
+      windowInnerHeight: window.innerHeight,
+      windowHeight: 0,
       isShowQuantity: false,
       isShowCheckout: false,
     };
@@ -289,8 +290,17 @@ class UserDashboard extends React.Component {
           data.barcode = this.getProductBarcode(data.product);
           return data;
         });
-        this.setState({ listing: res.data });
-        this.setState({ copyListing: res.data });
+        let stateUpdate = {
+          listing: res.data,
+          copyListing: res.data,
+          windowHeight:
+            this.state.windowInnerHeight -
+            (parseInt(document.getElementById("first-div").offsetHeight) +
+              parseInt(document.getElementById("second-div").offsetHeight) +
+              parseInt(document.getElementById("third-div").offsetHeight) +
+              105),
+        };
+        this.setState(stateUpdate);
       })
       .catch((error) => {
         console.log(error);
@@ -450,7 +460,7 @@ class UserDashboard extends React.Component {
   renderProductScannedModal() {
     if (!Object.keys(this.state.lastProduct).length) {
       return (
-        <div className="border">
+        <div id="second-div" className="border">
           <div className="d-flex justify-content-between">
             <div className="product-scanned text-start">
               <label>×{this.priceFormat(this.state.setQuantity)}</label>
@@ -463,7 +473,7 @@ class UserDashboard extends React.Component {
       );
     }
     return (
-      <div className="border">
+      <div id="second-div" className="border">
         <div className="d-flex justify-content-between">
           <div className="product-scanned text-start">
             <label>×{this.priceFormat(this.state.setQuantity)}</label>
@@ -682,7 +692,11 @@ class UserDashboard extends React.Component {
             <div>
               <b>Vat Sales:</b>
             </div>
-            <div>{this.priceFormat(this.state.lastTransaction.sales.total_amount * 1.12)}</div>
+            <div>
+              {this.priceFormat(
+                this.state.lastTransaction.sales.total_amount * 1.12
+              )}
+            </div>
           </div>
           <div className="d-flex justify-content-between">
             <div>
@@ -749,10 +763,13 @@ class UserDashboard extends React.Component {
 
   render() {
     return (
-      <>
+      <div style={{ height: this.state.windowInnerHeight }}>
         {!Object.keys(this.state.lastTransaction).length ? (
           <div className="container-fluid pt-3">
-            <div className="d-flex justify-content-between border border-bottom-0">
+            <div
+              id="first-div"
+              className="d-flex justify-content-between border border-bottom-0"
+            >
               <div>
                 {!Object.keys(this.state.lastProduct).length ? (
                   <div className="product-scanned-item">
@@ -780,11 +797,16 @@ class UserDashboard extends React.Component {
                     <th>PRICE</th>
                   </tr>
                 </thead>
-                <tbody className="cart-table">{this.renderCartData()}</tbody>
+                <tbody
+                  className="cart-table"
+                  style={{ height: this.state.windowHeight }}
+                >
+                  {this.renderCartData()}
+                </tbody>
               </table>
             </div>
             {this.renderProductScannedModal()}
-            <div className="mt-3">
+            <div id="third-div" className="mt-3">
               <button
                 className="btn btn-danger btn-dashboard"
                 onClick={this.logout}
@@ -838,7 +860,7 @@ class UserDashboard extends React.Component {
             </div>
           </div>
         )}
-      </>
+      </div>
     );
   }
 }

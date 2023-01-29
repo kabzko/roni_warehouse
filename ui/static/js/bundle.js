@@ -12051,6 +12051,7 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
       window.location.href = "/";
     }
 
+    console.log(window.innerHeight);
     _this = _super.call(this, props);
 
     (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_7__["default"])((0,_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__["default"])(_this), "updateCart", function (e, data) {
@@ -12120,7 +12121,8 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
       lastProduct: {},
       setQuantity: 1,
       lastTransaction: {},
-      windowHeight: window.innerHeight - 350,
+      windowInnerHeight: window.innerHeight,
+      windowHeight: 0,
       isShowQuantity: false,
       isShowCheckout: false
     };
@@ -12348,14 +12350,13 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
           data.barcode = _this4.getProductBarcode(data.product);
           return data;
         });
+        var stateUpdate = {
+          listing: res.data,
+          copyListing: res.data,
+          windowHeight: _this4.state.windowInnerHeight - (parseInt(document.getElementById("first-div").offsetHeight) + parseInt(document.getElementById("second-div").offsetHeight) + parseInt(document.getElementById("third-div").offsetHeight) + 105)
+        };
 
-        _this4.setState({
-          listing: res.data
-        });
-
-        _this4.setState({
-          copyListing: res.data
-        });
+        _this4.setState(stateUpdate);
       }).catch(function (error) {
         console.log(error);
         react_toastify__WEBPACK_IMPORTED_MODULE_9__.toast.error(error.response.data.message);
@@ -12514,6 +12515,7 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
     value: function renderProductScannedModal() {
       if (!Object.keys(this.state.lastProduct).length) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
+          id: "second-div",
           className: "border"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
           className: "d-flex justify-content-between"
@@ -12525,6 +12527,7 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
       }
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
+        id: "second-div",
         className: "border"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
         className: "d-flex justify-content-between"
@@ -12703,9 +12706,14 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this11 = this;
 
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement((react__WEBPACK_IMPORTED_MODULE_8___default().Fragment), null, !Object.keys(this.state.lastTransaction).length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
+        style: {
+          height: this.state.windowInnerHeight
+        }
+      }, !Object.keys(this.state.lastTransaction).length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
         className: "container-fluid pt-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
+        id: "first-div",
         className: "d-flex justify-content-between border border-bottom-0"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null, !Object.keys(this.state.lastProduct).length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
         className: "product-scanned-item"
@@ -12714,8 +12722,12 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null, this.state.lastProduct.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null, this.state.lastProduct.barcode), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null, this.priceFormat(this.state.lastProduct.price)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null, this.renderTotalAmount())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("table", {
         className: "table table-borderedless border"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("th", null, "BARCODE"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("th", null, "NAME"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("th", null, "QUANTITY"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("th", null, "PRICE"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("tbody", {
-        className: "cart-table"
+        className: "cart-table",
+        style: {
+          height: this.state.windowHeight
+        }
       }, this.renderCartData()))), this.renderProductScannedModal(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("div", {
+        id: "third-div",
         className: "mt-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default().createElement("button", {
         className: "btn btn-danger btn-dashboard",
