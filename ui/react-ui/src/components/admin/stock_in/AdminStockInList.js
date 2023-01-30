@@ -163,6 +163,7 @@ class AdminStockInList extends React.Component {
                                             <th scope="col">Supplier name</th>
                                             <th scope="col">Sales Invoice No.</th>
                                             <th scope="col">Received by</th>
+                                            <th scope="col">Checked by</th>
                                             <th scope="col">Date created</th>
                                             <th scope="col">Last changes</th>
                                             <th scope="col">Action</th>
@@ -177,6 +178,7 @@ class AdminStockInList extends React.Component {
                                                         <td>{stockin.supplier_name}</td>
                                                         <td>{stockin.sales_invoice_no}</td>
                                                         <td>{stockin.receiver_name}</td>
+                                                        <td>{stockin.checker_name}</td>
                                                         <td>{stockin.created_at}</td>
                                                         <td>{stockin.updated_at}</td>
                                                         <td>

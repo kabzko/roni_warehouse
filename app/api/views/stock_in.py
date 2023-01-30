@@ -76,6 +76,9 @@ class StockInAPIView(API):
                 if group_instance.received_by_user:
                     dict_data["receiver_name"] = f"{group_instance.received_by_user.first_name} {group_instance.received_by_user.last_name}"
                 
+                if group_instance.checked_by_user:
+                    dict_data["checker_name"] = f"{group_instance.checked_by_user.first_name} {group_instance.checked_by_user.last_name}"
+                
                 stockin_instances = StockIn.objects.filter(group=group_instance.pk)
                 dict_data["list"] = [StockInSerializer(stockin_instance).data for stockin_instance in stockin_instances]
                 data.append(dict_data)

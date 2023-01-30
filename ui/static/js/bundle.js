@@ -9186,6 +9186,8 @@ var AdminStockInList = /*#__PURE__*/function (_React$Component) {
         scope: "col"
       }, "Received by"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
         scope: "col"
+      }, "Checked by"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
+        scope: "col"
       }, "Date created"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
         scope: "col"
       }, "Last changes"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
@@ -9195,7 +9197,7 @@ var AdminStockInList = /*#__PURE__*/function (_React$Component) {
       }, this.state.stockIn.length > 0 ? this.state.stockIn.map(function (stockin) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("tr", {
           key: stockin.id
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockin.date), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockin.supplier_name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockin.sales_invoice_no), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockin.receiver_name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockin.created_at), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockin.updated_at), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockin.date), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockin.supplier_name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockin.sales_invoice_no), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockin.receiver_name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockin.checker_name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockin.created_at), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockin.updated_at), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
           className: "btn btn-sm btn-primary me-1",
           onClick: _this6.showCreateUpdateStockInModal.bind(_this6, stockin)
         }, "Edit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
