@@ -137,6 +137,8 @@ class UpdateCreateStockInDialog extends React.Component {
             label: `${user.first_name} ${user.last_name}`,
           })
         }
+
+        return user;
       })
 
       if (this.state.checked_by_user) {

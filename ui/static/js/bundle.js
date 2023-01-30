@@ -9391,6 +9391,8 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
               label: "".concat(user.first_name, " ").concat(user.last_name)
             });
           }
+
+          return user;
         });
 
         if (_this2.state.checked_by_user) {
@@ -12547,7 +12549,6 @@ var UserDashboard = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "showFindModal",
     value: function showFindModal() {
-      this.checkScannedBarcode("123456789", "add", this.state.setQuantity);
       var listing = {};
       listing["listing"] = this.state.listing;
       _UserFindDialog__WEBPACK_IMPORTED_MODULE_13__["default"].show(_objectSpread({}, listing));
