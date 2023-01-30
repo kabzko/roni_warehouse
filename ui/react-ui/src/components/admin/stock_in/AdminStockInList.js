@@ -176,7 +176,7 @@ class AdminStockInList extends React.Component {
                                                         <td>{stockin.date}</td>
                                                         <td>{stockin.supplier_name}</td>
                                                         <td>{stockin.sales_invoice_no}</td>
-                                                        <td>{stockin.received_by}</td>
+                                                        <td>{stockin.receiver_name}</td>
                                                         <td>{stockin.created_at}</td>
                                                         <td>{stockin.updated_at}</td>
                                                         <td>

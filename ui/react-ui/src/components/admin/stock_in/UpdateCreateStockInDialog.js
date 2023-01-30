@@ -24,14 +24,17 @@ const unitOfMeasureOptions = [
   },
 ];
 
+const checkerOptions = [];
+const receiverOptions = [];
+
 class UpdateCreateStockInDialog extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       list: props.list ? [...props.list] : [],
       supplier: props.supplier ? props.supplier : "",
-      checked_by: props.checked_by ? props.checked_by : "",
-      received_by: props.received_by ? props.received_by : "",
+      checked_by_user: props.checked_by_user ? props.checked_by_user : "",
+      received_by_user: props.received_by_user ? props.received_by_user : "",
       sales_invoice_no: props.sales_invoice_no ? props.sales_invoice_no : "",
       truck_plate_number: props.truck_plate_number
         ? props.truck_plate_number
@@ -64,6 +67,7 @@ class UpdateCreateStockInDialog extends React.Component {
     }
 
     this.getSuppliers();
+    this.getUsers();
 
     for (let i in this.state.list) {
       let unit_of_measure = this.state.list[i]["unit_of_measure"];
@@ -114,6 +118,35 @@ class UpdateCreateStockInDialog extends React.Component {
     }
 
     return supplier;
+  }
+
+  getUsers() {
+    axios.get("/api/users?checker=true&receiver=true").then(res => {
+      checkerOptions.splice(0, checkerOptions.length);
+      receiverOptions.splice(0, receiverOptions.length);
+
+      res.data.map(user => {
+        if (user.user_type === "checker") {
+          checkerOptions.push({
+            value: user.id,
+            label: `${user.first_name} ${user.last_name}`,
+          })
+        } else {
+          receiverOptions.push({
+            value: user.id,
+            label: `${user.first_name} ${user.last_name}`,
+          })
+        }
+      })
+
+      if (this.state.checked_by_user) {
+        this.setState({ checked_by_user: checkerOptions.find(user => user.value === this.state.checked_by_user )});
+      }
+
+      if (this.state.received_by_user) {
+        this.setState({ received_by_user: receiverOptions.find(user => user.value === this.state.received_by_user )});
+      }
+    })
   }
 
   getSuppliers() {
@@ -225,6 +258,14 @@ class UpdateCreateStockInDialog extends React.Component {
   selectTruckDriverChange(selectedOption) {
     this.setState({ new_truck_driver: selectedOption });
   }
+  
+  selectCheckerChange(selectedOption) {
+    this.setState({ checked_by_user: selectedOption });
+  }
+
+  selectReceiverChange(selectedOption) {
+    this.setState({ received_by_user: selectedOption });
+  }
 
   selectSupplierChange(selectedOption) {
     this.setState({ supplier: selectedOption });
@@ -307,6 +348,14 @@ class UpdateCreateStockInDialog extends React.Component {
       data.new_truck_driver = data.new_truck_driver.value;
     }
 
+    if (data.checked_by_user) {
+      data.checked_by_user = data.checked_by_user.value;
+    }
+
+    if (data.received_by_user) {
+      data.received_by_user = data.received_by_user.value;
+    }
+
     axios
       .post(api_url, data)
       .then((res) => {
@@ -316,8 +365,8 @@ class UpdateCreateStockInDialog extends React.Component {
         if (!data.id) {
           this.setState({
             supplier: "",
-            checked_by: "",
-            received_by: "",
+            checked_by_user: "",
+            received_by_user: "",
             truck_plate_number: "",
             new_truck_driver: "",
             date: "",
@@ -488,14 +537,11 @@ class UpdateCreateStockInDialog extends React.Component {
                       Received by:
                     </label>
                     <div>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="received-by"
-                        placeholder="Enter here.."
-                        onChange={this.inputChange.bind(this, "received_by")}
-                        value={this.state.received_by}
-                      ></input>
+                      <Select
+                        value={this.state.received_by_user}
+                        onChange={this.selectReceiverChange.bind(this)}
+                        options={receiverOptions}
+                      />
                     </div>
                   </div>
                   <div className="col-sm-4">
@@ -506,14 +552,11 @@ class UpdateCreateStockInDialog extends React.Component {
                       Checked by:
                     </label>
                     <div>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="checked-by"
-                        placeholder="Enter here.."
-                        onChange={this.inputChange.bind(this, "checked_by")}
-                        value={this.state.checked_by}
-                      ></input>
+                      <Select
+                        value={this.state.checked_by_user}
+                        onChange={this.selectCheckerChange.bind(this)}
+                        options={checkerOptions}
+                      />
                     </div>
                   </div>
                 </div>

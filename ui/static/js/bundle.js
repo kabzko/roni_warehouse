@@ -9195,7 +9195,7 @@ var AdminStockInList = /*#__PURE__*/function (_React$Component) {
       }, this.state.stockIn.length > 0 ? this.state.stockIn.map(function (stockin) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("tr", {
           key: stockin.id
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockin.date), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockin.supplier_name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockin.sales_invoice_no), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockin.received_by), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockin.created_at), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockin.updated_at), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockin.date), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockin.supplier_name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockin.sales_invoice_no), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockin.receiver_name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockin.created_at), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockin.updated_at), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
           className: "btn btn-sm btn-primary me-1",
           onClick: _this6.showCreateUpdateStockInModal.bind(_this6, stockin)
         }, "Edit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
@@ -9280,6 +9280,8 @@ var unitOfMeasureOptions = [{
   value: "box",
   label: "Box"
 }];
+var checkerOptions = [];
+var receiverOptions = [];
 
 var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
   (0,_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_6__["default"])(UpdateCreateStockInDialog, _React$Component);
@@ -9295,8 +9297,8 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
     _this.state = {
       list: props.list ? (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2__["default"])(props.list) : [],
       supplier: props.supplier ? props.supplier : "",
-      checked_by: props.checked_by ? props.checked_by : "",
-      received_by: props.received_by ? props.received_by : "",
+      checked_by_user: props.checked_by_user ? props.checked_by_user : "",
+      received_by_user: props.received_by_user ? props.received_by_user : "",
       sales_invoice_no: props.sales_invoice_no ? props.sales_invoice_no : "",
       truck_plate_number: props.truck_plate_number ? props.truck_plate_number : "",
       new_truck_driver: props.new_truck_driver ? props.new_truck_driver : "",
@@ -9326,6 +9328,8 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
     }
 
     _this.getSuppliers();
+
+    _this.getUsers();
 
     for (var i in _this.state.list) {
       var unit_of_measure = _this.state.list[i]["unit_of_measure"];
@@ -9368,9 +9372,48 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
       return supplier;
     }
   }, {
+    key: "getUsers",
+    value: function getUsers() {
+      var _this2 = this;
+
+      _utils_axios__WEBPACK_IMPORTED_MODULE_11__["default"].get("/api/users?checker=true&receiver=true").then(function (res) {
+        checkerOptions.splice(0, checkerOptions.length);
+        receiverOptions.splice(0, receiverOptions.length);
+        res.data.map(function (user) {
+          if (user.user_type === "checker") {
+            checkerOptions.push({
+              value: user.id,
+              label: "".concat(user.first_name, " ").concat(user.last_name)
+            });
+          } else {
+            receiverOptions.push({
+              value: user.id,
+              label: "".concat(user.first_name, " ").concat(user.last_name)
+            });
+          }
+        });
+
+        if (_this2.state.checked_by_user) {
+          _this2.setState({
+            checked_by_user: checkerOptions.find(function (user) {
+              return user.value === _this2.state.checked_by_user;
+            })
+          });
+        }
+
+        if (_this2.state.received_by_user) {
+          _this2.setState({
+            received_by_user: receiverOptions.find(function (user) {
+              return user.value === _this2.state.received_by_user;
+            })
+          });
+        }
+      });
+    }
+  }, {
     key: "getSuppliers",
     value: function getSuppliers() {
-      var _this2 = this;
+      var _this3 = this;
 
       _utils_axios__WEBPACK_IMPORTED_MODULE_11__["default"].get("/api/suppliers/").then(function (res) {
         supplierOptions.splice(0, supplierOptions.length);
@@ -9382,14 +9425,14 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
           return supplier;
         });
 
-        if (_this2.state.supplier) {
-          var supplier = _this2.getSupplierOption(_this2.state.supplier);
+        if (_this3.state.supplier) {
+          var supplier = _this3.getSupplierOption(_this3.state.supplier);
 
-          _this2.setState({
+          _this3.setState({
             supplier: supplier
           });
 
-          _this2.selectSupplierChange(supplier);
+          _this3.selectSupplierChange(supplier);
         }
       }).catch(function (error) {
         console.log(error);
@@ -9399,17 +9442,17 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "getProducts",
     value: function getProducts(event) {
-      var _this3 = this;
+      var _this4 = this;
 
       event.preventDefault();
       _utils_axios__WEBPACK_IMPORTED_MODULE_11__["default"].get("/api/products/").then(function (res) {
-        _this3.setState({
+        _this4.setState({
           products: res.data
         }, function () {
-          if (_this3.state.products) {
+          if (_this4.state.products) {
             productOptions.splice(0, productOptions.length);
 
-            _this3.state.products.map(function (prod) {
+            _this4.state.products.map(function (prod) {
               productOptions.push({
                 value: prod.id,
                 label: prod.name
@@ -9493,6 +9536,20 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "selectCheckerChange",
+    value: function selectCheckerChange(selectedOption) {
+      this.setState({
+        checked_by_user: selectedOption
+      });
+    }
+  }, {
+    key: "selectReceiverChange",
+    value: function selectReceiverChange(selectedOption) {
+      this.setState({
+        received_by_user: selectedOption
+      });
+    }
+  }, {
     key: "selectSupplierChange",
     value: function selectSupplierChange(selectedOption) {
       this.setState({
@@ -9558,7 +9615,7 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleSaveStockIn",
     value: function handleSaveStockIn(event) {
-      var _this4 = this;
+      var _this5 = this;
 
       event.preventDefault();
 
@@ -9592,21 +9649,29 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
         data.new_truck_driver = data.new_truck_driver.value;
       }
 
+      if (data.checked_by_user) {
+        data.checked_by_user = data.checked_by_user.value;
+      }
+
+      if (data.received_by_user) {
+        data.received_by_user = data.received_by_user.value;
+      }
+
       _utils_axios__WEBPACK_IMPORTED_MODULE_11__["default"].post(api_url, data).then(function (res) {
         (0,_utils_alert__WEBPACK_IMPORTED_MODULE_12__["default"])(res.data, "success", "success-notification");
 
-        _this4.props.callBackSave();
+        _this5.props.callBackSave();
 
         if (!data.id) {
-          _this4.setState({
+          _this5.setState({
             supplier: "",
-            checked_by: "",
-            received_by: "",
+            checked_by_user: "",
+            received_by_user: "",
             truck_plate_number: "",
             new_truck_driver: "",
             date: "",
             sales_invoice_no: "",
-            list: [_this4.getEmptyList()]
+            list: [_this5.getEmptyList()]
           });
         }
       }).catch(function (error) {
@@ -9653,7 +9718,7 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this5 = this;
+      var _this6 = this;
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("div", {
         className: "modal modal-xl fade",
@@ -9743,25 +9808,19 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("label", {
         htmlFor: "received-by",
         className: "col-form-label text-end"
-      }, "Received by:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("input", {
-        type: "text",
-        className: "form-control",
-        id: "received-by",
-        placeholder: "Enter here..",
-        onChange: this.inputChange.bind(this, "received_by"),
-        value: this.state.received_by
+      }, "Received by:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement(react_select__WEBPACK_IMPORTED_MODULE_14__["default"], {
+        value: this.state.received_by_user,
+        onChange: this.selectReceiverChange.bind(this),
+        options: receiverOptions
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("div", {
         className: "col-sm-4"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("label", {
         htmlFor: "checked-by",
         className: "col-form-label text-end"
-      }, "Checked by:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("input", {
-        type: "text",
-        className: "form-control",
-        id: "checked-by",
-        placeholder: "Enter here..",
-        onChange: this.inputChange.bind(this, "checked_by"),
-        value: this.state.checked_by
+      }, "Checked by:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement(react_select__WEBPACK_IMPORTED_MODULE_14__["default"], {
+        value: this.state.checked_by_user,
+        onChange: this.selectCheckerChange.bind(this),
+        options: checkerOptions
       })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("hr", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("div", {
         className: "d-flex align-items-center"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("h5", null, "Stocks")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("div", {
@@ -9779,32 +9838,32 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
           key: idx
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement(react_select__WEBPACK_IMPORTED_MODULE_14__["default"], {
           value: el.product,
-          onChange: _this5.selectProductChange.bind(_this5, idx),
+          onChange: _this6.selectProductChange.bind(_this6, idx),
           options: productOptions
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("input", {
           type: "number",
           className: "form-control",
           id: "price",
           placeholder: "Enter here..",
-          onChange: _this5.listInputChange.bind(_this5, "price", idx),
+          onChange: _this6.listInputChange.bind(_this6, "price", idx),
           value: el.price
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("input", {
           type: "number",
           className: "form-control",
           id: "quantity",
           placeholder: "Enter here..",
-          onChange: _this5.listInputChange.bind(_this5, "quantity", idx),
+          onChange: _this6.listInputChange.bind(_this6, "quantity", idx),
           value: el.quantity
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement(react_select__WEBPACK_IMPORTED_MODULE_14__["default"], {
           value: el.unit_of_measure,
-          onChange: _this5.selectUnitOfMeasureChange.bind(_this5, idx),
+          onChange: _this6.selectUnitOfMeasureChange.bind(_this6, idx),
           options: unitOfMeasureOptions
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("td", null, el.unit_of_measure.value !== "pieces" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("input", {
           type: "number",
           className: "form-control",
           id: "number-of-pieces",
           placeholder: "Enter here..",
-          onChange: _this5.listInputChange.bind(_this5, "number_of_pieces", idx),
+          onChange: _this6.listInputChange.bind(_this6, "number_of_pieces", idx),
           value: el.number_of_pieces
         }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("input", {
           type: "number",
@@ -9818,11 +9877,11 @@ var UpdateCreateStockInDialog = /*#__PURE__*/function (_React$Component) {
           className: "form-control",
           id: "expiration_date",
           placeholder: "Enter here..",
-          onChange: _this5.listInputChange.bind(_this5, "expiration_date", idx),
+          onChange: _this6.listInputChange.bind(_this6, "expiration_date", idx),
           value: el.expiration_date
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("button", {
           className: "btn btn-sm btn-danger",
-          onClick: _this5.removeList.bind(_this5, idx)
+          onClick: _this6.removeList.bind(_this6, idx)
         }, "Delete")));
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_9___default().createElement("button", {
         className: "btn btn-sm btn-primary",

@@ -107,7 +107,19 @@ class UserAPIView(API):
         """Get users. If pk is provided, get specific user only."""
         try:
             search = request.GET.get("search", None)
+            checker = request.GET.get("checker", None)
+            receiver = request.GET.get("receiver", None)
+
             filters = Q(is_superadmin=False)
+
+            if checker and receiver:
+                filters &= (Q(user_type="checker") |  Q(user_type="receiver"))
+            else:
+                if checker:
+                    filters &= Q(user_type="checker")
+
+                if receiver:
+                    filters &= Q(user_type="receiver")
 
             if search:
                 filters &= (Q(first_name__icontains=search) | Q(last_name__icontains=search) | Q(middle_name__icontains=search))

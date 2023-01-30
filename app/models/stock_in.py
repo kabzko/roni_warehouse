@@ -18,9 +18,9 @@ class GroupStockIn(models.Model):
     """Group stock in"""
 
     created_by = models.ForeignKey("User", on_delete=models.CASCADE)
+    checked_by_user = models.ForeignKey("User", on_delete=models.CASCADE, blank=True, null=True, related_name="user_checked_by")
+    received_by_user = models.ForeignKey("User", on_delete=models.CASCADE, blank=True, null=True, related_name="user_received_by")
     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
-    checked_by = models.CharField(max_length=250, blank=True, null=True)
-    received_by = models.CharField(max_length=250, blank=True, null=True)
     truck_plate_number = models.CharField(max_length=250, blank=True, null=True)
     new_truck_driver = models.ForeignKey(TruckDriver, on_delete=models.CASCADE, blank=True, null=True)
     sales_invoice_no = models.CharField(max_length=250, blank=True, null=True)
