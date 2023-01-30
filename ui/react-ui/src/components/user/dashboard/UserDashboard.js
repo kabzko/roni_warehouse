@@ -438,7 +438,6 @@ class UserDashboard extends React.Component {
   }
 
   showFindModal() {
-    this.checkScannedBarcode("123456789", "add", this.state.setQuantity);
     const listing = {};
     listing["listing"] = this.state.listing;
 
