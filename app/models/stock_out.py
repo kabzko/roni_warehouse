@@ -12,3 +12,10 @@ class StockOut(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     date = models.DateField()
+    is_approved = models.BooleanField(default=False)
+
+    def approve(self) -> None:
+        """Approve the stockout"""
+
+        self.is_approved = True
+        self.save()

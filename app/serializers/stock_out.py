@@ -18,6 +18,7 @@ class StockOutSerializer(serializers.ModelSerializer):
             "created_at",
             "updated_at",
             "date",
+            "is_approved",
         ]
 
         extra_kwargs = {

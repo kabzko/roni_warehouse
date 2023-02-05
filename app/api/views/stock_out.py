@@ -125,3 +125,23 @@ class StockOutDetailAPIView(API):
         except Exception as exc:
             debug_exception(exc)
             return self.server_error_response(exc)
+
+class StockOutApproveAPIView(API):
+    """Stock Out Approve API View."""
+
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, pk):
+        """Update stock out"""
+        try:
+            stockout_instance = StockOut.objects.get(pk=pk)
+            stockout_instance.approve()
+            return self.success_response("Stock out successfully approved!")
+        except StockOut.DoesNotExist:
+            self.raise_error("Stock out does not exist!")
+        except HumanReadableError as exc:
+            return self.error_response(exc, self.error_dict, self.status)
+        except Exception as exc:
+            debug_exception(exc)
+            return self.server_error_response(exc)

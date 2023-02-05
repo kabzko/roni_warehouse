@@ -5461,70 +5461,70 @@ var SideNav = /*#__PURE__*/function (_React$Component) {
         className: "align-text-bottom"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("i", {
         className: "bi bi-house"
-      }), "Dashboard"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Link, {
+      }), "Dashboard"))), localStorage.getItem("user_type") === "admin" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Link, {
         className: this.state.active === "users-list" ? "nav-link active" : "nav-link",
         to: "/web/admin/users"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
         className: "align-text-bottom"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("i", {
         className: "bi bi-people-fill"
-      }), "Users")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Link, {
+      }), "Users")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement((react__WEBPACK_IMPORTED_MODULE_7___default().Fragment), null), localStorage.getItem("user_type") === "admin" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Link, {
         className: this.state.active === "suppliers" ? "nav-link active" : "nav-link",
         to: "/web/admin/suppliers"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
         className: "align-text-bottom"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("i", {
         className: "bi bi-truck"
-      }), "Supplier")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Link, {
+      }), "Supplier")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement((react__WEBPACK_IMPORTED_MODULE_7___default().Fragment), null), localStorage.getItem("user_type") === "admin" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Link, {
         className: this.state.active === "products" ? "nav-link active" : "nav-link",
         to: "/web/admin/products"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
         className: "align-text-bottom"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("i", {
         className: "bi bi-box-seam"
-      }), "Products")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Link, {
+      }), "Products")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement((react__WEBPACK_IMPORTED_MODULE_7___default().Fragment), null), localStorage.getItem("user_type") === "admin" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Link, {
         className: this.state.active === "stock-in" ? "nav-link active" : "nav-link",
         to: "/web/admin/stock-in"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
         className: "align-text-bottom"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("i", {
         className: "bi bi-box-arrow-in-down-right"
-      }), "Stock In")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Link, {
+      }), "Stock In")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement((react__WEBPACK_IMPORTED_MODULE_7___default().Fragment), null), localStorage.getItem("user_type") === "admin" || localStorage.getItem("user_type") === "receiver" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Link, {
         className: this.state.active === "stock-out" ? "nav-link active" : "nav-link",
         to: "/web/admin/stock-out"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
         className: "align-text-bottom"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("i", {
         className: "bi bi-box-arrow-up-right"
-      }), "Stock Out")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Link, {
+      }), "Stock Out")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement((react__WEBPACK_IMPORTED_MODULE_7___default().Fragment), null), localStorage.getItem("user_type") === "admin" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Link, {
         className: this.state.active === "invoice" ? "nav-link active" : "nav-link",
         to: "/web/admin/invoice"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
         className: "align-text-bottom"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("i", {
         className: "bi bi-receipt-cutoff"
-      }), "Invoice")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Link, {
+      }), "Invoice")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement((react__WEBPACK_IMPORTED_MODULE_7___default().Fragment), null), localStorage.getItem("user_type") === "admin" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Link, {
         className: this.state.active === "sales" ? "nav-link active" : "nav-link",
         to: "/web/admin/invoice-sales-graph"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
         className: "align-text-bottom"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("i", {
         className: "bi bi-graph-up-arrow"
-      }), "Sales Graph")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Link, {
+      }), "Sales Graph")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement((react__WEBPACK_IMPORTED_MODULE_7___default().Fragment), null), localStorage.getItem("user_type") === "admin" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Link, {
         className: this.state.active === "leaderboards" ? "nav-link active" : "nav-link",
         to: "/web/admin/product-sales"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
         className: "align-text-bottom"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("i", {
         className: "bi bi-card-list"
-      }), "Product Sales")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Link, {
+      }), "Product Sales")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement((react__WEBPACK_IMPORTED_MODULE_7___default().Fragment), null), localStorage.getItem("user_type") === "admin" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Link, {
         className: this.state.active === "others" ? "nav-link active" : "nav-link",
         to: "/web/admin/others"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
         className: "align-text-bottom"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("i", {
         className: "bi bi-collection"
-      }), "Others")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("li", {
+      }), "Others")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement((react__WEBPACK_IMPORTED_MODULE_7___default().Fragment), null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("li", {
         className: "nav-item",
         onClick: this.logout
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
@@ -9998,7 +9998,7 @@ var AdminStockOutList = /*#__PURE__*/function (_React$Component) {
 
     (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__["default"])(this, AdminStockOutList);
 
-    if (!(localStorage.getItem("user_type") === "admin" || localStorage.getItem("user_type") === "inventory")) {
+    if (!(localStorage.getItem("user_type") === "admin" || localStorage.getItem("user_type") === "receiver")) {
       window.location.href = "/";
     }
 
@@ -10050,6 +10050,28 @@ var AdminStockOutList = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "approveStockOut",
+    value: function approveStockOut(stockOut, event) {
+      var _this3 = this;
+
+      event.preventDefault();
+      _utils_dialog__WEBPACK_IMPORTED_MODULE_12__["default"].create({
+        header: "Please confirm",
+        text: "Are you sure you want to approve this stock?",
+        confirmButtonText: "Yes",
+        cancelButtonText: "Cancel",
+        confirmSuccess: function confirmSuccess() {
+          _utils_axios__WEBPACK_IMPORTED_MODULE_11__["default"].post("/api/stock-out/approve/".concat(stockOut.id, "/"), {}).then(function (res) {
+            _utils_toast__WEBPACK_IMPORTED_MODULE_13__["default"].success(res.data);
+
+            _this3.getStockOut();
+          }).catch(function (error) {
+            _utils_toast__WEBPACK_IMPORTED_MODULE_13__["default"].error(error.response.data.message);
+          });
+        }
+      });
+    }
+  }, {
     key: "getProductName",
     value: function getProductName(productId) {
       var product;
@@ -10080,7 +10102,7 @@ var AdminStockOutList = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "getStockIn",
     value: function getStockIn() {
-      var _this3 = this;
+      var _this4 = this;
 
       var api_url = "/api/stock-in/list/";
       _utils_axios__WEBPACK_IMPORTED_MODULE_11__["default"].get(api_url).then(function (res) {
@@ -10096,7 +10118,7 @@ var AdminStockOutList = /*#__PURE__*/function (_React$Component) {
           return data;
         });
 
-        _this3.setState({
+        _this4.setState({
           "stockIn": res.data
         });
       }).catch(function (error) {
@@ -10107,10 +10129,10 @@ var AdminStockOutList = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "getProducts",
     value: function getProducts() {
-      var _this4 = this;
+      var _this5 = this;
 
       _utils_axios__WEBPACK_IMPORTED_MODULE_11__["default"].get("/api/products/").then(function (res) {
-        _this4.setState({
+        _this5.setState({
           "products": res.data
         });
       }).catch(function (error) {
@@ -10121,7 +10143,7 @@ var AdminStockOutList = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "getStockOut",
     value: function getStockOut() {
-      var _this5 = this;
+      var _this6 = this;
 
       var api_url = "/api/stock-out/";
       var productFilter = this.state.productFilter;
@@ -10143,7 +10165,7 @@ var AdminStockOutList = /*#__PURE__*/function (_React$Component) {
           return data;
         });
 
-        _this5.setState({
+        _this6.setState({
           "stockOut": res.data
         });
       }).catch(function (error) {
@@ -10183,7 +10205,7 @@ var AdminStockOutList = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this6 = this;
+      var _this7 = this;
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
         className: "side-nav-custom"
@@ -10199,11 +10221,11 @@ var AdminStockOutList = /*#__PURE__*/function (_React$Component) {
         className: "d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("h1", {
         className: "h2"
-      }, "Stock Out"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
+      }, "Stock Out"), localStorage.getItem("user_type") === "admin" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
         type: "button",
         className: "btn btn-dark",
         onClick: this.showCreateUpdateStockOutModal.bind(this)
-      }, "Create")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
+      }, "Create") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement((react__WEBPACK_IMPORTED_MODULE_7___default().Fragment), null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", {
         className: "input-group mb-3 w-50 float-lg-end"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("input", {
         type: "text",
@@ -10234,6 +10256,8 @@ var AdminStockOutList = /*#__PURE__*/function (_React$Component) {
         scope: "col"
       }, "Price per piece"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
         scope: "col"
+      }, "Is approved?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
+        scope: "col"
       }, "Expiration date"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
         scope: "col"
       }, "Date created"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("th", {
@@ -10243,17 +10267,23 @@ var AdminStockOutList = /*#__PURE__*/function (_React$Component) {
       }, this.state.stockOut.length > 0 ? this.state.stockOut.map(function (stockOut) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("tr", {
           key: stockOut.id
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockOut.date), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, _this6.getProductName(stockOut.product)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, _this6.getQuantityPerPiece(stockOut.stock_in, stockOut.quantity)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockOut.price), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockOut.expired ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockOut.date), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, _this7.getProductName(stockOut.product)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, _this7.getQuantityPerPiece(stockOut.stock_in, stockOut.quantity)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockOut.price), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockOut.is_approved ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", null, "Yes") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", null, "Not Yet"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("br", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockOut.expired ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", {
           style: {
             color: "red"
           }
-        }, stockOut.expiration_date, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("small", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("b", null, "(Expired)"))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", null, stockOut.expiration_date)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockOut.created_at), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
+        }, stockOut.expiration_date, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("small", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("b", null, "(Expired)"))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("span", null, stockOut.expiration_date)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, stockOut.created_at), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", null, localStorage.getItem("user_type") === "admin" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
           className: "btn btn-sm btn-primary me-1",
-          onClick: _this6.showCreateUpdateStockOutModal.bind(_this6, stockOut)
+          onClick: _this7.showCreateUpdateStockOutModal.bind(_this7, stockOut)
         }, "Edit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
-          className: "btn btn-sm btn-danger",
-          onClick: _this6.deleteStockOut.bind(_this6, stockOut)
-        }, "Delete")));
+          className: "btn btn-sm btn-danger me-1",
+          onClick: _this7.deleteStockOut.bind(_this7, stockOut)
+        }, "Delete")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("div", null, stockOut.is_approved ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
+          className: "btn btn-sm btn-success",
+          disabled: true
+        }, "Approve now") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("button", {
+          className: "btn btn-sm btn-success",
+          onClick: _this7.approveStockOut.bind(_this7, stockOut)
+        }, "Approve now"))));
       }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default().createElement("td", {
         colSpan: "1000",
         className: "text-center"

@@ -10,7 +10,7 @@ import Toast from "../../../utils/toast";
 
 class AdminStockOutList extends React.Component {
     constructor(props) {
-        if (!(localStorage.getItem("user_type") === "admin" || localStorage.getItem("user_type") === "inventory")) {
+        if (!(localStorage.getItem("user_type") === "admin" || localStorage.getItem("user_type") === "receiver")) {
             window.location.href = "/";
         }
         
@@ -45,6 +45,25 @@ class AdminStockOutList extends React.Component {
             cancelButtonText: "Cancel",
             confirmSuccess: () => {
                 axios.delete(`/api/stock-out/${stockOut.id}/`, {}).then(res => {
+                    Toast.success(res.data);
+                    this.getStockOut();
+                }).catch(error => {
+                    Toast.error(error.response.data.message)
+                })
+            }
+        })
+    }
+
+    approveStockOut(stockOut, event) {
+        event.preventDefault();
+
+        ConfirmDialog.create({
+            header: "Please confirm",
+            text: "Are you sure you want to approve this stock?",
+            confirmButtonText: "Yes",
+            cancelButtonText: "Cancel",
+            confirmSuccess: () => {
+                axios.post(`/api/stock-out/approve/${stockOut.id}/`, {}).then(res => {
                     Toast.success(res.data);
                     this.getStockOut();
                 }).catch(error => {
@@ -175,7 +194,11 @@ class AdminStockOutList extends React.Component {
                         <main className='col-md-9 ms-sm-auto col-lg-10 px-md-4'>
                             <div className='d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom'>
                                 <h1 className="h2">Stock Out</h1>
-                                <button type="button" className="btn btn-dark" onClick={this.showCreateUpdateStockOutModal.bind(this)}>Create</button>
+                                
+                                {localStorage.getItem("user_type") === "admin" ?
+                                    <button type="button" className="btn btn-dark" onClick={this.showCreateUpdateStockOutModal.bind(this)}>Create</button>
+                                    : <></>
+                                }
                             </div>
                             <div className="input-group mb-3 w-50 float-lg-end">
                                 <input type="text" className="form-control" placeholder="Search product..."
@@ -191,6 +214,7 @@ class AdminStockOutList extends React.Component {
                                             <th scope="col">Product</th>
                                             <th scope="col">Quantity per piece</th>
                                             <th scope="col">Price per piece</th>
+                                            <th scope="col">Is approved?</th>
                                             <th scope="col">Expiration date</th>
                                             <th scope="col">Date created</th>
                                             <th scope="col">Action</th>
@@ -206,6 +230,15 @@ class AdminStockOutList extends React.Component {
                                                         <td>{this.getQuantityPerPiece(stockOut.stock_in, stockOut.quantity)}</td>
                                                         <td>{stockOut.price}</td>
                                                         <td>
+                                                            {stockOut.is_approved ?
+                                                                <span>Yes</span>
+                                                                :
+                                                                <div>
+                                                                    <span>Not Yet</span><br></br>
+                                                                </div>
+                                                            }
+                                                        </td>
+                                                        <td>
                                                             {stockOut.expired ?
                                                                 <span style={{color: "red"}}>
                                                                     {stockOut.expiration_date} <br></br>
@@ -217,8 +250,20 @@ class AdminStockOutList extends React.Component {
                                                         </td>
                                                         <td>{stockOut.created_at}</td>
                                                         <td>
-                                                            <button className="btn btn-sm btn-primary me-1" onClick={this.showCreateUpdateStockOutModal.bind(this, stockOut)}>Edit</button>
-                                                            <button className="btn btn-sm btn-danger" onClick={this.deleteStockOut.bind(this, stockOut)}>Delete</button>
+                                                            {localStorage.getItem("user_type") === "admin" ?
+                                                                <div>
+                                                                    <button className="btn btn-sm btn-primary me-1" onClick={this.showCreateUpdateStockOutModal.bind(this, stockOut)}>Edit</button>
+                                                                    <button className="btn btn-sm btn-danger me-1" onClick={this.deleteStockOut.bind(this, stockOut)}>Delete</button>
+                                                                </div>
+                                                            :
+                                                            <div>
+                                                                {stockOut.is_approved ?
+                                                                    <button className="btn btn-sm btn-success" disabled>Approve now</button>
+                                                                :
+                                                                    <button className="btn btn-sm btn-success" onClick={this.approveStockOut.bind(this, stockOut)}>Approve now</button>
+                                                                }
+                                                            </div>
+                                                            }
                                                         </td>
                                                     </tr>
                                                 )
